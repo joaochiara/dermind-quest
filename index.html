@@ -6,7 +6,7 @@
 <title>derm.ia | Protocolo de pele</title>
 <link rel="icon" type="image/gif" href="favicon.gif">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,700;1,8..60,300;1,8..60,400;1,8..60,500;1,8..60,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
     --ivory:        #F7F2EA;
@@ -29,7 +29,7 @@
     --sage-dark:    #2E6A4E;
     --sage-light:   #C8E8D8;
     --sage-pale:    #EBF7F2;
-    --serif:        'DM Serif Display', Georgia, serif;
+    --serif:        'Source Serif 4', Georgia, serif;
     --sans:         'DM Sans', sans-serif;
   }
 
@@ -205,7 +205,7 @@
 
   .logo {
     font-family: var(--serif);
-    font-size: 20px; color: var(--ink);
+    font-size: 20px; font-weight: 700; color: var(--ink);
     text-decoration: none; letter-spacing: -0.02em;
   }
   .logo span { color: var(--wine); }
@@ -338,6 +338,7 @@
   .screen-h1 {
     font-family: var(--serif);
     font-size: clamp(32px, 5vw, 50px);
+    font-weight: 700;
     line-height: 1.08; letter-spacing: -0.025em;
     color: var(--ink); margin-bottom: 14px;
     filter: drop-shadow(0 2px 10px rgba(168,85,104,0.10)) drop-shadow(0 1px 3px rgba(24,16,14,0.06));
@@ -347,6 +348,7 @@
   .screen-q {
     font-family: var(--serif);
     font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 700;
     line-height: 1.15; letter-spacing: -0.02em;
     color: var(--ink); margin-bottom: 6px;
     filter: drop-shadow(0 2px 8px rgba(168,85,104,0.08)) drop-shadow(0 1px 3px rgba(24,16,14,0.05));
@@ -963,6 +965,7 @@
   .result-name {
     font-family: var(--serif);
     font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
     line-height: 1.1; letter-spacing: -0.025em;
     color: var(--ink); margin-bottom: 10px;
     filter: drop-shadow(0 2px 10px rgba(168,85,104,0.10)) drop-shadow(0 1px 3px rgba(24,16,14,0.06));
@@ -990,7 +993,7 @@
     box-shadow: 0 4px 16px rgba(24,16,14,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
   }
   .score-val {
-    font-family: var(--serif); font-size: 24px;
+    font-family: var(--serif); font-size: 24px; font-weight: 700;
     line-height: 1; color: var(--ink); margin-bottom: 3px;
     filter: drop-shadow(0 1px 4px rgba(24,16,14,0.08));
   }
@@ -1100,7 +1103,7 @@
     opacity: 0.1; border-radius: 50%; pointer-events: none;
   }
   .result-cta h3 {
-    font-family: var(--serif); font-size: 26px;
+    font-family: var(--serif); font-size: 26px; font-weight: 700;
     color: var(--ivory); line-height: 1.2; margin-bottom: 8px;
     position: relative;
   }
@@ -1141,7 +1144,7 @@
     -webkit-backdrop-filter: none;
     flex-shrink: 0;
     font-family: var(--serif);
-    font-size: 28px; font-weight: 400;
+    font-size: 28px; font-weight: 700;
     box-shadow: none;
   }
   /* Reflexo interno marfim (bolha) para os dots vazados da screen 0 */
@@ -1165,6 +1168,7 @@
   .interblock-title {
     font-family: var(--serif);
     font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
     line-height: 1.1; letter-spacing: -0.025em;
     color: var(--ivory); margin-bottom: 10px;
   }
@@ -1370,7 +1374,7 @@
   .interblock-dot {
     width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif); font-size: 20px; font-weight: 400; flex-shrink: 0;
+    font-family: var(--serif); font-size: 20px; font-weight: 700; flex-shrink: 0;
     background: rgba(247,242,234,0.12);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -1416,7 +1420,7 @@
     animation: none;
     color: var(--ivory);
     border-color: rgba(255,255,255,0.35);
-    font-size: 20px; font-weight: 400;
+    font-size: 20px; font-weight: 700;
   }
   .interblock-step.active .interblock-dot-wrap {
     filter: drop-shadow(0 3px 10px rgba(24,16,14,0.12)) drop-shadow(0 1px 0 rgba(255,255,255,0.70));
@@ -1424,7 +1428,7 @@
   /* Variante menor para steps não-ativos nas interblocos */
   .interblock-dot--sm {
     width: 40px; height: 40px;
-    font-family: var(--serif); font-size: 20px; font-weight: 400;
+    font-family: var(--serif); font-size: 20px; font-weight: 700;
   }
   /* dots concluídos — bolha vazada: número marfim, borda marfim */
   .interblock-step.done .interblock-dot--sm {
