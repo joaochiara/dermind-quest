@@ -230,8 +230,8 @@
   .quiz-wrap {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
-    padding: 96px 24px 60px;
-    min-height: 100vh;
+    padding: 96px 24px 120px;
+    min-height: calc(100vh - 200px);
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -240,7 +240,7 @@
     .quiz-wrap {
       overflow: visible;
       align-items: flex-start;
-      padding-bottom: 60px;
+      padding-bottom: 120px;
     }
   }
 
@@ -3378,6 +3378,7 @@
     // ── Animação do footer: desce ao sair, sobe ao entrar ──
     const _ftEl = document.getElementById('site-footer');
     if (_ftEl) {
+      _ftEl.classList.add('footer-ready');
       _ftEl.classList.remove('footer-hiding', 'footer-entering');
       _ftEl.classList.add('footer-hiding');
       setTimeout(() => {
@@ -6247,6 +6248,7 @@
       font-family: var(--sans);
       position: relative;
       margin-top: auto;
+      padding-top: 35px;
       height: 200px;
       flex-shrink: 0;
       display: flex;
@@ -6257,6 +6259,9 @@
       box-shadow: none;
       overflow: visible;
       z-index: 2;
+      transition: none;
+    }
+    #site-footer.footer-ready {
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
     }
     #site-footer.footer-hiding {
@@ -6307,78 +6312,27 @@
 
     body { padding-bottom: 0; }
 
-    /* ── Painel que abre para cima ── */
-    .footer-drawer {
-      position: absolute;
-      bottom: 100%;
-      left: 0; right: 0;
-      z-index: 2;
-      background: transparent;
-      border-top: 1px solid rgba(24,16,14,0.07);
-      box-shadow: 0 -8px 24px rgba(24,16,14,0.07);
-      max-height: 55vh;
-      overflow-y: auto;
-      display: none;
-      padding: 28px 40px 24px;
-    }
-    .footer-drawer.open { display: block; animation: drawerUp 0.22s ease; }
-    @keyframes drawerUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .footer-drawer-inner { max-width: 860px; margin: 0 auto; }
-    .footer-drawer h3 {
-      font-family: var(--sans); font-size: 9px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--ink-muted);
-      margin: 0 0 14px; font-weight: 500;
-    }
-    .footer-drawer p {
-      font-family: var(--sans); font-size: 12.5px; line-height: 1.75;
-      color: var(--ink-soft); opacity: 0.75; margin: 0 0 10px;
-    }
-    .footer-drawer p:last-child { margin-bottom: 0; }
-    .footer-drawer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
-    .footer-drawer ul li a {
-      font-family: var(--sans); font-size: 12px; color: var(--ink-soft);
-      opacity: 0.65; text-decoration: none; letter-spacing: 0.04em; transition: color 0.18s, opacity 0.18s;
-    }
-    .footer-drawer ul li a:hover { color: var(--wine); opacity: 1; }
-    .footer-drawer-panel { display: none; }
-    .footer-drawer-panel.active { display: block; }
-
     /* ── Barra inferior ── */
     .footer-bar {
       position: relative; z-index: 2;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: center;
       padding: 0 32px; height: 44px;
       border-top: 1px solid rgba(24,16,14,0.07);
-      gap: 12px;
     }
     .footer-copy {
-      font-family: var(--sans); font-size: 10px; font-weight: 300;
+      font-family: var(--sans); font-size: 13px; font-weight: 300;
       letter-spacing: 0.05em; color: var(--ink-soft); white-space: nowrap;
     }
     .footer-copy strong { color: var(--ink-soft); font-weight: 500; }
-    .footer-nav { display: flex; gap: 0; }
-    .footer-nav-btn {
-      background: none; border: none; cursor: pointer;
-      font-family: var(--sans); font-size: 10px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--ink-soft); padding: 0 16px; height: 44px;
-      border-left: 1px solid rgba(74,58,52,0.12);
-      transition: color 0.18s; white-space: nowrap;
+    .footer-copy-highlight {
+      font-size: 13px; font-weight: 500;
+      color: var(--ink-soft); letter-spacing: 0.03em;
     }
-    .footer-nav-btn:first-child { border-left: none; }
-    .footer-nav-btn:hover { color: var(--ink); }
-    .footer-nav-btn.active { color: var(--wine); }
 
     @media (max-width: 580px) {
       .footer-bar { padding: 0 16px; }
       .footer-copy { font-size: 9px; }
-      .footer-nav-btn { padding: 0 10px; font-size: 9px; letter-spacing: 0.08em; }
-      .footer-drawer { padding: 22px 20px 20px; }
     }
-    @media (max-width: 400px) { .footer-copy { display: none; } }
   </style>
 
   <!-- Cobertura do canvas além do footer -->
@@ -6400,67 +6354,9 @@
     <path id="footer-path-gloss" fill="rgba(255,255,255,0.13)" stroke="none"/>
   </svg>
 
-  <!-- Blur layer com máscara na forma do footer+orelha -->
-  <div id="footer-blur-layer"></div>
-
-  <!-- Painel que sobe -->
-  <div class="footer-drawer" id="footer-drawer">
-    <div class="footer-drawer-inner">
-      <div class="footer-drawer-panel" id="fdp-privacidade">
-        <h3>Política de Privacidade</h3>
-        <p>Seus dados são tratados com total segurança e nunca compartilhados com terceiros sem o seu consentimento expresso. As informações coletadas são utilizadas exclusivamente para personalizar a sua experiência na plataforma.</p>
-        <p>Você pode solicitar a exclusão dos seus dados a qualquer momento, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
-      </div>
-      <div class="footer-drawer-panel" id="fdp-termos">
-        <h3>Termos de Uso</h3>
-        <p>Ao utilizar esta plataforma, você concorda com os nossos termos e condições. O uso indevido do serviço, incluindo tentativas de acesso não autorizado ou reprodução do conteúdo sem permissão, está sujeito às penalidades previstas em lei.</p>
-        <p>Estes termos podem ser atualizados periodicamente. Recomendamos a leitura regular desta seção.</p>
-      </div>
-      <div class="footer-drawer-panel" id="fdp-cookies">
-        <h3>Cookies</h3>
-        <p>Utilizamos cookies essenciais para o funcionamento da plataforma e cookies analíticos para melhorar continuamente a sua experiência. Você pode gerenciar as suas preferências nas configurações do navegador.</p>
-      </div>
-      <div class="footer-drawer-panel" id="fdp-ajuda">
-        <h3>Central de Ajuda</h3>
-        <p>Encontrou algum problema ou tem dúvidas sobre o protocolo?</p>
-        <ul>
-          <li><a href="#">Como funciona o quiz?</a></li>
-          <li><a href="#">Como são geradas as recomendações?</a></li>
-          <li><a href="#">Meus dados são seguros?</a></li>
-          <li><a href="#">Posso refazer o protocolo?</a></li>
-          <li><a href="#">Acessibilidade</a></li>
-        </ul>
-      </div>
-      <div class="footer-drawer-panel" id="fdp-contato">
-        <h3>Contato</h3>
-        <p>Para dúvidas, sugestões ou solicitações relacionadas aos seus dados, respondemos em até 2 dias úteis.</p>
-        <ul>
-          <li><a href="/cdn-cgi/l/email-protection#9ff0f6dffbfaedf2b1f6fe"><span class="__cf_email__" data-cfemail="9bf4f2dbfffee9f6b5f2fa">[email&#160;protected]</span></a></li>
-          <li><a href="#">Formulário de contato</a></li>
-          <li><a href="#">Reportar problema</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Botão WhatsApp -->
-  <a id="whatsapp-btn" href="https://wa.me/" aria-label="WhatsApp" title="WhatsApp" style="position:absolute;bottom:52px;right:32px;z-index:10;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:rgba(253,250,247,0.70);border:1px solid rgba(255,255,255,0.60);box-shadow:0 2px 8px rgba(24,16,14,0.07),inset 0 1px 0 rgba(255,255,255,0.8);cursor:pointer;text-decoration:none;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="26" height="26"><defs><linearGradient id="wa-b" x1="85.915" x2="86.535" y1="32.567" y2="137.092" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#57d163"/><stop offset="1" stop-color="#23b33a"/></linearGradient><filter id="wa-a" width="1.115" height="1.114" x="-.057" y="-.057" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3.531"/></filter></defs><path fill="#b3b3b3" d="m54.532 138.45 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.523h.023c33.707 0 61.139-27.426 61.153-61.135.006-16.335-6.349-31.696-17.895-43.251A60.75 60.75 0 0 0 87.94 25.983c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.558zm-40.811 23.544L24.16 123.88c-6.438-11.154-9.825-23.808-9.821-36.772.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954zm0 0" filter="url(#wa-a)"/><path fill="#fff" d="m12.966 161.238 10.439-38.114a73.42 73.42 0 0 1-9.821-36.772c.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954z"/><path fill="url(#wa-b)" d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.313-6.179 22.558 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.517 31.126 8.523h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.928z"/><path fill="#fff" fill-rule="evenodd" d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647"/></svg>
-  </a>
-  <script>
-    (function(){var btn=document.getElementById('whatsapp-btn');if(!btn)return;var BASE_Y=0,PERIOD=4800,AMP=5,ROT_AMP=0.28,PHASE=-Math.PI/2+Math.PI/3,ROT_PHASE=PHASE+Math.PI/4,AMP_X=3,PERIOD_X=6600,PHASE_X=PHASE+Math.PI/3,t0=performance.now();function tick(now){var t=now-t0,osc=Math.sin(2*Math.PI*t/PERIOD+PHASE),floatY=BASE_Y-AMP*(osc*0.5+0.5),rot=ROT_AMP*Math.sin(2*Math.PI*t/PERIOD+ROT_PHASE),floatX=AMP_X*Math.sin(2*Math.PI*t/PERIOD_X+PHASE_X);btn.style.transform='translateX('+floatX.toFixed(2)+'px) translateY('+floatY.toFixed(2)+'px) rotate('+rot.toFixed(3)+'deg)';requestAnimationFrame(tick);}requestAnimationFrame(tick);})();
-  </script>
-
   <!-- Barra inferior -->
   <div class="footer-bar">
-    <span class="footer-copy">© 2026 <strong>derm.ia</strong>. Todos os direitos reservados.</span>
-    <nav class="footer-nav">
-      <button class="footer-nav-btn" data-panel="privacidade">Privacidade</button>
-      <button class="footer-nav-btn" data-panel="termos">Termos</button>
-      <button class="footer-nav-btn" data-panel="cookies">Cookies</button>
-      <button class="footer-nav-btn" data-panel="ajuda">Ajuda</button>
-      <button class="footer-nav-btn" data-panel="contato">Contato</button>
-    </nav>
+    <span class="footer-copy"><strong class="footer-copy-highlight">© 2026 derm.ia.</strong> Todos os direitos reservados.</span>
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -6503,11 +6399,13 @@
       document.getElementById('footer-path-gloss').setAttribute('d', buildGloss(W));
 
       /* Atualiza máscara do blur */
-      var enc = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+SVG_H+'"><path d="'+buildPath(W)+'" fill="black"/></svg>');
-      var mu  = 'url("data:image/svg+xml,'+enc+'")';
       var bl  = document.getElementById('footer-blur-layer');
-      bl.style.webkitMaskImage = mu; bl.style.maskImage = mu;
-      bl.style.webkitMaskSize  = '100% 100%'; bl.style.maskSize = '100% 100%';
+      if (bl) {
+        var enc = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+SVG_H+'"><path d="'+buildPath(W)+'" fill="black"/></svg>');
+        var mu  = 'url("data:image/svg+xml,'+enc+'")';
+        bl.style.webkitMaskImage = mu; bl.style.maskImage = mu;
+        bl.style.webkitMaskSize  = '100% 100%'; bl.style.maskSize = '100% 100%';
+      }
     }
 
     if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', update);
@@ -6515,43 +6413,12 @@
     window.addEventListener('resize', update);
   })();
 
-  /* ── Canvas cover: cobre o fundo além do footer ── */
-  (function() {
-    function updateCover() {
-      var footer = document.getElementById('site-footer');
-      var cover  = document.getElementById('footer-canvas-cover');
-      if (!footer || !cover) return;
-      var rect  = footer.getBoundingClientRect();
-      var below = Math.max(0, window.innerHeight - rect.top);
-      cover.style.height = below + 'px';
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      document.body.addEventListener('scroll', updateCover);
-      window.addEventListener('scroll', updateCover);
-      (function loop() { updateCover(); requestAnimationFrame(loop); })();
-    });
-  })();
+  /* ── Canvas cover: desativado (footer fixo no layout) ── */
+  window.addEventListener('load', function() {
+    var ft = document.getElementById('site-footer');
+    if (ft) ft.classList.add('footer-ready');
+  });
 
-  /* ── Drawer (painel que sobe) ── */
-  (function() {
-    var drawer  = document.getElementById('footer-drawer');
-    var btns    = document.querySelectorAll('.footer-nav-btn');
-    var panels  = document.querySelectorAll('.footer-drawer-panel');
-    var current = null;
-    function open(panelId) {
-      if (current===panelId && drawer.classList.contains('open')) { close(); return; }
-      current = panelId;
-      panels.forEach(function(p){ p.classList.toggle('active', p.id==='fdp-'+panelId); });
-      btns.forEach(function(b){ b.classList.toggle('active', b.dataset.panel===panelId); });
-      drawer.classList.remove('open');
-      void drawer.offsetWidth;
-      drawer.classList.add('open');
-    }
-    function close() {
-      current = null;
-      drawer.classList.remove('open');
-      btns.forEach(function(b){ b.classList.remove('active'); });
-    }
-    btns.forEach(function(btn){
-      btn.addEventListener('click', function(e){
-        e.stopPropagatio
+  </script>
+</footer>
+</html>
