@@ -1813,14 +1813,6 @@
   #hud-bl { bottom: 110px; left: 22px; }
   #hud-br { bottom: 110px; right: 22px; text-align: right; }
 
-  @media (max-width: 580px) {
-    #hud-tl, #hud-tr { top: 158px; }
-    #hud-bl, #hud-br { display: block; bottom: 95px; }
-    .scan-hud { font-size: 9px; }
-    #scanner-instruction { bottom: 255px; }
-    #scanner-top { padding-top: 82px; }
-    #scanner-progress-wrap { bottom: 62px; }
-  }
 
   /* Linha de scan horizontal animada */
   #scan-line {
@@ -2106,6 +2098,16 @@
   }
   #scanner-back-btn:hover { opacity: 1; transform: scale(1.05); }
   #scanner-back-btn::before { content: '←'; font-size: 15px; }
+
+  /* ── Scanner overlay: overrides mobile ── */
+  @media (max-width: 580px) {
+    #hud-tl, #hud-tr { top: 158px; }
+    #hud-bl, #hud-br { display: block; bottom: 95px; }
+    .scan-hud { font-size: 9px; }
+    #scanner-instruction { bottom: 255px; }
+    #scanner-top { padding-top: 82px; }
+    #scanner-progress-wrap { bottom: 62px; }
+  }
 
   /* ── Pílula WhatsApp footer ── */
   .footer-wa-pill {
