@@ -201,20 +201,14 @@
     opacity: 0;
   }
 
-  /* Mobile: overlay fullscreen com scroll para acomodar botão voltar abaixo do box */
-  @media (max-width: 580px) {
-    #cc-overlay.cc-fullscreen {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      height: calc(100dvh + 100px) !important;
-    }
-  }
-
   header.cc-open {
     z-index: 55;
   }
   header.cc-open .header-island {
     pointer-events: none;
+  }
+  header.cc-open .inter-header-back {
+    pointer-events: auto;
   }
 
   /* Barra de progresso fica acima do painel quando este está aberto */
@@ -755,22 +749,26 @@
   .btn-back::before { content: '←'; font-size: 15px; }
   /* Nas inter screens, btn-back fica fora do box, abaixo, cor marfim */
   .interblock-btn-back-wrap {
-    position: fixed;
-    left: calc(50% - 350px + 92px);
-    top: calc(50% + 292.5px + 6px);
-    z-index: 65;
-    opacity: 0;
-    transition: opacity 1.0s ease;
+    display: none !important;
   }
-  @media (max-width: 580px) {
-    .interblock-btn-back-wrap {
-      left: calc(50% - (min(100vw - 32px, 700px) / 2) + 28px);
-      top: calc(50dvh + min(267.5px, 50dvh - 65px) + 30px + 12px);
-    }
+  /* Botão voltar no header durante inter screens */
+  .inter-header-back {
+    font-size: 14px;
+    color: var(--ink);
+    text-shadow: 0 2px 6px rgba(24,16,14,0.10);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    transition: color 0.2s, transform 0.15s;
+    position: relative;
+    z-index: 3;
   }
-  .interblock-btn-back-wrap.sub-visible { opacity: 1; }
-  .screen.interblock .btn-back { color: var(--ivory); }
-  .screen.interblock .btn-back:hover { color: var(--ivory-mid); transform: scale(1.05); }
+  .inter-header-back::before { content: '←'; font-size: 14px; }
+  .inter-header-back:hover { color: var(--ivory-mid); transform: scale(1.05); }
 
   .btn-next {
     background: var(--wine);
@@ -1527,19 +1525,19 @@
     #screen-0 .intro-step-row { justify-content: center; }
     #screen-0 .intro-step-row .option { flex: unset; width: fit-content; margin-right: 0 !important; margin-left: 0 !important; }
 
-    /* Redução de 20% nos boxes da screen 0 em mobile */
+    /* Redução de 15% nos boxes da screen 0 em mobile */
     #screen-0 #intro-box-1,
     #screen-0 #intro-box-2,
     #screen-0 #intro-box-3 {
-      transform: scale(0.7);
+      transform: scale(0.85);
       transform-origin: center center;
       margin-top: -10px !important;
       margin-bottom: -10px !important;
     }
 
-    /* Move botão 15px para baixo em mobile */
+    /* Move botão para cima em mobile */
     #screen-0 #intro-btn {
-      transform: translateY(22px);
+      transform: translateY(12px);
     }
 
     /* Carousel cards mobile */
@@ -2242,14 +2240,11 @@
   </div>
 </div>
 
-<div class="interblock-btn-back-wrap" id="interblock-back-wrap" style="display:none;">
-  <button class="btn-back" id="interblock-back-btn" onclick="">Voltar</button>
-</div>
-
 <header>
   <div class="header-island">
     <a href="#" class="logo">derm<span>.ia</span></a>
     <div class="step-counter" id="stepCounter"></div>
+    <button class="btn-back inter-header-back" id="interblock-back-btn" onclick="" style="display:none;">Voltar</button>
   </div>
 </header>
 
@@ -3188,7 +3183,7 @@
     ov.style.top          = '0px';
     ov.style.left         = '0px';
     ov.style.width        = window.innerWidth  + 'px';
-    ov.style.height       = window.innerHeight + 'px';
+    ov.style.height       = (window.innerWidth <= 580 ? window.innerHeight + 80 : window.innerHeight) + 'px';
     ov.style.borderRadius = '0px';
     ov.style.opacity      = '1';
     hdr.classList.add('cc-open');
@@ -3236,6 +3231,8 @@
           counter.style.opacity    = '1';
           setTimeout(() => { counter.style.transition = ''; }, 280);
         }
+        const backBtn = document.getElementById('interblock-back-btn');
+        if (backBtn) backBtn.style.display = 'none';
       }, FADE_DUR + 20);
     }, GEOM_DUR);
 
@@ -3336,16 +3333,14 @@
     box && box.querySelectorAll('.interblock-step').forEach(el => {
       el.style.opacity = '1'; el.style.transition = ''; el.style.transform = '';
     });
-    const backWrap = document.getElementById('interblock-back-wrap');
     const backBtn  = document.getElementById('interblock-back-btn');
-    if (backWrap && backBtn) {
+    if (backBtn) {
       const dest = n === 'inter1' ? 7 : n === 'inter2' ? 16 : 23;
       backBtn.onclick = () => goTo(dest);
-      backWrap.style.display = '';
-      backWrap.classList.remove('sub-visible');
-      void backWrap.offsetHeight;
-      setTimeout(() => backWrap.classList.add('sub-visible'), 300);
+      backBtn.style.display = 'flex';
     }
+    const counter = document.getElementById('stepCounter');
+    if (counter) counter.style.opacity = '0';
     box && box.querySelectorAll('.interblock-badge').forEach(b => {
       b.classList.add('badge-visible');
       b.classList.remove('sub-visible');
@@ -3364,8 +3359,8 @@
     const box   = document.getElementById(boxId);
 
     // Esconde back button
-    const bw = document.getElementById('interblock-back-wrap');
-    if (bw) { bw.classList.remove('sub-visible'); setTimeout(() => { bw.style.display = 'none'; }, 300); }
+    const bw = document.getElementById('interblock-back-btn');
+    if (bw) { bw.style.display = 'none'; }
 
     // 1. Widget some
     await _widgetBox(box, 'widget-out', 400);
@@ -4650,16 +4645,12 @@
         activeScreen.querySelectorAll('.interblock-step').forEach(el => {
           el.style.opacity = '1'; el.style.transition = ''; el.style.transform = '';
         });
-        // Mostra btn-back global com fade-in, configura destino
-        const backWrap = document.getElementById('interblock-back-wrap');
+        // Mostra btn-back no header, configura destino
         const backBtn  = document.getElementById('interblock-back-btn');
-        if (backWrap && backBtn) {
+        if (backBtn) {
           const dest = activeScreen.id === 'screen-inter1' ? 7 : activeScreen.id === 'screen-inter2' ? 16 : 23;
           backBtn.onclick = () => goTo(dest);
-          backWrap.style.display = '';
-          backWrap.classList.remove('sub-visible');
-          void backWrap.offsetHeight;
-          setTimeout(() => backWrap.classList.add('sub-visible'), 300);
+          backBtn.style.display = 'flex';
         }
         // Fade-in nos badges ✅
         activeScreen.querySelectorAll('.interblock-badge').forEach(b => {
@@ -4726,7 +4717,7 @@
           const floatX = p.ampX ? p.ampX * Math.sin(2 * Math.PI * t / p.periodX + p.phaseX) : 0;
           const isMobileIntroBox = window.innerWidth <= 580 && p.el.id && p.el.id.startsWith('intro-box-');
           const mobileOffsetY = isMobileIntroBox ? -5 : 0;
-          const mobileScale   = isMobileIntroBox ? ' scale(0.7)' : '';
+          const mobileScale   = isMobileIntroBox ? ' scale(0.85)' : '';
           p.el.style.transform = `translateX(${floatX.toFixed(2)}px) translateY(${(floatY + offset + mobileOffsetY).toFixed(2)}px) rotate(${rot.toFixed(3)}deg)${mobileScale}`;
         }
       }
