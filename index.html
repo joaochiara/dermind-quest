@@ -159,8 +159,8 @@
     z-index: 54;
     pointer-events: none;
     background: rgba(253,250,247,0.25);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255,255,255,0.55);
     box-shadow:
       0 2px 0px rgba(255,255,255,0.70),
@@ -172,23 +172,33 @@
     transition:
       top    0.58s cubic-bezier(0.4, 0, 0.2, 1),
       left   0.58s cubic-bezier(0.4, 0, 0.2, 1),
-      right  0.58s cubic-bezier(0.4, 0, 0.2, 1),
       width  0.58s cubic-bezier(0.4, 0, 0.2, 1),
       height 0.58s cubic-bezier(0.4, 0, 0.2, 1),
       border-radius 0.58s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.18s ease;
-    will-change: top, left, right, width, height, border-radius;
+      opacity 0.35s ease;
+    will-change: top, left, width, height, border-radius, opacity;
     overflow: hidden;
   }
+  /* Reflexo bolha no topo — igual ao header-island */
   #cc-overlay::before {
     content: '';
     position: absolute;
     top: 0; left: 5%; right: 5%;
     height: 46%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 60%, transparent 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.38) 0%,
+      rgba(255,255,255,0.10) 60%,
+      transparent 100%
+    );
     border-radius: 0 0 60% 60% / 0 0 100% 100%;
     pointer-events: none;
     z-index: 2;
+    transition: opacity 0.4s ease;
+  }
+  /* Quando fullscreen, reflexo some pois a bolha já é a tela toda */
+  #cc-overlay.cc-fullscreen::before {
+    opacity: 0;
   }
 
   header.cc-open {
@@ -209,7 +219,7 @@
   .logo span { color: var(--wine); }
 
   .step-counter {
-    font-size: 14px; color: var(--ink-soft);
+    font-size: 14px; color: #8A7A74;
     text-shadow: 0 2px 6px rgba(24,16,14,0.10);
   }
 
@@ -231,7 +241,7 @@
     flex: 1;
     display: flex; align-items: center; justify-content: center;
     padding: 96px 24px 120px;
-    min-height: calc(100vh - 200px);
+    min-height: 100vh;
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -1488,7 +1498,7 @@
 
   @media (max-width: 580px) {
     header { padding: 14px 20px; }
-    .quiz-wrap { padding: 82px 16px 44px; }
+    .quiz-wrap { padding: 82px 16px 120px; }
     .screen-h1 { font-size: 42px; margin-inline: 6px; }
     .screen-q { font-size: 32px; margin-inline: 6px; }
     .screen-sub { padding-inline: 6px; }
@@ -3112,35 +3122,38 @@
     const ov      = document.getElementById('cc-overlay');
     const isMobile = window.innerWidth <= 580;
 
-    // Esconde step counter imediatamente
+    // Esconde step counter
     if (counter) { counter.style.transition = 'opacity 0.15s'; counter.style.opacity = '0'; }
 
-    // Posiciona overlay exatamente sobre o header (ponto de partida da expansão)
+    // Posiciona overlay exatamente sobre o header (ponto de partida)
     const rect = hdr.getBoundingClientRect();
-    ov.style.transition  = 'none';
-    ov.style.top         = rect.top    + 'px';
-    ov.style.left        = rect.left   + 'px';
-    ov.style.width       = rect.width  + 'px';
-    ov.style.height      = rect.height + 'px';
+    ov.style.transition   = 'none';
+    ov.style.top          = rect.top    + 'px';
+    ov.style.left         = rect.left   + 'px';
+    ov.style.width        = rect.width  + 'px';
+    ov.style.height       = rect.height + 'px';
     ov.style.borderRadius = isMobile ? '17px' : '20px';
-    ov.style.opacity     = '0';
+    ov.style.opacity      = '0';
+    ov.classList.remove('cc-fullscreen');
     void ov.offsetHeight;
 
-    // Anima: expansão geométrica + fade-in de opacidade simultâneos
+    // Anima expansão do header até fullscreen
     ov.style.transition =
       'top 0.58s cubic-bezier(0.4,0,0.2,1), ' +
       'left 0.58s cubic-bezier(0.4,0,0.2,1), ' +
       'width 0.58s cubic-bezier(0.4,0,0.2,1), ' +
       'height 0.58s cubic-bezier(0.4,0,0.2,1), ' +
       'border-radius 0.58s cubic-bezier(0.4,0,0.2,1), ' +
-      'opacity 0.42s cubic-bezier(0.4,0,0.2,1)';
-    ov.style.top         = '0px';
-    ov.style.left        = '0px';
-    ov.style.width       = window.innerWidth  + 'px';
-    ov.style.height      = window.innerHeight + 'px';
+      'opacity 0.35s cubic-bezier(0.4,0,0.2,1)';
+    ov.style.top          = '0px';
+    ov.style.left         = '0px';
+    ov.style.width        = window.innerWidth  + 'px';
+    ov.style.height       = window.innerHeight + 'px';
     ov.style.borderRadius = '0px';
-    ov.style.opacity     = '1';
+    ov.style.opacity      = '1';
     hdr.classList.add('cc-open');
+    // Quando chega fullscreen, remove reflexo de bolha do topo
+    setTimeout(() => ov.classList.add('cc-fullscreen'), 560);
     return _wait(620);
   }
 
@@ -3150,15 +3163,18 @@
     const ov      = document.getElementById('cc-overlay');
     const isMobile = window.innerWidth <= 580;
     const margin   = isMobile ? 1 : 12;
-    const GEOM_DUR = 520; // duração da animação geométrica
-    const FADE_DUR = 200; // duração do fade-out no final
+    const GEOM_DUR = 500;
+    const FADE_DUR = 180;
 
-    // Fase 1: animação geométrica com opacidade em 1
+    // Remove fullscreen, restaura reflexo de bolha antes de recolher
+    ov.classList.remove('cc-fullscreen');
+    void ov.offsetHeight;
+
     ov.style.transition =
-      'top '    + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
-      'left '   + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
-      'width '  + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
-      'height ' + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
+      'top '           + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
+      'left '          + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
+      'width '         + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
+      'height '        + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1), ' +
       'border-radius ' + GEOM_DUR + 'ms cubic-bezier(0.4,0,0.2,1)';
     ov.style.opacity      = '1';
     ov.style.top          = margin + 'px';
@@ -3168,14 +3184,13 @@
     ov.style.borderRadius = isMobile ? '17px' : '20px';
     hdr.classList.remove('cc-open');
 
-    // Fase 2: fade-out apenas depois que a geometria terminar
+    // Fade out após recolher
     setTimeout(() => {
       ov.style.transition = 'opacity ' + FADE_DUR + 'ms ease';
       ov.style.opacity    = '0';
-
-      // Limpeza após o fade
       setTimeout(() => {
         ov.style.transition = 'none';
+        ov.classList.remove('cc-fullscreen');
         if (counter) {
           counter.style.transition = 'opacity 0.25s';
           counter.style.opacity    = '1';
@@ -3236,6 +3251,7 @@
       cur.classList.remove('enter-up','enter-down','enter-fade','exit-up','exit-down','exit-fade');
       cur.classList.add('exit-up');
     }
+    window.mistInterMode = true;
     if (typeof window.goMist === 'function') window.goMist('up', n);
 
     await _wait(250);
@@ -3319,13 +3335,17 @@
     if (tipWrap) { tipWrap.style.transition = 'none'; tipWrap.style.height = '0'; }
     next.classList.remove('enter-up','enter-down','enter-fade','exit-up','exit-down','exit-fade');
 
-    // 3. Névoa salta para posição destino antes do painel recolher — evita fundo vazio visível
+    // 3. Névoa salta para posição destino; próxima screen aparece enquanto overlay recolhe
+    window.mistInterMode = false;
     if (typeof window.goMist === 'function') window.goMist('snap', n);
-    await _headerCollapse();
+
+    // Inicia o colapso e mostra a próxima screen simultaneamente
+    _headerCollapse();
     next.classList.add('active', 'enter-fade');
     current = n;
     updateProgress();
     window.scrollTo({ top: 0, behavior: 'instant' });
+    await _wait(100);
 
     // Typewriter inicia imediatamente com a entrada da screen (igual screens 8 e 17)
     if (typeof runScreenTypewriter === 'function') runScreenTypewriter(next);
@@ -4104,17 +4124,24 @@
       }
 
       // 3. Névoa garantida no fundo — onde o botão Voltar mora ───────────────
-      // Gradientes radiais fixos ancorados no fundo do CANVAS (não do
-      // espaço virtual). Sempre presentes independente do scroll, garantindo
-      // que a região inferior tenha cor suficiente para o texto claro ser legível.
-      // O terceiro blob cobre especificamente o botão Voltar das inter screens,
-      // que fica em top: 50vh + ~323px — calculado dinamicamente via H.
       var interBtnCy = Math.min((H * 0.5 + 323 + 20) / H, 0.97);
-      ;[
+
+      // Blobs extras no centro do viewport quando em inter screens
+      var interBlobs = [
         { cx: 0.20, cy: 0.92,        rxN: 0.55, ryN: 0.36, a: 0.44, r:168, g: 85, b:104 },
         { cx: 0.78, cy: 0.88,        rxN: 0.52, ryN: 0.34, a: 0.48, r: 74, g:127, b:165 },
         { cx: 0.18, cy: interBtnCy,  rxN: 0.48, ryN: 0.28, a: 0.46, r:168, g: 85, b:104 },
-      ].forEach(function(e) {
+      ];
+      if (window.mistInterMode) {
+        interBlobs = interBlobs.concat([
+          { cx: 0.15, cy: 0.18, rxN: 0.70, ryN: 0.45, a: 0.55, r:168, g: 85, b:104 },
+          { cx: 0.82, cy: 0.22, rxN: 0.65, ryN: 0.42, a: 0.52, r: 74, g:127, b:165 },
+          { cx: 0.50, cy: 0.50, rxN: 0.80, ryN: 0.55, a: 0.38, r:217, g:168, b:178 },
+          { cx: 0.25, cy: 0.62, rxN: 0.55, ryN: 0.38, a: 0.45, r: 74, g:127, b:165 },
+          { cx: 0.75, cy: 0.58, rxN: 0.58, ryN: 0.40, a: 0.42, r:168, g: 85, b:104 },
+        ]);
+      }
+      interBlobs.forEach(function(e) {
         const bx  = e.cx * W;
         const by  = e.cy * H;
         const brX = e.rxN * W;
@@ -4136,10 +4163,14 @@
       });
 
       // 4. Máscara de marfim no topo — gradiente suave, sem fillRect sólido
+      // Durante inter screens a máscara é quase transparente para névoa aparecer
+      var maskOpacity = window.mistInterMode ? 0.08 : 1.0;
+      var maskOpacity2 = window.mistInterMode ? 0.04 : 0.96;
+      var maskOpacity3 = window.mistInterMode ? 0.02 : 0.60;
       const mask = ctx.createLinearGradient(0, 0, 0, H * 0.55);
-      mask.addColorStop(0,    'rgba(247,242,234,1)');
-      mask.addColorStop(0.25, 'rgba(247,242,234,0.96)');
-      mask.addColorStop(0.50, 'rgba(247,242,234,0.60)');
+      mask.addColorStop(0,    'rgba(247,242,234,' + maskOpacity + ')');
+      mask.addColorStop(0.25, 'rgba(247,242,234,' + maskOpacity2 + ')');
+      mask.addColorStop(0.50, 'rgba(247,242,234,' + maskOpacity3 + ')');
       mask.addColorStop(0.75, 'rgba(247,242,234,0.18)');
       mask.addColorStop(1,    'rgba(247,242,234,0)');
       ctx.fillStyle = mask;
@@ -6249,7 +6280,7 @@
       position: relative;
       margin-top: auto;
       padding-top: 35px;
-      height: 200px;
+      height: 150px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -6317,21 +6348,21 @@
       position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: center;
       padding: 0 32px; height: 44px;
-      border-top: 1px solid rgba(24,16,14,0.07);
+      border-top: 1px solid rgba(247,242,234,0.55);
     }
     .footer-copy {
-      font-family: var(--sans); font-size: 13px; font-weight: 300;
-      letter-spacing: 0.05em; color: var(--ink-soft); white-space: nowrap;
+      font-family: var(--sans); font-size: 12px; font-weight: 300;
+      letter-spacing: 0.05em; color: var(--ivory); white-space: nowrap;
     }
-    .footer-copy strong { color: var(--ink-soft); font-weight: 500; }
+    .footer-copy strong { color: var(--ivory); font-weight: 500; }
     .footer-copy-highlight {
-      font-size: 13px; font-weight: 500;
-      color: var(--ink-soft); letter-spacing: 0.03em;
+      font-weight: 500;
+      color: var(--ivory); letter-spacing: 0.03em;
     }
 
     @media (max-width: 580px) {
       .footer-bar { padding: 0 16px; }
-      .footer-copy { font-size: 9px; }
+      .footer-copy { font-size: 12px; }
     }
   </style>
 
@@ -6363,7 +6394,7 @@
   /* ── Orelha + forma do footer via JS ── */
   (function() {
     var EAR_TW = 140, EAR_BW = 200, EAR_H = 30, EAR_R = 12, JR = 18, RADIUS = 18;
-    var SVG_H  = 200 + EAR_H;
+    var SVG_H  = 150 + EAR_H;
 
     function buildPath(W) {
       var cx = W/2, bL = cx-EAR_BW/2, bR = cx+EAR_BW/2;
@@ -6418,6 +6449,80 @@
     var ft = document.getElementById('site-footer');
     if (ft) ft.classList.add('footer-ready');
   });
+
+  /* ── Garante footer sempre na 2ª dobra; oculta nas inter screens ── */
+  (function() {
+    var BASE_PB_DESKTOP = 120;
+    var BASE_PB_MOBILE  = 120;
+
+    function isInter(screenId) {
+      return (screenId === 'screen-inter1' || screenId === 'screen-inter2' || screenId === 'screen-inter3');
+    }
+
+    function onScreenChange(activeScreen) {
+      var ft = document.getElementById('site-footer');
+      if (!ft) return;
+      if (activeScreen && isInter(activeScreen.id)) {
+        ft.style.display = 'none';
+      } else {
+        ft.style.display = '';
+        // Aguarda a animação de entrada terminar antes de medir
+        setTimeout(pushFooterToFold, 520);
+      }
+    }
+
+    function pushFooterToFold() {
+      var wrap = document.querySelector('.quiz-wrap');
+      var ft   = document.getElementById('site-footer');
+      if (!wrap || !ft || ft.style.display === 'none') return;
+
+      var isMobile = window.innerWidth <= 580;
+      var basePb   = isMobile ? BASE_PB_MOBILE : BASE_PB_DESKTOP;
+
+      // O min-height:100vh do .quiz-wrap já garante que o footer fique
+      // abaixo da dobra em screens com pouco conteúdo.
+      // Aqui só ajustamos o padding-bottom para o espaçamento correto.
+      wrap.style.paddingBottom = basePb + 'px';
+    }
+
+    // MutationObserver: detecta quando .active é adicionado a uma screen
+    var lastActive = null;
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.type === 'attributes' && m.attributeName === 'class') {
+          var el = m.target;
+          if (el.classList.contains('screen') && el.classList.contains('active')) {
+            if (el !== lastActive) {
+              lastActive = el;
+              onScreenChange(el);
+            }
+          }
+        }
+      });
+    });
+
+    function init() {
+      var wrap = document.querySelector('.quiz-wrap');
+      if (wrap) {
+        observer.observe(wrap, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      }
+      // Também observa os inter boxes fora do quiz-wrap
+      ['inter1-box','inter2-box','inter3-box'].forEach(function(id) {
+        var box = document.getElementById('screen-inter1') || document.getElementById('screen-inter2') || document.getElementById('screen-inter3');
+      });
+      // Observa o body inteiro para pegar screen-inter* que ficam fora do quiz-wrap
+      observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+      pushFooterToFold();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    window.addEventListener('load', pushFooterToFold);
+    window.addEventListener('resize', pushFooterToFold);
+  })();
 
   </script>
 </footer>
