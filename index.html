@@ -742,7 +742,7 @@
     transition: color 0.2s, transform 0.15s; padding: 8px 0;
     will-change: transform;
   }
-  .btn-back:hover { color: var(--ink); transform: scale(1.05); }
+  .btn-back:hover { color: var(--ivory-mid); transform: scale(1.05); }
   .btn-back::before { content: '←'; font-size: 15px; }
   /* Nas inter screens, btn-back fica fora do box, abaixo, cor marfim */
   .interblock-btn-back-wrap {
@@ -756,12 +756,12 @@
   @media (max-width: 580px) {
     .interblock-btn-back-wrap {
       left: calc(50% - (min(100vw - 32px, 700px) / 2) + 28px);
-      top: calc(50% + 285px + 43px - 75px);
+      top: calc(50% + 285px + 43px - 75px + 30px);
     }
   }
   .interblock-btn-back-wrap.sub-visible { opacity: 1; }
   .screen.interblock .btn-back { color: var(--ivory); }
-  .screen.interblock .btn-back:hover { color: var(--ink); transform: scale(1.05); }
+  .screen.interblock .btn-back:hover { color: var(--ivory-mid); transform: scale(1.05); }
 
   .btn-next {
     background: var(--wine);
@@ -819,7 +819,7 @@
   }
 
   @media (max-width: 580px) {
-    #screen-0 .screen-h1 { font-size: 40px; max-width: 100%; margin-top: 5px; }
+    #screen-0 .screen-h1 { font-size: 40px; max-width: 100%; margin-top: 0px; transform: translateY(-5px); }
     #screen-0 .screen-h1 .intro-highlight { font-size: 40px; }
     #screen-0 .screen-h1 .intro-finale { font-size: 40px; }
     .sub1-desktop { display: none; }
