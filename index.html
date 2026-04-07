@@ -201,6 +201,15 @@
     opacity: 0;
   }
 
+  /* Mobile: overlay fullscreen com scroll para acomodar botão voltar abaixo do box */
+  @media (max-width: 580px) {
+    #cc-overlay.cc-fullscreen {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      height: calc(100dvh + 100px) !important;
+    }
+  }
+
   header.cc-open {
     z-index: 55;
   }
@@ -756,7 +765,7 @@
   @media (max-width: 580px) {
     .interblock-btn-back-wrap {
       left: calc(50% - (min(100vw - 32px, 700px) / 2) + 28px);
-      top: calc(50% + 285px + 43px - 75px + 30px);
+      top: calc(50dvh + min(267.5px, 50dvh - 65px) + 30px + 12px);
     }
   }
   .interblock-btn-back-wrap.sub-visible { opacity: 1; }
@@ -3179,7 +3188,7 @@
     ov.style.top          = '0px';
     ov.style.left         = '0px';
     ov.style.width        = window.innerWidth  + 'px';
-    ov.style.height       = (window.innerWidth <= 580 ? window.innerHeight + 80 : window.innerHeight) + 'px';
+    ov.style.height       = window.innerHeight + 'px';
     ov.style.borderRadius = '0px';
     ov.style.opacity      = '1';
     hdr.classList.add('cc-open');
@@ -4715,8 +4724,10 @@
           const floatY = BASE_Y - p.amp * (osc * 0.5 + 0.5);
           const rot    = p.rotAmp * Math.sin(2 * Math.PI * t / p.period + p.rotPhase);
           const floatX = p.ampX ? p.ampX * Math.sin(2 * Math.PI * t / p.periodX + p.phaseX) : 0;
-          const mobileOffsetY = (window.innerWidth <= 580 && p.el.id && p.el.id.startsWith('intro-box-')) ? 10 : 0;
-          p.el.style.transform = `translateX(${floatX.toFixed(2)}px) translateY(${(floatY + offset + mobileOffsetY).toFixed(2)}px) rotate(${rot.toFixed(3)}deg)`;
+          const isMobileIntroBox = window.innerWidth <= 580 && p.el.id && p.el.id.startsWith('intro-box-');
+          const mobileOffsetY = isMobileIntroBox ? -5 : 0;
+          const mobileScale   = isMobileIntroBox ? ' scale(0.7)' : '';
+          p.el.style.transform = `translateX(${floatX.toFixed(2)}px) translateY(${(floatY + offset + mobileOffsetY).toFixed(2)}px) rotate(${rot.toFixed(3)}deg)${mobileScale}`;
         }
       }
       requestAnimationFrame(tick);
