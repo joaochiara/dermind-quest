@@ -1278,6 +1278,18 @@
     border: 1px solid rgba(255,255,255,0.55);
     border-radius: 13px;
     box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .routine-step:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.7); }
+  .dica-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px;
+    background: rgba(247,242,234,0.60);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 13px;
+    box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
   }
   .rs-period {
     display: inline-block; align-self: flex-start;
@@ -1309,7 +1321,7 @@
     transition: transform 0.15s, box-shadow 0.15s;
     box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
   }
-  .prod-rec:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(74,127,165,0.14), inset 0 1px 0 rgba(255,255,255,0.7); }
+  .prod-rec:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.7); }
   .prod-emoji {
     width: 42px; height: 42px; border-radius: 11px;
     background: var(--ivory-dark);
@@ -1320,10 +1332,10 @@
   .prod-brand { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
   .prod-price { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
   .prod-fit {
-    font-size: 11px; font-weight: 500; color: var(--steel-dark);
-    background: var(--steel-pale); padding: 7px 17px;
+    font-size: 11px; font-weight: 500; color: var(--wine-dark);
+    background: var(--wine-light); padding: 7px 17px;
     border-radius: 100px; white-space: nowrap; margin-left: auto;
-    border: 1px solid var(--steel-light);
+    border: 1px solid rgba(168,85,104,0.22);
     text-transform: uppercase; letter-spacing: 0.07em;
   }
 
@@ -1415,7 +1427,9 @@
     box-shadow: 0 4px 16px rgba(168,85,104,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
     position: relative;
     overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .essential-product-card:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .essential-product-card::before {
     content: '';
     position: absolute;
@@ -3443,7 +3457,7 @@
 
     <div class="result-section">
       <div class="rs-title">Avaliação concluída</div>
-      <p class="diagnosis-text">Sua pele apresenta <strong>oleosidade moderada a alta</strong> na zona T com sensação de ressecamento nas bochechas - padrão clássico de pele mista. A análise das fotos indica <strong>poros dilatados</strong> nas laterais do nariz e leve <strong>desuniformidade de textura</strong>. Não identificamos inflamação ativa, mas há predisposição à acne quando a barreira protetora está comprometida. Esse perfil responde muito bem a uma rotina simples e consistente com os ativos certos.</p>
+      <p class="diagnosis-text"><span style="color:var(--wine);margin-right:6px;">✦</span>Sua pele apresenta <strong>oleosidade moderada a alta</strong> na zona T com sensação de ressecamento nas bochechas - padrão clássico de pele mista. A análise das fotos indica <strong>poros dilatados</strong> nas laterais do nariz e leve <strong>desuniformidade de textura</strong>. Não identificamos inflamação ativa, mas há predisposição à acne quando a barreira protetora está comprometida. Esse perfil responde muito bem a uma rotina simples e consistente com os ativos certos.</p>
     </div>
 
     <!-- BOX: Idade da Pele -->
@@ -3521,12 +3535,18 @@
     <div class="result-section">
       <div class="rs-title">Indicados para você</div>
       <div class="product-recs">
-        <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">97% fit</span></div>
-        <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">94% fit</span></div>
-        <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">91% fit</span></div>
-        <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">96% fit</span></div>
-        <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">93% fit</span></div>
+        <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">97% 💘</span></div>
+        <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">94% 💘</span></div>
+        <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">91% 💘</span></div>
+        <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">96% 💘</span></div>
+        <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">93% 💘</span></div>
       </div>
+    </div>
+
+    <!-- BOX: Dicas Inteligentes -->
+    <div class="result-section" id="box-dicas-inteligentes">
+      <div class="rs-title">Dicas inteligentes</div>
+      <div id="dicas-lista" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
     </div>
 
     <div class="result-cta">
@@ -4418,9 +4438,312 @@
     if (inp) inp.value = '';
   }
 
+  // ── CATÁLOGO DE PRODUTOS ──────────────────────────────────────────────────
+  const CATALOGO = [{"marca":"Adcos","produtos":[{"nome":"Protetor Solar Pó Compacto com Ácido Hialurônico FPS 50","categoria":"protetor solar","ativos":["Ácido Hialurônico","Filtros UV FPS 50"],"preco":249.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/protetor-solar-tonalizante-fps50-pocompacto-acido-hialuronico/p","urlImagem":"https://adcos.vtexassets.com/arquivos/ids/161747-600-0/9599_Protetor-Solar-Po-Compacto-FPS-50-Tonalizante-Aberto.jpg"},{"nome":"Collagen Filler Up - Creme Anti-idade","categoria":"hidratante","ativos":["Colágeno","Ácido Hialurônico","Peptídeos"],"preco":389.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/collagen-filler-up/p","urlImagem":"https://adcos.vtexassets.com/arquivos/ids/163576-600-0/collagen__fillerup.png"},{"nome":"Protetor Solar Stick Tonalizante FPS 80","categoria":"protetor solar","ativos":["Filtros UV FPS 80"],"preco":149.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/protetor-solar-stick-fps80/p","urlImagem":""},{"nome":"Protetor Solar Aqua Fluid FPS 50","categoria":"protetor solar","ativos":["Filtros UV FPS 50","Ácido Hialurônico"],"preco":149.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/protetor-solar-aqua-fluid-fps50/p","urlImagem":""},{"nome":"Protetor Solar Mousse Tonalizante FPS 50 - Mineral","categoria":"protetor solar","ativos":["Filtros Minerais FPS 50","Dióxido de Titânio","Óxido de Zinco"],"preco":179.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/protetor-solar-mousse-tonalizante-fps50-mineral/p","urlImagem":""},{"nome":"Acne Solution Fluido Ultra Secativo - Renovação Cutânea","categoria":"tratamento","ativos":["Ácido Salicílico","Niacinamida","Enxofre"],"preco":189.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/acne-solution-fluido-ultra-secativo/p","urlImagem":""},{"nome":"Hyalu 6 Aqua Face e Olhos","categoria":"sérum","ativos":["6 tipos de Ácido Hialurônico","Peptídeos"],"preco":269.00,"disponivel":true,"urlProduto":"https://www.lojaadcos.com.br/hyalu-6-aqua-face-e-olhos/p","urlImagem":""}]},{"marca":"Bioderma","produtos":[{"nome":"Sensibio H2O - Água Micelar Calmante 500ml","categoria":"limpeza","ativos":["Solução Micelar","Cucumber Extract"],"preco":134.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/sensibio/agua-micelar-sensibio-h2o","urlImagem":"https://www.biodermabrasil.com/media/catalog/product/S/e/Sensibio_H2O_500mL_BR.png"},{"nome":"Sébium H2O Antioleosidade - Água Micelar 500ml","categoria":"limpeza","ativos":["Solução Micelar","Fluidactiv","Zinco"],"preco":134.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/sebium/agua-micelar-sebium-h2o","urlImagem":""},{"nome":"Sébium Gel Moussant - Gel de Limpeza Antioleosidade 100ml","categoria":"limpeza","ativos":["Fluidactiv","Zinco"],"preco":44.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/sebium/gel-de-limpeza-sebium-gel-moussant","urlImagem":""},{"nome":"Sensibio Gel Moussant - Gel de Limpeza Micelar Calmante 200ml","categoria":"limpeza","ativos":["Solução Micelar"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/sensibio/gel-de-limpeza-sensibio-gel-moussant","urlImagem":""},{"nome":"Hydrabio - Sérum Facial Hidratante e Fortalecedor 40ml","categoria":"sérum","ativos":["Ácido Hialurônico","Mannitol"],"preco":169.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/hydrabio/serum-hydrabio","urlImagem":""},{"nome":"Photoderm XDefense SPF 50+ Invisible Sem Cor 40ml","categoria":"protetor solar","ativos":["Filtros UV FPS 50+","Mexoryl XL"],"preco":93.90,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/photoderm/protetor-solar-photoderm-xdefense-spf50plus","urlImagem":""},{"nome":"Cicabio Crème - Creme Hidratante Reparador 40ml","categoria":"hidratante","ativos":["Mannitol","Zinco","Vitamina PP"],"preco":105.00,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/cicabio/creme-cicabio","urlImagem":""},{"nome":"Atoderm Intensive Baume - Bálsamo Multirreparador 200ml","categoria":"hidratante","ativos":["Niacinamida","Glicerina"],"preco":178.51,"disponivel":true,"urlProduto":"https://www.biodermabrasil.com/skincare/atoderm/baume-atoderm-intensive","urlImagem":""}]},{"marca":"CeraVe","produtos":[{"nome":"Espuma Cremosa de Limpeza Hidratante","categoria":"limpeza","ativos":["3 Ceramidas","Ácido Hialurônico","Niacinamida"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/limpeza-facial/espuma-cremosa-de-limpeza-hidratante","urlImagem":""},{"nome":"Gel de Limpeza Acne Control","categoria":"limpeza","ativos":["Ácido Salicílico 2%","3 Ceramidas","Niacinamida"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/limpeza-facial/gel-de-limpeza-acne-control","urlImagem":""},{"nome":"Espuma de Limpeza Air Foam Reequilibrante","categoria":"limpeza","ativos":["3 Ceramidas","Niacinamida","Ácido Hialurônico"],"preco":64.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/limpeza-facial/espuma-de-limpeza-air-foam-reequilibrante","urlImagem":""},{"nome":"SA Gel de Limpeza Renovador","categoria":"limpeza","ativos":["Ácido Salicílico","3 Ceramidas","Niacinamida"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/limpeza-facial/sa-gel-de-limpeza-renovador","urlImagem":""},{"nome":"Loção Facial Hidratante","categoria":"hidratante","ativos":["3 Ceramidas","Ácido Hialurônico","Niacinamida"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/hidratantes-faciais/locao-facial-hidratante","urlImagem":""},{"nome":"Loção Facial Hidratante FPS 50","categoria":"hidratante","ativos":["3 Ceramidas","Ácido Hialurônico","Niacinamida","FPS 50"],"preco":89.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/hidratantes-faciais/locao-facial-hidratante-fps50","urlImagem":""},{"nome":"Loção Facial Oil Control","categoria":"hidratante","ativos":["3 Ceramidas","Niacinamida","Ácido Hialurônico"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/hidratantes-faciais/locao-facial-oil-control","urlImagem":""},{"nome":"Creme Reparador Para Olhos","categoria":"contorno dos olhos","ativos":["3 Ceramidas","Ácido Hialurônico","Niacinamida","Cafeína"],"preco":109.90,"disponivel":true,"urlProduto":"https://www.cerave.com.br/todos-os-produtos/hidratantes-faciais/creme-reparador-para-olhos","urlImagem":""}]},{"marca":"Creamy","produtos":[{"nome":"Gel-creme Hidratante Calmante - Calming Cream","categoria":"hidratante","ativos":["Ceramidas","Centella Asiática","Pantenol"],"preco":52.62,"disponivel":true,"urlProduto":"https://www.creamy.com.br/creamy-calming-cream-1/p","urlImagem":"https://creamy.vtexassets.com/arquivos/ids/157391/Calming_Cream_Creamy_-_produto.jpg"},{"nome":"Sérum Anti-idade - Retinal","categoria":"sérum","ativos":["Retinal 0.05%","Vitamina E","Esqualano"],"preco":115.71,"disponivel":true,"urlProduto":"https://www.creamy.com.br/serum-facial-anti-aging-retinal-30-g/p","urlImagem":""},{"nome":"Sérum Antioxidante - Vitamina C","categoria":"sérum","ativos":["Vitamina C 15%","Ácido Ferúlico","Vitamina E"],"preco":105.25,"disponivel":true,"urlProduto":"https://www.creamy.com.br/vitamina-c/p","urlImagem":""},{"nome":"Sérum Antioxidante Clareador - Vitamina C Gold","categoria":"sérum","ativos":["Vitamina C Gold","Ácido Kójico","Niacinamida"],"preco":115.71,"disponivel":true,"urlProduto":"https://www.creamy.com.br/vitamina-c-gold/p","urlImagem":""},{"nome":"Protetor Solar Watery Lotion FPS 60","categoria":"protetor solar","ativos":["Filtros UV FPS 60","Niacinamida","Vitamina E"],"preco":126.16,"disponivel":true,"urlProduto":"https://www.creamy.com.br/protetor-solar-fps60-watery-lotion/p","urlImagem":""},{"nome":"Tônico Antioleosidade - Ácido Salicílico","categoria":"tônico","ativos":["Ácido Salicílico 2%","Niacinamida","Pantenol"],"preco":83.90,"disponivel":true,"urlProduto":"https://www.creamy.com.br/acido-salicilico-1/p","urlImagem":""},{"nome":"Limpador Facial Antioleosidade 300ml","categoria":"limpeza","ativos":["Ácido Salicílico","Zinco","Glicerina"],"preco":94.28,"disponivel":true,"urlProduto":"https://www.creamy.com.br/limpador-facial-antioleosidade-1/p","urlImagem":""},{"nome":"Pore Refiner - Suavizador de Poros","categoria":"sérum","ativos":["Niacinamida 10%","Ácido Hialurônico","Zinco"],"preco":94.28,"disponivel":true,"urlProduto":"https://www.creamy.com.br/pore-refiner/p","urlImagem":""},{"nome":"Creme Clareador para Olhos - Eye Cream","categoria":"contorno dos olhos","ativos":["Vitamina C","Retinol","Cafeína","Ácido Hialurônico"],"preco":136.83,"disponivel":true,"urlProduto":"https://www.creamy.com.br/eye-cream/p","urlImagem":""},{"nome":"Retinol - Creme Corretivo Anti sinais","categoria":"sérum","ativos":["Retinol 1%","Vitamina E","Esqualano"],"preco":105.25,"disponivel":true,"urlProduto":"https://www.creamy.com.br/retinol/p","urlImagem":""},{"nome":"Creme Firmador Anti-idade - Peptide Cream","categoria":"hidratante","ativos":["Peptídeos","Ácido Hialurônico","Ceramidas"],"preco":199.99,"disponivel":true,"urlProduto":"https://www.creamy.com.br/peptide-cream/p","urlImagem":""},{"nome":"Ceramide Skin Repair","categoria":"hidratante","ativos":["Ceramidas","Pantenol","Centella Asiática"],"preco":94.28,"disponivel":true,"urlProduto":"https://www.creamy.com.br/ceramide-skin-repair/p","urlImagem":""}]},{"marca":"Eucerin","produtos":[{"nome":"Hyaluron-Filler 3x Effect Sérum 30ml","categoria":"sérum","ativos":["Ácido Hialurônico","Pro-Retinol"],"preco":219.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/hyaluron-filler/hyaluron-filler-3x-effect-serum","urlImagem":""},{"nome":"Eucerin DermoPure Sérum Facial Efeito Triplo 40ml","categoria":"sérum","ativos":["Thiamidol","Ácido Salicílico","Licochalcona A"],"preco":139.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/dermopure/dermopure-triple-effect-serum","urlImagem":""},{"nome":"Eucerin Sun Oil Control FPS 50+ 50ml","categoria":"protetor solar","ativos":["Filtros UV FPS 50+","Licochalcona A","Carnitina"],"preco":149.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/sun/sun-oil-control-fps-50-fluid","urlImagem":""},{"nome":"Hyaluron-Filler Vitamina C Booster 8ml","categoria":"sérum","ativos":["Vitamina C 10%","Ácido Hialurônico","Tiamidol"],"preco":199.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/hyaluron-filler/hyaluron-filler-vitamin-c-booster","urlImagem":""},{"nome":"Eucerin DermoPure Gel de Limpeza 200ml","categoria":"limpeza","ativos":["Ácido Salicílico","Licochalcona A","Zinco"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/dermopure/dermopure-cleansing-gel","urlImagem":""},{"nome":"Eucerin Hyaluron-Filler Creme Dia FPS 30 50ml","categoria":"hidratante","ativos":["Ácido Hialurônico","FPS 30"],"preco":189.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/hyaluron-filler/hyaluron-filler-day-cream-normal-to-mixed-skin","urlImagem":""},{"nome":"Eucerin Even Pigment Perfector Creme Clareador Dia FPS 30 50ml","categoria":"hidratante","ativos":["Tiamidol","FPS 30","Licochalcona A"],"preco":179.90,"disponivel":true,"urlProduto":"https://www.eucerin.com.br/products/even-pigment-perfector/even-pigment-perfector-day-cream","urlImagem":""}]},{"marca":"La Roche-Posay","produtos":[{"nome":"Anthelios Airlicium FPS 80 Protetor Solar Sem Cor 40g","categoria":"protetor solar","ativos":["Filtros UV FPS 80","Mexoryl XL"],"preco":134.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/anthelios/anthelios-airlicium-fps80/p","urlImagem":"https://www.laroche-posay.com.br/media/catalog/product/a/n/anthelios-airlicium-fps80-la-roche-posay.jpg"},{"nome":"Anthelios XL Protect Clara FPS 60 40g","categoria":"protetor solar","ativos":["Filtros UV FPS 60","Mexoryl XL"],"preco":119.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/anthelios/anthelios-xl-protect-clara-fps60/p","urlImagem":""},{"nome":"Effaclar Alta Tolerância - Gel de Limpeza Facial 300ml","categoria":"limpeza","ativos":["Zinco","Ácido Salicílico LHA","Água Termal"],"preco":94.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/effaclar/effaclar-gel-limpeza-alta-tolerancia/p","urlImagem":""},{"nome":"Hyalu B5 Repair Sérum Anti-idade 30ml","categoria":"sérum","ativos":["Ácido Hialurônico Puro","Vitamina B5","Madecassoside"],"preco":294.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/hyalu-b5/hyalu-b5-repair-serum-anti-idade/p","urlImagem":""},{"nome":"Mela B3 Sérum Antimanchas 30ml","categoria":"sérum","ativos":["Melasyl","Niacinamida 10%","Água Termal"],"preco":259.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/mela-b3/mela-b3-serum/p","urlImagem":""},{"nome":"Cicaplast Baume B5+ Multirreparador 40ml","categoria":"hidratante","ativos":["Vitamina B5","Manteiga de Karité","Madecassoside","Zinco"],"preco":94.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/cicaplast/cicaplast-baume-b5/p","urlImagem":""},{"nome":"Toleriane Sensitive Cuidado Prebiótico 40ml","categoria":"hidratante","ativos":["Prebiótico","Niacinamida","Glicerina"],"preco":183.99,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/toleriane/toleriane-sensitive/p","urlImagem":""},{"nome":"Effaclar Ultra Concentrado Sérum 30ml","categoria":"sérum","ativos":["LHA","Ácido Salicílico","Niacinamida"],"preco":239.90,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/effaclar/effaclar-ultra-concentrado/p","urlImagem":""},{"nome":"Hyalu B5 Aquagel FPS 30 50ml","categoria":"hidratante","ativos":["Ácido Hialurônico","Vitamina B5","FPS 30"],"preco":242.89,"disponivel":true,"urlProduto":"https://www.laroche-posay.com.br/hyalu-b5/hyalu-b5-aquagel-fps30/p","urlImagem":""}]},{"marca":"L'Oréal Paris","produtos":[{"nome":"Revitalift Hialurônico Diurno FPS 20 - Creme Anti-Idade 49g","categoria":"hidratante","ativos":["Ácido Hialurônico","Pro-Retinol","FPS 20"],"preco":37.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/revitalift/revitalift-hialuronico-fps20","urlImagem":""},{"nome":"Sérum Preenchedor Facial Anti-idade Revitalift Hialurônico 30ml","categoria":"sérum","ativos":["Ácido Hialurônico","Pro-Retinol"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/revitalift/serum-hialuronico","urlImagem":""},{"nome":"Revitalift Vitamina C Sérum Facial Concentrado 30ml","categoria":"sérum","ativos":["Vitamina C 12%","Ácido Hialurônico"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/revitalift/revitalift-vitamina-c-serum","urlImagem":""},{"nome":"UV Defender Aqua Gel FPS 60 30ml","categoria":"protetor solar","ativos":["FPS 60","Ácido Hialurônico","Mexoryl XL"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/uv-defender/uv-defender-aqua-gel","urlImagem":""},{"nome":"Hydra Total 5 Gel Creme Hidratante Facial 50ml","categoria":"hidratante","ativos":["Ceramidas","Glicerina","Ácido Hialurônico"],"preco":34.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/hydra-total-5/gel-creme","urlImagem":""},{"nome":"Glow Mon Amour Sérum Iluminador 30ml","categoria":"sérum","ativos":["Vitamina C","Niacinamida","Ácido Hialurônico"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.lorealparis.com.br/glow-mon-amour/serum","urlImagem":""}]},{"marca":"Neutrogena","produtos":[{"nome":"Hydro Boost Water Gel Hidratante Facial 50g","categoria":"hidratante","ativos":["Ácido Hialurônico","Glicerina","Esqualano"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.neutrogena.com.br/hydro-boost/hydro-boost-water-gel","urlImagem":""},{"nome":"Sun Fresh Derm Care Sem Cor FPS 70 40g","categoria":"protetor solar","ativos":["FPS 70","Niacinamida","Vitamina C"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.neutrogena.com.br/sun-fresh/sun-fresh-derm-care-fps70","urlImagem":""},{"nome":"Antissinais Reparador Creme Noturno 40g","categoria":"hidratante","ativos":["Vitamina C","Colágeno","Niacinamida"],"preco":36.09,"disponivel":true,"urlProduto":"https://www.neutrogena.com.br/antissinais/antissinais-reparador-noturno","urlImagem":""},{"nome":"Hydro Boost Sérum Ácido Hialurônico 30ml","categoria":"sérum","ativos":["Ácido Hialurônico","Glicerina"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.neutrogena.com.br/hydro-boost/hydro-boost-serum-acido-hialuronico","urlImagem":""},{"nome":"Gel de Limpeza Facial Deep Clean Suave 80g","categoria":"limpeza","ativos":["Aloe Vera","Glicerina"],"preco":24.90,"disponivel":true,"urlProduto":"https://www.neutrogena.com.br/deep-clean/gel-de-limpeza-facial-deep-clean-suave","urlImagem":""}]},{"marca":"Nivea","produtos":[{"nome":"Hidratante Facial em Gel com Ácido Hialurônico e Pepino 100ml","categoria":"hidratante","ativos":["Ácido Hialurônico","Extrato de Pepino"],"preco":36.90,"disponivel":true,"urlProduto":"https://www.nivea.com.br/produtos/rosto/hidratante/hidratante-facial-gel-acido-hialuronico","urlImagem":""},{"nome":"Creme Facial Antissinais 7 em 1 FPS 30 50ml","categoria":"hidratante","ativos":["Vitamina E","Coenzima Q10","FPS 30"],"preco":34.90,"disponivel":true,"urlProduto":"https://www.nivea.com.br/produtos/rosto/antissinais/creme-antissinais-7em1","urlImagem":""},{"nome":"Sérum Facial Luminoso com Vitamina C 30ml","categoria":"sérum","ativos":["Vitamina C","Niacinamida","Ácido Hialurônico"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.nivea.com.br/produtos/rosto/serum/serum-vitamina-c","urlImagem":""},{"nome":"Gel Creme Hidratante Acne Control 40ml","categoria":"hidratante","ativos":["Ácido Hialurônico","Niacinamida"],"preco":32.90,"disponivel":true,"urlProduto":"https://www.nivea.com.br/produtos/rosto/hidratante/gel-creme-acne-control","urlImagem":""}]},{"marca":"Payot","produtos":[{"nome":"B.A. (Beauté Absolue) Creme Facial Nutritivo 50ml","categoria":"hidratante","ativos":["Ácido Hialurônico","Colágeno","Vitamina C"],"preco":89.90,"disponivel":true,"urlProduto":"https://www.payot.com.br/ba-creme-facial-nutritivo/p","urlImagem":""},{"nome":"Techni Liss Sérum Anti-Idade 30ml","categoria":"sérum","ativos":["Ácido Hialurônico","Peptídeos","Vitamina E"],"preco":129.90,"disponivel":true,"urlProduto":"https://www.payot.com.br/techni-liss-serum/p","urlImagem":""},{"nome":"Gel Limpador Facial Detox 150ml","categoria":"limpeza","ativos":["Aloe Vera","Ácido Salicílico","Glicerina"],"preco":59.90,"disponivel":true,"urlProduto":"https://www.payot.com.br/gel-limpador-detox/p","urlImagem":""},{"nome":"Máscara Gel Anti-Olheiras e Bolsas Olhos Cansados 30ml","categoria":"máscara","ativos":["Cafeína","Ácido Hialurônico","Vitamina K"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.payot.com.br/mascara-gel-anti-olheiras/p","urlImagem":""},{"nome":"Protetor Solar Episol Color Toque Seco FPS 60 40g","categoria":"protetor solar","ativos":["FPS 60","Pigmentos de Cor"],"preco":109.90,"disponivel":true,"urlProduto":"https://www.payot.com.br/episol-color-fps60/p","urlImagem":""}]},{"marca":"Principia","produtos":[{"nome":"Protetor Solar PS-01 FPS 60 40ml","categoria":"protetor solar","ativos":["FPS 60","Niacinamida 5%"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.principia.bio/protetor-solar-ps01-fps60/p","urlImagem":""},{"nome":"Sérum Ácido Hialurônico + B5 30ml","categoria":"sérum","ativos":["Ácido Hialurônico 2%","Vitamina B5","Glicerina"],"preco":54.90,"disponivel":true,"urlProduto":"https://www.principia.bio/serum-acido-hialuronico-b5/p","urlImagem":""},{"nome":"Sérum Niacinamida 10% 30ml","categoria":"sérum","ativos":["Niacinamida 10%","Zinco 1%"],"preco":49.90,"disponivel":true,"urlProduto":"https://www.principia.bio/serum-niacinamida/p","urlImagem":""},{"nome":"Creme Calmante Multirreparador 50ml","categoria":"hidratante","ativos":["Ceramidas","Pantenol","Centella Asiática","Niacinamida"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.principia.bio/creme-calmante-multirreparador/p","urlImagem":""},{"nome":"Sérum Vitamina C 15% 30ml","categoria":"sérum","ativos":["Vitamina C 15%","Ácido Ferúlico","Vitamina E"],"preco":89.90,"disponivel":true,"urlProduto":"https://www.principia.bio/serum-vitamina-c/p","urlImagem":""},{"nome":"Sérum Retinol 0.5% 30ml","categoria":"sérum","ativos":["Retinol 0.5%","Esqualano","Vitamina E"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.principia.bio/serum-retinol/p","urlImagem":""}]},{"marca":"Sallve","produtos":[{"nome":"Antioxidante Hidratante - Sérum Gel Facial 35g","categoria":"sérum","ativos":["Vitamina C 10%","Niacinamida","Cafeína","Vitamina E"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/antioxidante-hidratante","urlImagem":"https://cdn.shopify.com/s/files/1/0561/0016/7939/products/antioxidante-hidratante-sallve.jpg"},{"nome":"Protetor Solar Toque Seco FPS 50 40g","categoria":"protetor solar","ativos":["FPS 50","Niacinamida","Vitamina E"],"preco":89.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/protetor-solar","urlImagem":""},{"nome":"Protetor Solar Com Cor FPS 60 - 10 tons","categoria":"protetor solar","ativos":["FPS 60","Niacinamida","Pigmentos de Cor"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/protetor-solar-com-cor","urlImagem":""},{"nome":"Antioxidante Hidratante FPS 30 UVA/UVB","categoria":"protetor solar","ativos":["Vitamina C 10%","Niacinamida","FPS 30"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/antioxidante-hidratante-fps30","urlImagem":""},{"nome":"Hidratante Facial 40g","categoria":"hidratante","ativos":["Beta-Glucan","Niacinamida"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/hidratante-facial","urlImagem":""},{"nome":"Retinol Puro 0.3% - Sérum Antissinais 30g","categoria":"sérum","ativos":["Retinol Puro 0.3%","Vitamina E","Esqualano"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/retinol","urlImagem":""},{"nome":"Tônico Renovador - Tratamento Facial 120ml","categoria":"tônico","ativos":["Ácido Glicólico","Niacinamida","Ácido Salicílico"],"preco":74.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/tonico-renovador","urlImagem":""},{"nome":"Esfoliante Enzimático Facial 70g","categoria":"esfoliante","ativos":["Enzimas Proteolíticas","Ácido Glicólico","Ácido Salicílico"],"preco":74.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/esfoliante-enzimatico","urlImagem":""},{"nome":"Limpador Facial Antioleosidade 150ml","categoria":"limpeza","ativos":["Ácido Salicílico","Melaleuca","Glicerina"],"preco":69.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/limpador-facial","urlImagem":""},{"nome":"Bastão Antioleosidade - Protetor Solar FPS 60","categoria":"protetor solar","ativos":["FPS 60","Niacinamida"],"preco":79.90,"disponivel":true,"urlProduto":"https://www.sallve.com.br/products/bastao-antioleosidade","urlImagem":""}]},{"marca":"Simple Organic","produtos":[{"nome":"Solução Niacinamida 10% 30ml","categoria":"sérum","ativos":["Niacinamida 10%","Zinco"],"preco":129.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/solucao-niacinamida","urlImagem":"https://simpleorganic.com.br/cdn/shop/products/niacinamida-simple-organic.jpg"},{"nome":"Solução Ácido Glicólico 10% 30ml","categoria":"esfoliante","ativos":["Ácido Glicólico 10%","Aloe Vera","Pantenol"],"preco":119.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/solucao-acido-glicolico","urlImagem":""},{"nome":"Sérum Vitamina C Iluminador 30ml","categoria":"sérum","ativos":["Vitamina C","Vitamina E","Rosa Mosqueta"],"preco":169.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/serum-vitamina-c","urlImagem":""},{"nome":"Hidratante Facial Multiativos [R]evolution 60ml","categoria":"hidratante","ativos":["Colágeno Vegano","Ácido Hialurônico","Peptídeos"],"preco":189.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/hidratante-facial-multiativos","urlImagem":""},{"nome":"Solução Ácido Mandélico 10% 30ml","categoria":"esfoliante","ativos":["Ácido Mandélico 10%","Aloe Vera","Pantenol"],"preco":119.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/solucao-acido-mandelico","urlImagem":""},{"nome":"Espuma de Limpeza Facial 150ml","categoria":"limpeza","ativos":["Aloe Vera","Calêndula","Glicerina Vegetal"],"preco":99.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/espuma-de-limpeza-facial","urlImagem":""},{"nome":"Óleo Facial Antiidade Rosa Mosqueta 30ml","categoria":"óleo","ativos":["Óleo de Rosa Mosqueta","Vitamina C","Vitamina E"],"preco":149.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/oleo-rosa-mosqueta","urlImagem":""},{"nome":"Eye Balm - Creme para Área dos Olhos Antiolheiras 15ml","categoria":"contorno dos olhos","ativos":["Cafeína","Ácido Hialurônico","Manteiga de Karité"],"preco":159.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/eye-balm","urlImagem":""},{"nome":"Protetor Solar Facial FPS 50 40g","categoria":"protetor solar","ativos":["FPS 50","Extrato de Aloe Vera","Vitamina E"],"preco":129.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/protetor-solar-fps50","urlImagem":""},{"nome":"Retinol Bakuchiol Sérum Antiacne 30ml","categoria":"sérum","ativos":["Bakuchiol","Retinol","Niacinamida"],"preco":159.90,"disponivel":true,"urlProduto":"https://simpleorganic.com.br/products/retinol-bakuchiol","urlImagem":""}]},{"marca":"SkinCeuticals","produtos":[{"nome":"C E Ferulic Sérum Antioxidante Vitamina C Pura 30ml","categoria":"sérum","ativos":["Vitamina C 15%","Vitamina E 1%","Ácido Ferúlico 0.5%"],"preco":899.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/c-e-ferulic-serum-vitamina-c-pura/SKBRS17.html","urlImagem":"https://www.skinceuticals.com.br/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-ACD-BR-Library/default/skinceuticals/ce-ferulic.jpg"},{"nome":"Hyaluronic Acid Intensifier [H.A.] Sérum 30ml","categoria":"sérum","ativos":["Ácido Hialurônico","Proxylane"],"preco":689.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/hyaluronic-acid-intensifier/SKBRS04.html","urlImagem":""},{"nome":"Triple Lipid Restore 2:4:2 50ml","categoria":"hidratante","ativos":["Ceramidas 2%","Colesterol Natural 4%","Ácidos Graxos 2%"],"preco":769.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/triple-lipid-restore-242/SKBRS06.html","urlImagem":""},{"nome":"Silymarin CF Sérum Antioxidante Pele Oleosa 30ml","categoria":"sérum","ativos":["Vitamina C 15%","Silimarina","Ácido Ferúlico"],"preco":899.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/silymarin-cf/SKBRS15.html","urlImagem":""},{"nome":"Physical Fusion UV Defense FPS 50 50ml","categoria":"protetor solar","ativos":["FPS 50","Dióxido de Titânio","Zinco"],"preco":489.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/physical-fusion-uv-defense-fps50/SKBRS08.html","urlImagem":""},{"nome":"Retinol 0.3 30ml","categoria":"sérum","ativos":["Retinol Puro 0.3%","Vitamina E"],"preco":529.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/retinol-0-3/SKBRS09.html","urlImagem":""},{"nome":"Retinol 0.5 30ml","categoria":"sérum","ativos":["Retinol Puro 0.5%","Vitamina E"],"preco":569.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/retinol-0-5/SKBRS10.html","urlImagem":""},{"nome":"Phyto Corrective Gel 30ml","categoria":"sérum","ativos":["Extrato de Pepino","Centella Asiática","Regaliz"],"preco":559.00,"disponivel":true,"urlProduto":"https://www.skinceuticals.com.br/phyto-corrective-gel/SKBRS11.html","urlImagem":""}]},{"marca":"The Ordinary","produtos":[{"nome":"Niacinamide 10% + Zinc 1% 30ml","categoria":"sérum","ativos":["Niacinamida 10%","Zinco 1%"],"preco":59.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/niacinamide-10pct-zinc-1pct","urlImagem":"https://theordinary.com/cdn/shop/products/RONI0001-1_large.jpg"},{"nome":"Hyaluronic Acid 2% + B5 30ml","categoria":"sérum","ativos":["Ácido Hialurônico 2%","Vitamina B5"],"preco":89.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/hyaluronic-acid-2pct-b5","urlImagem":""},{"nome":"Squalane Cleanser 50ml","categoria":"limpeza","ativos":["Esqualano"],"preco":85.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/squalane-cleanser","urlImagem":""},{"nome":"Glycolic Acid 7% Toning Solution 240ml","categoria":"tônico","ativos":["Ácido Glicólico 7%","Aminoácidos","Aloe Vera"],"preco":89.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/glycolic-acid-7pct-toning-solution","urlImagem":""},{"nome":"AHA 30% + BHA 2% Peeling Solution 30ml","categoria":"esfoliante","ativos":["Ácido Glicólico 30%","Ácido Salicílico 2%","Ácido Lático"],"preco":109.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/aha-30pct-bha-2pct-peeling-solution","urlImagem":""},{"nome":"Caffeine Solution 5% + EGCG 30ml","categoria":"contorno dos olhos","ativos":["Cafeína 5%","Extrato de Chá Verde"],"preco":75.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/caffeine-solution-5pct-egcg","urlImagem":""},{"nome":"Salicylic Acid 2% Anhydrous Solution 30ml","categoria":"tratamento","ativos":["Ácido Salicílico 2%","Mentol"],"preco":69.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/salicylic-acid-2pct-anhydrous-solution","urlImagem":""},{"nome":"Retinol 0.5% in Squalane 30ml","categoria":"sérum","ativos":["Retinol 0.5%","Esqualano"],"preco":99.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/retinol-0-5pct-in-squalane","urlImagem":""},{"nome":"Natural Moisturizing Factors + HA 100ml","categoria":"hidratante","ativos":["Aminoácidos","Ácido Hialurônico","Glicerina"],"preco":79.00,"disponivel":true,"urlProduto":"https://theordinary.com/pt-br/products/natural-moisturizing-factors-ha","urlImagem":""}]},{"marca":"Vichy","produtos":[{"nome":"Capital Soleil UV-Age Daily FPS 50+ 40ml","categoria":"protetor solar","ativos":["FPS 50+","Vitamina C","Mexoryl 400"],"preco":139.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/capital-soleil/uv-age-daily/p","urlImagem":""},{"nome":"Liftactiv B3 Sérum Anti-manchas 30ml","categoria":"sérum","ativos":["Niacinamida 3.5%","Vitamina C","Bisabolol"],"preco":259.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/liftactiv/liftactiv-b3-serum/p","urlImagem":""},{"nome":"Normaderm Phytosolution Sérum 50ml","categoria":"sérum","ativos":["Ácido Salicílico","Niacinamida","Probióticos","Vitamina C"],"preco":159.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/normaderm/normaderm-phytosolution-serum/p","urlImagem":""},{"nome":"Minéral 89 Baume Reparador 50ml","categoria":"hidratante","ativos":["Água Mineral Vulcânica","Ácido Hialurônico 89%"],"preco":149.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/mineral-89/mineral-89-baume-reparador/p","urlImagem":""},{"nome":"Slow Age Fluido Antienvelhecimento FPS 25 50ml","categoria":"hidratante","ativos":["Antioxidantes","FPS 25","Água Mineral Vulcânica"],"preco":189.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/slow-age/slow-age-fluido/p","urlImagem":""},{"nome":"Normaderm Bifase - Água Micelar Bifásica 200ml","categoria":"limpeza","ativos":["Água Micelar","Ácido Salicílico","Vitamina C"],"preco":99.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/normaderm/normaderm-bifase/p","urlImagem":""},{"nome":"Liftactiv Peptide-AHA Sérum Anti-Idade 30ml","categoria":"sérum","ativos":["Peptídeos","AHA (Ácido Glicólico)","Vitamina C"],"preco":229.90,"disponivel":true,"urlProduto":"https://www.vichy.com.br/liftactiv/liftactiv-peptide-aha/p","urlImagem":""}]}];
+
+  // ── FILTRO DE ORÇAMENTO ───────────────────────────────────────────────────
+  function filtrarPorOrcamento(orcamento) {
+    const tetos = { basico: 100, medio: 200, premium: Infinity };
+    const teto = tetos[orcamento] || 200;
+    return CATALOGO
+      .map(marca => ({
+        ...marca,
+        produtos: marca.produtos.filter(p => p.disponivel && p.preco !== null && p.preco <= teto)
+      }))
+      .filter(marca => marca.produtos.length > 0);
+  }
+
+  // ── CHAMADA À IA ─────────────────────────────────────────────────────────
+  async function chamarIA(respostas, produtosFiltrados) {
+    const prompt = `Você é a especialista em dermatologia clínica da derm.ia, uma plataforma de análise de pele por inteligência artificial. Sua função é analisar o perfil de uma paciente e gerar um protocolo de skincare personalizado com rigor técnico e linguagem clínica direta.
+
+════════════════════════════════════
+REGRAS DE SEGURANÇA — PRIORIDADE ABSOLUTA
+Estas regras se sobrepõem a qualquer outra instrução.
+════════════════════════════════════
+
+1. ALERGIAS: Se a paciente informou alergia a algum ingrediente, esse ingrediente e qualquer ativo da mesma família química jamais podem aparecer nas recomendações. Sem exceções.
+
+2. MEDICAMENTOS COM RECEITA: Se a paciente usa tretinoína, ácido azelaico, antibiótico tópico ou qualquer outro produto prescrito, não indique ativos que conflitem com eles. Adapte a rotina para coexistir com o tratamento em curso.
+
+3. GESTANTES E LACTANTES: Se a paciente está grávida ou amamentando, remova obrigatoriamente da rotina: retinol e retinoides, ácido salicílico acima de 2%, hidroquinona, ácidos AHA em concentrações elevadas e qualquer ativo com contraindicação documentada nessa fase. Substitua por alternativas seguras.
+
+4. PRODUTOS: Todos os produtos indicados — na rotina, no produto essencial e nos indicados para você — devem ser selecionados exclusivamente da lista de produtos disponíveis fornecida abaixo. Nunca invente ou sugira produtos fora dessa lista.
+
+════════════════════════════════════
+TOM E LINGUAGEM
+════════════════════════════════════
+
+- Use linguagem clínica e técnica, como uma dermatologista em consulta.
+- Seja direta e objetiva. Evite frases vazias como "sua pele é única" ou "cada pele tem suas necessidades".
+- Nomeie os ativos pelos seus termos técnicos (ex: ácido retinóico, niacinamida, ceramidas, ácido hialurônico de baixo peso molecular).
+- Justifique cada indicação com base no perfil clínico da paciente — nunca recomende algo sem ancorar na queixa ou no dado coletado.
+- Nunca prometa resultados absolutos. Use termos como "tende a", "em geral responde bem a", "pode contribuir para".
+- Considere o nível de experiência da paciente com skincare ao montar a rotina. Pacientes sem rotina prévia devem receber protocolos mais simples e progressivos — priorize os ativos de maior impacto e deixe os complementares para uma segunda fase. Pacientes com rotina estabelecida podem receber protocolos mais completos.
+
+════════════════════════════════════
+PERFIS DISPONÍVEIS
+════════════════════════════════════
+
+Classifique a paciente em um dos perfis abaixo. Se dois perfis forem clinicamente relevantes ao mesmo tempo, você pode combiná-los no título usando "com" (ex: "Oleosa com tendência à acne e hiperpigmentação"). Nunca combine mais de dois perfis.
+
+1. Oleosa com tendência à acne
+2. Mista com zona T oleosa
+3. Mista com tendência oleosa e acne
+4. Seca com déficit de barreira
+5. Seca e sensível
+6. Normal com sinais de envelhecimento
+7. Madura com ressecamento e flacidez
+8. Sensível e reativa
+9. Com hiperpigmentação e manchas
+10. Desidratada com leve oleosidade
+
+════════════════════════════════════
+PERFIL DA PACIENTE
+════════════════════════════════════
+
+Nome: ${respostas.nome}
+Idade: ${respostas.idade} anos
+Cidade: ${respostas.cidade} | Índice UV: ${respostas.uv} | Umidade: ${respostas.umidade} | Poluição: ${respostas.poluicao}
+
+Tipo de pele autorrelatado: ${respostas.tipoPele}
+Principais queixas: ${respostas.queixas}
+Áreas de foco: ${respostas.areas}
+Pele hidratada naturalmente: ${respostas.hidratacao}
+Pele sensível: ${respostas.sensibilidade}
+
+Rotina atual: ${respostas.rotina}
+Produtos matinais em uso: ${respostas.rotinaMatinal}
+Produtos noturnos em uso: ${respostas.rotinaNoturna}
+
+Uso de maquiagem: ${respostas.maquiagem}
+Preparo antes de se maquiar: ${respostas.preparoPele}
+Método de remoção de maquiagem: ${respostas.demaquilante}
+
+Exposição ao sol diária: ${respostas.exposicaoSol}
+Uso de protetor solar: ${respostas.protetor}
+Tempo de tela por dia: ${respostas.tempoTela}
+
+Alergia a ingredientes: ${respostas.alergia}
+Ingredientes que causam reação: ${respostas.ingredientesAlergia}
+Usa produto com receita médica: ${respostas.receita}
+Produto com receita em uso: ${respostas.produtoReceita}
+
+Ingestão de água por dia: ${respostas.agua}
+Alimentação habitual: ${respostas.alimentacao}
+Grávida ou amamentando: ${respostas.gravidez}
+
+Orçamento mensal para skincare: ${respostas.orcamento}
+
+════════════════════════════════════
+PRODUTOS DISPONÍVEIS
+════════════════════════════════════
+
+O orçamento informado é o valor máximo por produto. Nunca indique produto com preço superior ao orçamento da paciente. Nunca indique produto com disponivel: false.
+
+${JSON.stringify(produtosFiltrados)}
+
+════════════════════════════════════
+FORMATO DE SAÍDA
+════════════════════════════════════
+
+Retorne SOMENTE um JSON válido, sem texto antes ou depois, sem markdown, sem blocos de código. Siga exatamente esta estrutura:
+
+{
+  "tituloPerfil": "Seu perfil de pele é <em>oleosa com tendência à acne</em>.",
+  "diagnostico": "Texto de 4 a 6 frases em linguagem clínica descrevendo o perfil da paciente, ancorando cada observação nos dados coletados. Mencione cidade e clima se forem relevantes para o caso. Seja específica — nunca genérica.",
+  "scores": { "hidratacao": 0, "brilho": 0, "firmeza": 0, "textura": 0, "oleosidade": 0, "sensibilidade": 0, "rugas": 0, "manchas": 0 },
+  "idadePele": 0,
+  "produtoEssencial": {
+    "nome": "Nome exato do produto conforme consta na lista",
+    "marca": "Marca exata conforme consta na lista",
+    "preco": 0.00,
+    "urlProduto": "URL exata conforme consta na lista",
+    "urlImagem": "URL exata conforme consta na lista",
+    "pontoFraco": "Nome curto do ponto fraco identificado",
+    "motivo": "2 a 3 frases clínicas explicando por que este é o maior ponto fraco da pele desta paciente e por que este produto age diretamente sobre ele."
+  },
+  "rotinaMatinal": [
+    { "passo": 1, "nome": "Nome do passo clínico", "produto": "Nome exato do produto", "marca": "Marca exata", "preco": 0.00, "urlProduto": "URL exata", "descricao": "Instrução de uso objetiva e técnica.", "motivo": "Justificativa clínica ancorada no perfil da paciente." }
+  ],
+  "rotinaNoturna": [
+    { "passo": 1, "nome": "Nome do passo clínico", "produto": "Nome exato do produto", "marca": "Marca exata", "preco": 0.00, "urlProduto": "URL exata", "descricao": "Instrução de uso objetiva e técnica.", "motivo": "Justificativa clínica ancorada no perfil da paciente." }
+  ],
+  "rotinaSemanal": [
+    { "passo": 1, "nome": "Nome do passo clínico", "produto": "Nome exato do produto", "marca": "Marca exata", "preco": 0.00, "urlProduto": "URL exata", "descricao": "Instrução de uso objetiva e técnica.", "motivo": "Justificativa clínica ancorada no perfil da paciente." }
+  ],
+  "indicadosParaVoce": [
+    { "nome": "Nome exato do produto", "marca": "Marca exata", "preco": 0.00, "urlProduto": "URL exata", "urlImagem": "URL exata", "fit": 0 }
+  ],
+  "dicasInteligentes": {
+    "agua": {
+      "titulo": "Título curto sobre hidratação (máx. 4 palavras)",
+      "subtitulo": "Frase personalizada sobre o hábito de hidratação da paciente (máx. 90 caracteres)."
+    },
+    "protetor": {
+      "titulo": "Título curto sobre proteção solar (máx. 4 palavras)",
+      "subtitulo": "Frase personalizada sobre o uso de protetor solar da paciente (máx. 90 caracteres)."
+    },
+    "alimentacao": {
+      "titulo": "Título curto sobre alimentação (máx. 4 palavras)",
+      "subtitulo": "Frase personalizada sobre os hábitos alimentares da paciente (máx. 90 caracteres)."
+    },
+    "luzAzul": {
+      "titulo": "Título curto sobre exposição a telas (máx. 4 palavras)",
+      "subtitulo": "Frase personalizada sobre o tempo de tela da paciente (máx. 90 caracteres)."
+    },
+    "sono": {
+      "titulo": "Título curto sobre sono (máx. 4 palavras)",
+      "subtitulo": "Frase sobre a importância do sono para a pele, personalizada ao perfil da paciente (máx. 90 caracteres)."
+    }
+  }
+}
+
+Scores devem ser números inteiros de 0 a 100, refletindo o estado atual estimado da pele — não o estado ideal.
+idadePele deve ser um número inteiro entre 10% e 20% acima da idade cronológica da paciente, variando aleatoriamente dentro desse intervalo.
+O campo fit em indicadosParaVoce deve ser um número inteiro de 0 a 100.
+indicadosParaVoce deve conter entre 4 e 6 produtos de categorias variadas e complementares.
+Cada período da rotina (matinal e noturna) deve ter no máximo 5 passos. Priorize os ativos de maior impacto clínico — omita os complementares se necessário para respeitar o limite.
+rotinaSemanal deve ser incluída apenas se clinicamente indicado, com no máximo 2 passos. Se não houver indicação, retorne rotinaSemanal como array vazio [].
+Todos os campos de nome, marca, preco, urlProduto e urlImagem devem ser copiados exatamente como estão na lista — sem alterações.
+dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentacao, luzAzul e sono. Cada campo tem um titulo de no máximo 4 palavras e um subtitulo de no máximo 90 caracteres. Os textos devem ser personalizados com base nas respostas da paciente — tom positivo quando o hábito é bom, orientativo quando precisa melhorar. Nunca use textos genéricos.`;
+
+    const response = await fetch('https://SEU-PROJETO.supabase.co/functions/v1/analisar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+
+    if (!response.ok) throw new Error('Erro na chamada à IA');
+    const data = await response.json();
+    return JSON.parse(data.resultado);
+  }
+
+  // ── POPULA TELA DE RESULTADO COM DADOS DA IA ─────────────────────────────
+  function preencherResultadoIA(r, nome) {
+    const titlePlaceholder = document.getElementById('result-title-placeholder');
+    const titleTyped = document.getElementById('result-title-typed');
+    if (titlePlaceholder) titlePlaceholder.innerHTML = r.tituloPerfil;
+    if (titleTyped) titleTyped.innerHTML = '';
+
+    const nomeEl = document.getElementById('resultNome');
+    if (nomeEl) nomeEl.textContent = nome;
+
+    const diagEl = document.querySelector('.diagnosis-text');
+    if (diagEl) diagEl.innerHTML = r.diagnostico;
+
+    const scoreMap = {
+      hidratacao: 'Hidratação', brilho: 'Brilho', firmeza: 'Firmeza',
+      textura: 'Textura', oleosidade: 'Oleosidade', sensibilidade: 'Sensibilidade',
+      rugas: 'Rugas', manchas: 'Manchas'
+    };
+    document.querySelectorAll('.score-pill').forEach(pill => {
+      const lbl = pill.querySelector('.score-lbl');
+      if (!lbl) return;
+      const chave = Object.keys(scoreMap).find(k => scoreMap[k] === lbl.textContent.trim());
+      if (!chave || r.scores[chave] === undefined) return;
+      const val = pill.querySelector('.score-val');
+      const fill = pill.querySelector('.score-bar-fill');
+      if (val) val.textContent = r.scores[chave] + '%';
+      if (fill) fill.dataset.width = r.scores[chave] + '%';
+    });
+
+    const idadeInput = document.getElementById('inputIdadeNew');
+    const idadeReal = idadeInput ? parseInt(idadeInput.value.trim()) : null;
+    if (idadeReal && r.idadePele) {
+      const ageRealEl = document.getElementById('ageReal');
+      const ageSkinEl = document.getElementById('ageSkin');
+      const deltaEl   = document.getElementById('ageDelta');
+      if (ageRealEl) ageRealEl.textContent = idadeReal;
+      if (ageSkinEl) ageSkinEl.innerHTML = '<em style="color:var(--blush);">' + r.idadePele + '</em>';
+      if (deltaEl) {
+        const diff = r.idadePele - idadeReal;
+        deltaEl.style.display = 'block';
+        deltaEl.innerHTML = 'Sua pele aparenta <strong style="color:var(--blush);">' + diff + ' anos a mais</strong> que a sua idade cronológica. Fatores como exposição solar acumulada, estresse oxidativo, baixa hidratação e sono irregular tendem a acelerar o envelhecimento da barreira cutânea - e é exatamente aí que o seu protocolo vai atuar.';
+      }
+    }
+
+    if (r.produtoEssencial) {
+      const pe = r.produtoEssencial;
+      const emojiMap = { 'Hiperpigmentação': '✨', 'Oleosidade': '🌿', 'Hidratação': '💧', 'Manchas': '🌟', 'Rugas': '🧬', 'Firmeza': '💎', 'Sensibilidade': '🌸', 'Acne': '🫧' };
+      const emoji  = document.getElementById('essentialEmoji');
+      const name   = document.getElementById('essentialName');
+      const brand  = document.getElementById('essentialBrand');
+      const price  = document.getElementById('essentialPrice');
+      const reason = document.getElementById('essentialReason');
+      const badge  = document.getElementById('essentialBadge');
+      if (emoji)  emoji.textContent = emojiMap[pe.pontoFraco] || '⭐';
+      if (name)   name.textContent  = pe.nome;
+      if (brand)  brand.textContent = pe.marca;
+      if (price)  price.textContent = 'R$ ' + pe.preco.toFixed(2).replace('.', ',');
+      if (reason) reason.innerHTML  = pe.motivo;
+      if (badge)  badge.textContent = 'Prioridade';
+    }
+
+    if (r.dicasInteligentes) {
+      const lista = document.getElementById('dicas-lista');
+      if (lista) {
+        const emojiDicas = { agua: '💧', protetor: '☀️', alimentacao: '🍎', luzAzul: '📱', sono: '😴' };
+        const ordem = ['agua', 'protetor', 'alimentacao', 'luzAzul', 'sono'];
+        lista.innerHTML = ordem.map(chave => {
+          const d = r.dicasInteligentes[chave];
+          if (!d) return '';
+          return '<div class="dica-step">' +
+            '<div class="rs-emoji">' + emojiDicas[chave] + '</div>' +
+            '<div>' +
+              '<div class="rs-step-name">' + d.titulo + '</div>' +
+              '<div class="rs-step-desc">' + d.subtitulo + '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+  }
+
   function startAguardando() {
     answers['telefone'] = document.getElementById('inputTelefone').value.trim();
+
+    const nome  = (document.getElementById('inputNomeNew') && document.getElementById('inputNomeNew').value.trim()) || '';
+    const idade = (document.getElementById('inputIdadeNew') && document.getElementById('inputIdadeNew').value.trim()) || '';
+    const respostas = {
+      nome,
+      idade,
+      cidade:              document.getElementById('city-label')?.textContent || '',
+      uv:                  document.getElementById('uv-val')?.textContent || '',
+      umidade:             document.getElementById('hum-val')?.textContent || '',
+      poluicao:            document.getElementById('pol-val')?.textContent || '',
+      tipoPele:            answers['q1'] || '',
+      queixas:             (answers['q2'] || []).join(', '),
+      areas:               (answers['q_area'] || []).join(', '),
+      hidratacao:          answers['q_hidrat'] || '',
+      sensibilidade:       answers['q_sensivel'] || '',
+      rotina:              answers['q_rotina'] || '',
+      rotinaMatinal:       (answers['q4'] || []).join(', '),
+      rotinaNoturna:       (answers['q4b'] || []).join(', '),
+      maquiagem:           answers['q_maquiagem'] || '',
+      preparoPele:         answers['q_preparo_pele'] || '',
+      demaquilante:        (answers['q_demaquila'] || []).join(', '),
+      exposicaoSol:        answers['q_sol'] || '',
+      protetor:            answers['q_fps'] || '',
+      tempoTela:           answers['q_tela'] || '',
+      alergia:             answers['q_alergia'] || '',
+      ingredientesAlergia: document.getElementById('inputAlergia')?.value || 'nenhum',
+      receita:             answers['q_receita'] || '',
+      produtoReceita:      document.getElementById('inputReceita')?.value || 'nenhum',
+      agua:                answers['q_agua'] || '',
+      alimentacao:         (answers['q_alimentacao'] || []).join(', '),
+      gravidez:            answers['q_grav'] || '',
+      orcamento:           answers['q6'] || 'medio'
+    };
+
+    const produtosFiltrados = filtrarPorOrcamento(respostas.orcamento);
+
+    window._iaPromise = chamarIA(respostas, produtosFiltrados)
+      .then(resultado => { window._iaResultado = resultado; window._iaNome = nome; })
+      .catch(err => { console.error('Erro IA:', err); window._iaResultado = null; });
+
     goTo('aguardando');
+
 
     // ── Pílulas: preenchimento sequencial esquerda→direita ──
     const pillIds   = ['ls1','ls2','ls3','ls4','ls5'];
@@ -4593,6 +4916,11 @@
   })();
 
   function showResult() {
+    // Se a IA respondeu, preenche os campos com os dados reais antes de animar
+    if (window._iaResultado) {
+      preencherResultadoIA(window._iaResultado, window._iaNome || 'você');
+    }
+
     const nome = (document.getElementById('inputNomeNew') && document.getElementById('inputNomeNew').value.trim()) || 'você';
     const tipo = answers['q1'] || 'mista';
     const tipos = {
@@ -4602,7 +4930,12 @@
       seca:     'seca com tendência a ressecamento',
       sensivel: 'sensível'
     };
-    const tipoLabel = tipos[tipo] || tipo;
+    // Se a IA retornou um tituloPerfil, extrai o texto do <em> para o typewriter
+    let tipoLabel = tipos[tipo] || tipo;
+    if (window._iaResultado && window._iaResultado.tituloPerfil) {
+      const match = window._iaResultado.tituloPerfil.match(/<em>(.*?)<\/em>/);
+      if (match) tipoLabel = match[1];
+    }
 
     // Atualiza o nome no subtítulo
     const nomeEl = document.getElementById('resultNome');
@@ -4769,79 +5102,13 @@
         }
       }
 
-      // ── Popula box Produto Essencial ──
-      const ESSENTIAL_PRODUCTS = {
-        hidratacao: {
-          emoji: '💧',
-          name: 'Hydra Boost Oil-Free',
-          brand: 'Neutrogena',
-          price: '~R$ 72',
-          reason: 'Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.',
-          badge: 'Prioridade'
-        },
-        oleosidade: {
-          emoji: '🌿',
-          name: 'Effaclar Mat',
-          brand: 'La Roche-Posay',
-          price: '~R$ 89',
-          reason: 'Sua <strong>oleosidade elevada</strong> é a principal causa de poros dilatados e acne. Esse sérum matificante reequilibra a produção de sebo sem ressecar a barreira.',
-          badge: 'Prioridade'
-        },
-        firmeza: {
-          emoji: '✨',
-          name: 'Retinol 0.5% Serum',
-          brand: 'The Ordinary',
-          price: '~R$ 79',
-          reason: 'A <strong>firmeza baixa</strong> é o parâmetro que mais impacta o envelhecimento precoce. O retinol estimula colágeno e é o ativo mais estudado para reverter essa condição.',
-          badge: 'Prioridade'
-        },
-        sensibilidade: {
-          emoji: '🌸',
-          name: 'Cicaplast Baume B5',
-          brand: 'La Roche-Posay',
-          price: '~R$ 94',
-          reason: 'Sua <strong>alta sensibilidade</strong> é o gatilho que amplifica todos os outros problemas. Esse bálsamo calmante reconstrói a barreira e reduz a reatividade imediatamente.',
-          badge: 'Prioridade'
-        }
-      };
-
-      const scoreMapFull = {};
-      document.querySelectorAll('.score-pill').forEach(pill => {
-        const lbl = pill.querySelector('.score-lbl');
-        const val = pill.querySelector('.score-val');
-        if (lbl && val) {
-          const key = lbl.textContent.trim().toLowerCase().replace('.','');
-          scoreMapFull[key] = parseInt(val.textContent);
-        }
-      });
-
-      const needScores = {
-        hidratacao:    100 - (scoreMapFull['hidratação'] || 50),
-        oleosidade:    (scoreMapFull['oleosidade'] || 50),
-        firmeza:       100 - (scoreMapFull['firmeza'] || 50),
-        sensibilidade: (scoreMapFull['sensibilidade'] || 50)
-      };
-
-      let worstParam = 'hidratacao';
-      let worstScore = -1;
-      Object.entries(needScores).forEach(([k, v]) => {
-        if (v > worstScore) { worstScore = v; worstParam = k; }
-      });
-
-      const prod = ESSENTIAL_PRODUCTS[worstParam];
-      if (prod) {
-        const emoji = document.getElementById('essentialEmoji');
-        const name  = document.getElementById('essentialName');
-        const brand = document.getElementById('essentialBrand');
-        const price = document.getElementById('essentialPrice');
-        const reason= document.getElementById('essentialReason');
-        const badge = document.getElementById('essentialBadge');
-        if (emoji)  emoji.textContent = prod.emoji;
-        if (name)   name.textContent  = prod.name;
-        if (brand)  brand.textContent = prod.brand;
-        if (price)  price.textContent = prod.price;
-        if (reason) reason.innerHTML  = prod.reason;
-        if (badge)  badge.textContent = prod.badge;
+      // Produto essencial e dicas inteligentes já preenchidos pela IA em preencherResultadoIA.
+      // Fallback exibido apenas se a IA não estiver disponível.
+      if (!window._iaResultado) {
+        const name   = document.getElementById('essentialName');
+        const reason = document.getElementById('essentialReason');
+        if (name)   name.textContent = 'Protocolo indisponível';
+        if (reason) reason.innerHTML = 'Não foi possível gerar o protocolo. Tente novamente.';
       }
 
     }, RESULT_BOX_START);
