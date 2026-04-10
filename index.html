@@ -4616,7 +4616,10 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
 
     if (!response.ok) throw new Error('Erro na chamada à IA');
     const data = await response.json();
-    return JSON.parse(data.resultado);
+    let raw = data.resultado;
+// Remove blocos de markdown residuais
+raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+return JSON.parse(raw);
   }
 
   // ── POPULA TELA DE RESULTADO COM DADOS DA IA ─────────────────────────────
