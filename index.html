@@ -3508,7 +3508,7 @@
       <div class="routine-steps">
         <div class="routine-group">
           <span class="rs-period">Matinal</span>
-          <div class="routine-group-cards">
+          <div class="routine-group-cards" id="rotina-matinal-cards">
             <div class="routine-step"><div class="rs-emoji">🧼</div><div><div class="rs-step-name">Limpeza suave</div><div class="rs-step-desc">Remove impurezas e excesso de oleosidade sem comprometer a barreira da pele.</div></div></div>
             <div class="routine-step"><div class="rs-emoji">✨</div><div><div class="rs-step-name">Sérum vitamina C</div><div class="rs-step-desc">Clareia manchas, uniformiza o tom e protege contra radicais livres ao longo do dia.</div></div></div>
             <div class="routine-step"><div class="rs-emoji">💧</div><div><div class="rs-step-name">Hidratante oil-free</div><div class="rs-step-desc">Hidrata sem obstruir os poros, deixando a pele macia e com acabamento seco.</div></div></div>
@@ -3517,15 +3517,15 @@
         </div>
         <div class="routine-group">
           <span class="rs-period">Noturno</span>
-          <div class="routine-group-cards">
+          <div class="routine-group-cards" id="rotina-noturna-cards">
             <div class="routine-step"><div class="rs-emoji">🫧</div><div><div class="rs-step-name">Limpeza dupla</div><div class="rs-step-desc">Remove maquiagem, protetor e impurezas acumuladas ao longo do dia.</div></div></div>
             <div class="routine-step"><div class="rs-emoji">🧪</div><div><div class="rs-step-name">Ácido salicílico (2×/sem)</div><div class="rs-step-desc">Desobstrui os poros. Use apenas 2 vezes por semana nos primeiros 30 dias para a pele se adaptar.</div></div></div>
             <div class="routine-step"><div class="rs-emoji">🌙</div><div><div class="rs-step-name">Hidratante noturno</div><div class="rs-step-desc">Repõe a hidratação e apoia a regeneração da pele enquanto você dorme.</div></div></div>
           </div>
         </div>
-        <div class="routine-group">
+        <div class="routine-group" id="rotina-semanal-group">
           <span class="rs-period">Semanal</span>
-          <div class="routine-group-cards">
+          <div class="routine-group-cards" id="rotina-semanal-cards">
             <div class="routine-step"><div class="rs-emoji">🌿</div><div><div class="rs-step-name">Máscara de argila na zona T (1×/sem)</div><div class="rs-step-desc">Purifica e minimiza os poros sem ressecar as bochechas. Aplique só na zona T.</div></div></div>
           </div>
         </div>
@@ -3534,7 +3534,7 @@
 
     <div class="result-section">
       <div class="rs-title">Indicados para você</div>
-      <div class="product-recs">
+      <div class="product-recs" id="indicados-para-voce">
         <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">97% 💘</span></div>
         <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">94% 💘</span></div>
         <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">91% 💘</span></div>
@@ -4701,6 +4701,63 @@ return JSON.parse(raw);
         }).join('');
       }
     }
+
+    // ── Renderiza rotinas ──
+    const emojiPassos = ['🧼','✨','💧','☀️','🌿','🧪','🌙','🧬','💎','🌸'];
+    function renderPassos(passos, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container || !passos || !passos.length) return;
+      container.innerHTML = passos.map(function(p, i) {
+        const emoji = emojiPassos[i] || '🌿';
+        const prodInfo = (p.produto && p.marca)
+          ? '<div class="rs-step-desc" style="margin-top:3px;font-style:italic;color:var(--wine);">' + p.produto + ' — ' + p.marca + '</div>'
+          : '';
+        return '<div class="routine-step">' +
+          '<div class="rs-emoji">' + emoji + '</div>' +
+          '<div>' +
+            '<div class="rs-step-name">' + (p.nome || '') + '</div>' +
+            '<div class="rs-step-desc">' + (p.descricao || '') + '</div>' +
+            prodInfo +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    if (r.rotinaMatinal && r.rotinaMatinal.length) {
+      renderPassos(r.rotinaMatinal, 'rotina-matinal-cards');
+    }
+    if (r.rotinaNoturna && r.rotinaNoturna.length) {
+      renderPassos(r.rotinaNoturna, 'rotina-noturna-cards');
+    }
+    if (r.rotinaSemanal && r.rotinaSemanal.length) {
+      renderPassos(r.rotinaSemanal, 'rotina-semanal-cards');
+    } else {
+      const grupoSemanal = document.getElementById('rotina-semanal-group');
+      if (grupoSemanal) grupoSemanal.style.display = 'none';
+    }
+
+    // ── Renderiza indicados para você ──
+    if (r.indicadosParaVoce && r.indicadosParaVoce.length) {
+      const prodRecs = document.getElementById('indicados-para-voce');
+      if (prodRecs) {
+        const emojisCat = { 'limpeza': '🧼', 'sérum': '✨', 'hidratante': '💧', 'protetor solar': '☀️', 'tônico': '🌿', 'esfoliante': '🧪', 'contorno dos olhos': '👁️', 'tratamento': '🧬' };
+        prodRecs.innerHTML = r.indicadosParaVoce.map(function(p) {
+          const emoji = emojisCat[p.categoria] || '🧴';
+          const preco = (typeof p.preco === 'number')
+            ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
+            : 'R$ ' + p.preco;
+          return '<div class="prod-rec">' +
+            '<div class="prod-emoji">' + emoji + '</div>' +
+            '<div>' +
+              '<div class="prod-name">' + p.nome + '</div>' +
+              '<div class="prod-brand">' + p.marca + '</div>' +
+              '<div class="prod-price">' + preco + '</div>' +
+            '</div>' +
+            '<span class="prod-fit">' + p.fit + '% 💘</span>' +
+          '</div>';
+        }).join('');
+      }
+    }
   }
 
   function startAguardando() {
@@ -4949,7 +5006,10 @@ return JSON.parse(raw);
     const titlePlaceholder = document.getElementById('result-title-placeholder');
     if (titleTyped) { titleTyped.innerHTML = ''; }
     if (titlePlaceholder) {
-      titlePlaceholder.innerHTML = 'Seu perfil de pele é<br> <em>' + tipoLabel + '</em>.';
+      // Só usa o fallback se a IA não tiver fornecido um tituloPerfil
+      if (!window._iaResultado || !window._iaResultado.tituloPerfil) {
+        titlePlaceholder.innerHTML = 'Seu perfil de pele é<br> <em>' + tipoLabel + '</em>.';
+      }
     }
 
     // Reseta animações de entrada
