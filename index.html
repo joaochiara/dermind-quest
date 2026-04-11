@@ -4749,6 +4749,8 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     });
     // Remove qualquer ponto final remanescente no meio que não virou hífen
     s = s.replace(/\.\s+/g, ' - ');
+    // Garante espaço entre numeral e "L" de litro (ex: "1L" → "1 L", "1,5L" → "1,5 L")
+    s = s.replace(/(\d[,.]?\d*)L\b/g, '$1 L');
     return s;
   }
   // Sanitiza um objeto recursivamente — travessões em todo o JSON da IA
@@ -5002,15 +5004,27 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         // Linha 2: nome do produto — rs-prod-name (15px, ink, 500)
         // Remove prefixo da marca se a IA colou junto (ex: "Principia Creme..." → "Creme...")
+        // Remove também sufixo " - Marca" ou " — Marca" que a IA às vezes inclui no nome
         const prodNomeLimpo = (function(nome, marca) {
           if (!nome || !marca) return removerVolume(nome || '');
+          // Remove sufixo " - Marca" ou " — Marca" (após sanitizeIA converter — em -)
+          const sufNorm = ' - ' + marca.trim().toLowerCase();
+          const sufNorm2 = ' — ' + marca.trim().toLowerCase();
+          let n = nome.trim();
+          const nLow = n.toLowerCase();
+          if (nLow.endsWith(sufNorm)) n = n.slice(0, n.length - sufNorm.length).trim();
+          else if (nLow.endsWith(sufNorm2)) n = n.slice(0, n.length - sufNorm2.length).trim();
+          // Remove prefixo da marca se colou junto no início
           const prefNorm = marca.trim().toLowerCase() + ' ';
-          const nomeNorm = nome.trim().toLowerCase();
-          if (nomeNorm.indexOf(prefNorm) === 0) return removerVolume(nome.trim().slice(marca.trim().length + 1));
-          return removerVolume(nome);
+          const nNorm = n.trim().toLowerCase();
+          if (nNorm.indexOf(prefNorm) === 0) return removerVolume(n.trim().slice(marca.trim().length + 1));
+          return removerVolume(n);
         })(p.produto, p.marca);
-        const prodLine = (p.produto && p.marca)
-          ? '<div class="rs-prod-name">' + prodNomeLimpo + ' — ' + p.marca + '</div>'
+        const prodLine = p.produto
+          ? '<div class="rs-prod-name">' + prodNomeLimpo + '</div>'
+          : '';
+        const brandLine = p.marca
+          ? '<div class="rs-step-name">' + p.marca + '</div>'
           : '';
         // Linha 3: instrução — rs-prod-instr (12px, itálico, wine), sem ponto final
         const descLine = (p.descricao)
@@ -5018,7 +5032,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         return '<div class="routine-step">' +
           imgHtml +
-          '<div>' + nomeLine + prodLine + descLine + '</div>' +
+          '<div>' + nomeLine + prodLine + brandLine + descLine + '</div>' +
         '</div>';
       }).join('');
     }
