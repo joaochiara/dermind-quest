@@ -4855,7 +4855,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (emoji) {
         const imgUrlEss = (pe.urlImagem && pe.urlImagem.trim()) ? pe.urlImagem : buscarImagem(pe.nome, pe.marca);
         if (imgUrlEss) {
-          emoji.innerHTML = '<img src="' + imgUrlEss + '" alt="' + (pe.nome || '').replace(/"/g, '') + '" style="width:56px;height:56px;object-fit:cover;border-radius:12px;" onerror="this.parentNode.innerHTML=\'' + emojiChar + '\'">';
+          emoji.innerHTML = '<img src="' + imgUrlEss + '" alt="' + (pe.nome || '').replace(/"/g, '') + '" style="width:56px;height:56px;object-fit:contain;background:#fff;border-radius:12px;" onerror="this.parentNode.innerHTML=\'' + emojiChar + '\'">';
         } else {
           emoji.textContent = emojiChar;
         }
@@ -4994,7 +4994,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         // urlImagem pode vir direto da IA ou precisa ser buscada no catálogo
         const imgUrl = (p.urlImagem && p.urlImagem.trim()) ? p.urlImagem : buscarImagem(p.produto, p.marca);
         const imgHtml = imgUrl
-          ? '<img src="' + imgUrl + '" alt="' + prodNome + '" style="width:44px;height:44px;object-fit:cover;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
+          ? '<img src="' + imgUrl + '" alt="' + prodNome + '" style="width:44px;height:44px;object-fit:contain;background:#fff;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
           : '<div style="width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);">' + inicial + '</div>';
         // Linha 1: nome da etapa — rs-step-name (12px, ink-soft)
         const nomeLine = (p.nome)
@@ -5046,7 +5046,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           const inicial = nomeLimpo.charAt(0).toUpperCase();
           const imgUrlRec = (p.urlImagem && p.urlImagem.trim()) ? p.urlImagem : buscarImagem(p.nome, p.marca);
           const imgHtml = imgUrlRec
-            ? '<img src="' + imgUrlRec + '" alt="' + nomeLimpo + '" style="width:44px;height:44px;object-fit:cover;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
+            ? '<img src="' + imgUrlRec + '" alt="' + nomeLimpo + '" style="width:44px;height:44px;object-fit:contain;background:#fff;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
             : '<div style="width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);">' + inicial + '</div>';
           const preco = (typeof p.preco === 'number')
             ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
