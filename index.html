@@ -945,7 +945,7 @@
   /* ── AGUARDANDO ── */
   .aguardando-screen { text-align: center; padding: 16px 0; }
   @media (max-width: 580px) {
-    .aguardando-screen { transform: translateY(-100px); }
+    .aguardando-screen { transform: translateY(150px); }
   }
 
   /* Fade out do conteúdo da screen aguardando após última pílula */
@@ -3222,7 +3222,7 @@
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧻</div><div class="opt-text"><span class="opt-label">Lenço</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
-      <div class="option" onclick="toggleMulti(this,'q_demaquila','none')"><div class="opt-icon">👎</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">👎</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
     </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(12)">Voltar</button>
@@ -4172,6 +4172,13 @@
     // 5. Pós-entrada: float, steps, back button, badges
     if (typeof window._floatCollect === 'function') window._floatCollect(next, forward);
     if (typeof startInterblockBoxFloat === 'function') startInterblockBoxFloat(box);
+    if (box) {
+      box.querySelectorAll('video').forEach(function(v) {
+        v.currentTime = 0;
+        var p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(function(){});
+      });
+    }
     box && box.querySelectorAll('.interblock-step').forEach(el => {
       el.style.opacity = '1'; el.style.transition = ''; el.style.transform = '';
     });
@@ -4353,6 +4360,13 @@
         if (typeof window._floatCollect === 'function') window._floatCollect(next, forward);
         if (typeof runScreenTypewriter === 'function' && !next.classList.contains('interblock')) runScreenTypewriter(next);
         if (next.classList.contains('interblock') && typeof startInterblockBoxFloat === 'function') startInterblockBoxFloat(next);
+        if (next.classList.contains('interblock')) {
+          next.querySelectorAll('video').forEach(function(v) {
+            v.currentTime = 0;
+            var p = v.play();
+            if (p && typeof p.catch === 'function') p.catch(function(){});
+          });
+        }
         if (n === 0 && typeof window._floatResetScreen0 === 'function') window._floatResetScreen0(forward);
         const hint = next.querySelector('.screen-hint');
         if (hint) { hint.classList.remove('sub-visible'); void hint.offsetHeight; setTimeout(() => hint.classList.add('sub-visible'), 180); }
@@ -4828,7 +4842,7 @@ idadePele deve ser um número inteiro entre 10% e 20% acima da idade cronológic
 O campo fit em indicadosParaVoce deve ser um número inteiro de 0 a 100.
 indicadosParaVoce deve conter entre 4 e 6 produtos de categorias variadas e complementares.
 Cada período da rotina (matinal e noturna) deve ter no máximo 5 passos. Priorize os ativos de maior impacto clínico — omita os complementares se necessário para respeitar o limite.
-O campo descricao de cada passo deve ter OBRIGATORIAMENTE no máximo 47 caracteres (nunca mais que 47) — seja direto e objetivo. Nunca use ponto final nem ponto de exclamação.
+O campo descricao de cada passo deve ter OBRIGATORIAMENTE no máximo 40 caracteres (nunca mais que 40) — seja direto e objetivo. Nunca use ponto final nem ponto de exclamação.
 rotinaSemanal deve ser incluída apenas se clinicamente indicado, com no máximo 2 passos. Se não houver indicação, retorne rotinaSemanal como array vazio [].
 Todos os campos de nome, marca, preco, urlProduto e urlImagem devem ser copiados exatamente como estão na lista — sem alterações.
 Nos nomes dos produtos, NUNCA use travessão (—). Se o nome original contiver travessão, substitua por hífen (-).
@@ -5065,6 +5079,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
             '<div>' +
               '<div class="dica-title">' + (function(t) {
                 t = t.length > 69 ? t.slice(0, 69) + '…' : t;
+                while (t.replace(/\u00A0/g, ' ').length < 53) t += '\u00A0';
                 return t;
               })(d.titulo) + '</div>' +
               '<div class="dica-sub">' + limparSubtituloDica(d.subtitulo) + '</div>' +
@@ -5730,7 +5745,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     }
 
     function updateAttractor() {
-      const mobileOffset = window.innerWidth <= 580 ? -20 : 0;
+      const mobileOffset = window.innerWidth <= 580 ? 130 : 0;
       const el = document.getElementById('particle-attractor');
       if (!el) { cx = W / 2; cy = H / 2 + mobileOffset; return; }
       const er = el.getBoundingClientRect();
