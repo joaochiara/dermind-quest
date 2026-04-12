@@ -1460,7 +1460,7 @@
     border-radius: 100px; white-space: nowrap;
   }
   .rs-emoji {
-    width: 56px; height: 56px; border-radius: 16px;
+    width: 42px; height: 42px; border-radius: 12px;
     background: var(--ivory-dark);
     display: flex; align-items: center; justify-content: center;
     font-size: 24px; flex-shrink: 0;
@@ -5063,7 +5063,11 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           return '<div class="dica-step">' +
             '<div class="rs-emoji">' + emoji + '</div>' +
             '<div>' +
-              '<div class="dica-title">' + d.titulo + '</div>' +
+              '<div class="dica-title">' + (function(t) {
+                t = t.length > 69 ? t.slice(0, 69) + '…' : t;
+                while (t.replace(/\u00A0/g, ' ').length < 53) t += '\u00A0';
+                return t;
+              })(d.titulo) + '</div>' +
               '<div class="dica-sub">' + limparSubtituloDica(d.subtitulo) + '</div>' +
             '</div>' +
           '</div>';
@@ -5165,7 +5169,12 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         // Linha 3: instrução — rs-prod-instr (12px, itálico, wine), sem ponto final
         const descLine = (p.descricao)
-          ? '<div class="rs-prod-instr">' + semPontoFinal(p.descricao).slice(0, 75) + (p.descricao.length > 75 ? '…' : '') + '</div>'
+          ? '<div class="rs-prod-instr">' + (function(t) {
+              t = semPontoFinal(t);
+              t = t.length > 75 ? t.slice(0, 75) + '…' : t;
+              while (t.replace(/\u00A0/g, ' ').length < 61) t += '\u00A0';
+              return t;
+            })(p.descricao) + '</div>'
           : '';
         const precoFormatado = (typeof p.preco === 'number')
           ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
