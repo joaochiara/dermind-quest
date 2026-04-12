@@ -1415,6 +1415,11 @@
       flex: 1;
       width: auto; flex-basis: auto;
       margin-top: 0;
+      order: 2;
+    }
+    .routine-step span.prod-fit {
+      order: 3;
+      align-self: center;
     }
   }
   .dica-step {
@@ -4820,7 +4825,7 @@ idadePele deve ser um número inteiro entre 10% e 20% acima da idade cronológic
 O campo fit em indicadosParaVoce deve ser um número inteiro de 0 a 100.
 indicadosParaVoce deve conter entre 4 e 6 produtos de categorias variadas e complementares.
 Cada período da rotina (matinal e noturna) deve ter no máximo 5 passos. Priorize os ativos de maior impacto clínico — omita os complementares se necessário para respeitar o limite.
-O campo descricao de cada passo deve ter no máximo 65 caracteres — seja direto e objetivo. Use "e" para conectar ações em vez de vírgula (ex: "Aplique no rosto úmido e massageie por 30s"). Nunca use ponto final nem ponto de exclamação.
+O campo descricao de cada passo deve ter OBRIGATORIAMENTE entre 55 e 75 caracteres (nunca menos que 55 nem mais que 75) — seja direto e objetivo. Use "e" para conectar ações em vez de vírgula (ex: "Aplique no rosto úmido e massageie por 30s antes de enxaguar"). Nunca use ponto final nem ponto de exclamação.
 rotinaSemanal deve ser incluída apenas se clinicamente indicado, com no máximo 2 passos. Se não houver indicação, retorne rotinaSemanal como array vazio [].
 Todos os campos de nome, marca, preco, urlProduto e urlImagem devem ser copiados exatamente como estão na lista — sem alterações.
 Nos nomes dos produtos, NUNCA use travessão (—). Se o nome original contiver travessão, substitua por hífen (-).
@@ -5157,7 +5162,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         // Linha 3: instrução — rs-prod-instr (12px, itálico, wine), sem ponto final
         const descLine = (p.descricao)
-          ? '<div class="rs-prod-instr">' + semPontoFinal(p.descricao).slice(0, 65) + (p.descricao.length > 65 ? '…' : '') + '</div>'
+          ? '<div class="rs-prod-instr">' + semPontoFinal(p.descricao).slice(0, 75) + (p.descricao.length > 75 ? '…' : '') + '</div>'
           : '';
         const precoFormatado = (typeof p.preco === 'number')
           ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
@@ -5169,7 +5174,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           imgHtml +
           '<div class="rs-part1" style="position:relative;z-index:1;flex:1;">' + nomeLine + '</div>' +
           precoPilula +
-          '<div class="rs-part2" style="position:relative;z-index:1;width:100%;flex-basis:100%;">' + nomeLine + prodLine + brandLine + descLine + '</div>' +
+          '<div class="rs-part2" style="position:relative;z-index:1;width:100%;flex-basis:100%;">' + prodLine + brandLine + descLine + '</div>' +
         '</div>';
       }).join('');
     }
@@ -5205,7 +5210,6 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           return '<div class="prod-rec">' +
             imgHtml +
             '<div class="pr-part1" style="position:relative;z-index:1;flex:1;">' +
-              '<div class="prod-name">' + nomeLimpo + '</div>' +
               '<div class="prod-brand">' + p.marca + '</div>' +
               '<div class="prod-price">' + preco + '</div>' +
             '</div>' +
