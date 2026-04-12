@@ -1362,23 +1362,29 @@
     .routine-step {
       flex-wrap: wrap;
       align-items: flex-start;
+      gap: 10px;
     }
     .routine-step img,
     .routine-step > div[style*="56px"] {
       flex-shrink: 0;
       align-self: flex-start;
     }
-    .routine-step > div[style*="flex:1"],
-    .routine-step > div[style*="flex: 1"] {
+    .routine-step .rs-part1 {
+      flex: 1;
+      align-self: flex-start;
+    }
+    .routine-step span.prod-fit {
+      align-self: flex-start;
+    }
+    .routine-step .rs-part2 {
       width: 100%;
       flex-basis: 100%;
       padding-right: 0;
-      margin-top: 30px;
+      margin-top: 0;
     }
     .routine-step .rs-step-name { padding-right: 0; }
     .routine-step .rs-prod-name { padding-right: 0; }
     .routine-step .rs-prod-instr { padding-right: 0; }
-    .routine-step span.prod-fit { align-self: flex-start; }
   }
   .routine-step {
     display: flex; align-items: center; gap: 16px;
@@ -1480,29 +1486,26 @@
     .prod-rec {
       flex-wrap: wrap;
       align-items: flex-start;
+      gap: 10px;
     }
     .prod-rec img,
     .prod-rec > div[style*="56px"] {
       flex-shrink: 0;
       align-self: flex-start;
     }
+    .prod-rec .pr-part1 {
+      flex: 1;
+      align-self: flex-start;
+    }
     .prod-rec .prod-fit {
       align-self: flex-start;
     }
-    .prod-rec > div[style*="flex:1"],
-    .prod-rec > div[style*="flex: 1"] {
+    .prod-rec .pr-part2 {
       width: 100%;
       flex-basis: 100%;
       padding-right: 0;
-      display: flex;
-      flex-direction: column;
-    }
-    .prod-rec .prod-brand,
-    .prod-rec .prod-price {
-      order: -1;
     }
     .prod-rec .prod-name {
-      order: 1;
       padding-right: 0;
     }
   }
@@ -5142,8 +5145,9 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         return '<div class="routine-step">' +
           imgHtml +
-          '<div style="position:relative;z-index:1;flex:1;">' + nomeLine + prodLine + brandLine + descLine + '</div>' +
+          '<div class="rs-part1" style="position:relative;z-index:1;flex:1;">' + nomeLine + '</div>' +
           precoPilula +
+          '<div class="rs-part2" style="position:relative;z-index:1;width:100%;flex-basis:100%;">' + prodLine + brandLine + descLine + '</div>' +
         '</div>';
       }).join('');
     }
@@ -5178,12 +5182,14 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
             : 'R$ ' + p.preco;
           return '<div class="prod-rec">' +
             imgHtml +
-            '<div style="position:relative;z-index:1;flex:1;">' +
-              '<div class="prod-name">' + nomeLimpo + '</div>' +
+            '<div class="pr-part1" style="position:relative;z-index:1;flex:1;">' +
               '<div class="prod-brand">' + p.marca + '</div>' +
               '<div class="prod-price">' + preco + '</div>' +
             '</div>' +
-            '<span class="prod-fit" style="position:relative;z-index:1;">' + '❤︎ ' + p.fit + '%</span>' +
+            '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;">' + '❤︎ ' + p.fit + '%</span>' +
+            '<div class="pr-part2" style="position:relative;z-index:1;width:100%;flex-basis:100%;">' +
+              '<div class="prod-name">' + nomeLimpo + '</div>' +
+            '</div>' +
           '</div>';
         }).join('');
       }
