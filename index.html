@@ -1358,6 +1358,12 @@
   .routine-group { display: flex; flex-direction: column; gap: 10px; }
   .routine-group-cards { display: flex; flex-direction: column; gap: 6px; }
   @media (max-width: 580px) { .routine-group-cards { margin-left: 0; } }
+  @media (max-width: 580px) {
+    .routine-step { align-items: flex-start; }
+    .routine-step .rs-prod-name { margin-top: 20px; padding-right: 0; }
+    .routine-step .rs-prod-instr { padding-right: 0; }
+    .routine-step img, .routine-step > div[style*="56px"] { align-self: flex-start; }
+  }
   .routine-step {
     display: flex; align-items: center; gap: 16px;
     padding: 18px;
@@ -1380,12 +1386,35 @@
   .routine-step:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .dica-step {
     display: flex; align-items: center; gap: 12px;
-    padding: 14px;
-    background: rgba(247,242,234,0.92);
+    padding: 16px 18px;
+    background: rgba(253,250,247,0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 13px;
-    box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+    border-radius: 16px;
+    box-shadow:
+      0 2px 0px rgba(255,255,255,0.70),
+      0 6px 18px rgba(24,16,14,0.10),
+      0 1px 0 rgba(255,255,255,0.90) inset,
+      0 -1px 0 rgba(0,0,0,0.06) inset;
+    position: relative; overflow: hidden;
   }
+  .dica-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 42%;
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.38) 0%,
+      rgba(255,255,255,0.10) 60%,
+      transparent 100%
+    );
+    border-radius: 0 0 60% 60% / 0 0 100% 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dica-step > * { position: relative; z-index: 1; }
   .rs-period {
     display: inline-block; align-self: flex-start;
     font-size: 11px; font-weight: 500; text-transform: uppercase;
@@ -1431,6 +1460,11 @@
     pointer-events: none;
   }
   .prod-rec:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
+  @media (max-width: 580px) {
+    .prod-rec { align-items: flex-start; }
+    .prod-rec .prod-name { margin-top: 20px; padding-right: 0; }
+    .prod-fit { align-self: flex-start; }
+  }
   .prod-emoji {
     width: 56px; height: 56px; border-radius: 16px;
     background: var(--ivory-dark);
@@ -1578,9 +1612,8 @@
   }
   .essential-prod-reason {
     font-size: 12px; color: var(--ink-soft);
-    margin-top: 6px; line-height: 1.5;
+    margin-top: -9px; line-height: 1.5;
     width: 100%; flex-basis: 100%;
-    padding-left: 72px;
     position: relative; z-index: 1;
   }
   .essential-prod-reason strong { color: var(--wine-dark); font-weight: 500; }
@@ -1608,6 +1641,13 @@
       order: 3;
       width: 100%;
       flex-basis: 100%;
+    }
+    .essential-prod-reason {
+      order: 4;
+      width: 100%;
+      flex-basis: 100%;
+      margin-top: 8px;
+      padding-left: 0;
     }
   }
   .result-cta {
@@ -3650,7 +3690,7 @@
     </div>
 
     <div class="result-section">
-      <div class="rs-title">Indicados para você</div>
+      <div class="rs-title">Combinam com você</div>
       <div class="product-recs" id="indicados-para-voce">
         <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">❤︎ 97%</span></div>
         <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">❤︎ 94%</span></div>
@@ -5057,7 +5097,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
           : (p.preco ? 'R$ ' + p.preco : '');
         const precoPilula = precoFormatado
-          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-weight:500;">' + precoFormatado + '</span>'
+          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-weight:500;">⛁ ' + precoFormatado + '</span>'
           : '';
         return '<div class="routine-step">' +
           imgHtml +
