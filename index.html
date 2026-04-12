@@ -1441,7 +1441,7 @@
   }
   .prod-name  { font-size: 15px; font-weight: 500; color: var(--ink); filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .prod-brand { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
-  .prod-price { font-size: 12px; color: var(--wine); font-style: italic; margin-top: 1px; }
+  .prod-price { font-size: 12px; color: var(--wine); font-weight: 500; margin-top: 1px; }
   .prod-fit {
     font-size: 11px; font-weight: 500; color: var(--wine-dark);
     background: var(--wine-light); padding: 7px 17px;
@@ -1530,6 +1530,7 @@
   .essential-product-card {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 16px;
     padding: 18px 18px;
     background: linear-gradient(135deg, var(--wine-pale) 0%, rgba(247,242,234,0.70) 100%);
@@ -1560,6 +1561,7 @@
   }
   .essential-prod-info {
     flex: 1;
+    min-width: 0;
     position: relative; z-index: 1;
   }
   .essential-prod-name {
@@ -1571,12 +1573,15 @@
     margin-top: 2px;
   }
   #essentialPrice {
-    font-size: 12px; color: var(--wine); font-style: italic;
+    font-size: 12px; color: var(--wine); font-weight: 500;
     margin-top: 2px;
   }
   .essential-prod-reason {
     font-size: 12px; color: var(--ink-soft);
     margin-top: 6px; line-height: 1.5;
+    width: 100%; flex-basis: 100%;
+    padding-left: 72px;
+    position: relative; z-index: 1;
   }
   .essential-prod-reason strong { color: var(--wine-dark); font-weight: 500; }
   .essential-badge {
@@ -1592,10 +1597,6 @@
   }
 
   @media (max-width: 580px) {
-    .essential-product-card {
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
     .essential-emoji-wrap {
       order: 1;
     }
@@ -3612,9 +3613,9 @@
             <div class="essential-prod-name" id="essentialName">Hydra Boost Oil-Free</div>
             <div class="essential-prod-brand" id="essentialBrand">Neutrogena</div>
             <div class="essential-prod-brand" id="essentialPrice">~R$ 72</div>
-            <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
           </div>
           <span class="essential-badge" id="essentialBadge">⭑ Prioridade</span>
+          <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
         </div>
       </div>
     </div>
@@ -3651,11 +3652,11 @@
     <div class="result-section">
       <div class="rs-title">Indicados para você</div>
       <div class="product-recs" id="indicados-para-voce">
-        <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">97% ❤︎</span></div>
-        <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">94% ❤︎</span></div>
-        <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">91% ❤︎</span></div>
-        <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">96% ❤︎</span></div>
-        <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">93% ❤︎</span></div>
+        <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">❤︎ 97%</span></div>
+        <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">❤︎ 94%</span></div>
+        <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">❤︎ 91%</span></div>
+        <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">❤︎ 96%</span></div>
+        <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">❤︎ 93%</span></div>
       </div>
     </div>
 
@@ -5056,7 +5057,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
           : (p.preco ? 'R$ ' + p.preco : '');
         const precoPilula = precoFormatado
-          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-style:italic;">' + precoFormatado + '</span>'
+          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-weight:500;">' + precoFormatado + '</span>'
           : '';
         return '<div class="routine-step">' +
           imgHtml +
@@ -5101,7 +5102,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
               '<div class="prod-brand">' + p.marca + '</div>' +
               '<div class="prod-price">' + preco + '</div>' +
             '</div>' +
-            '<span class="prod-fit" style="position:relative;z-index:1;">' + p.fit + '% ❤︎</span>' +
+            '<span class="prod-fit" style="position:relative;z-index:1;">' + '❤︎ ' + p.fit + '%</span>' +
           '</div>';
         }).join('');
       }
