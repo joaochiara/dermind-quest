@@ -1373,6 +1373,7 @@
       width: 100%;
       flex-basis: 100%;
       padding-right: 0;
+      margin-top: 30px;
     }
     .routine-step .rs-step-name { padding-right: 0; }
     .routine-step .rs-prod-name { padding-right: 0; }
@@ -4768,23 +4769,23 @@ Retorne SOMENTE um JSON válido, sem texto antes ou depois, sem markdown, sem bl
   "dicasInteligentes": {
     "agua": {
       "titulo": "Título curto sobre hidratação (entre 35 e 45 caracteres)",
-      "subtitulo": "Frase personalizada sobre o hábito de hidratação da paciente (máx. 90 caracteres)."
+      "subtitulo": "Frase personalizada sobre o hábito de hidratação da paciente (máx. 62 caracteres)."
     },
     "protetor": {
       "titulo": "Título curto sobre proteção solar (entre 35 e 45 caracteres)",
-      "subtitulo": "Frase personalizada sobre o uso de protetor solar da paciente (máx. 90 caracteres)."
+      "subtitulo": "Frase personalizada sobre o uso de protetor solar da paciente (máx. 62 caracteres)."
     },
     "alimentacao": {
       "titulo": "Título curto sobre alimentação (entre 35 e 45 caracteres)",
-      "subtitulo": "Frase personalizada sobre os hábitos alimentares da paciente — pode abordar consumo de álcool, laticínios, embutidos, ultraprocessados, açúcar ou frutas/vegetais, conforme o perfil (máx. 90 caracteres)."
+      "subtitulo": "Frase personalizada sobre os hábitos alimentares da paciente — pode abordar consumo de álcool, laticínios, embutidos, ultraprocessados, açúcar ou frutas/vegetais, conforme o perfil (máx. 62 caracteres)."
     },
     "luzAzul": {
       "titulo": "Título curto sobre exposição a telas (entre 35 e 45 caracteres)",
-      "subtitulo": "Frase personalizada sobre o tempo de tela da paciente (máx. 90 caracteres)."
+      "subtitulo": "Frase personalizada sobre o tempo de tela da paciente (máx. 62 caracteres)."
     },
     "sono": {
       "titulo": "Título curto sobre sono (entre 35 e 45 caracteres)",
-      "subtitulo": "Frase sobre a importância do sono para a pele, personalizada ao perfil da paciente (máx. 90 caracteres)."
+      "subtitulo": "Frase sobre a importância do sono para a pele, personalizada ao perfil da paciente (máx. 62 caracteres)."
     }
   }
 }
@@ -4799,7 +4800,7 @@ rotinaSemanal deve ser incluída apenas se clinicamente indicado, com no máximo
 Todos os campos de nome, marca, preco, urlProduto e urlImagem devem ser copiados exatamente como estão na lista — sem alterações.
 Nos nomes dos produtos, NUNCA use travessão (—). Se o nome original contiver travessão, substitua por hífen (-).
 O conjunto de produtos indicados na rotinaMatinal, rotinaNoturna, rotinaSemanal e indicadosParaVoce deve obrigatoriamente incluir produtos de no mínimo 3 marcas diferentes. Se a seleção natural resultar em menos de 3 marcas, substitua um ou mais produtos por equivalentes de outras marcas disponíveis na lista, mantendo a adequação clínica.
-dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentacao, luzAzul e sono. Cada campo tem um titulo OBRIGATORIAMENTE entre 35 e 45 caracteres (nunca menos que 35 nem mais que 45 — use frases completas como "Hidrate-se o dia todo" ou "Proteja do sol diariamente"). O subtitulo deve ter no máximo 90 caracteres, sem ponto final nem ponto de exclamação. Os textos devem ser personalizados com base nas respostas da paciente — tom positivo quando o hábito é bom, orientativo quando precisa melhorar. Nunca use textos genéricos.`;
+dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentacao, luzAzul e sono. Cada campo tem um titulo OBRIGATORIAMENTE entre 35 e 45 caracteres (nunca menos que 35 nem mais que 45 — use frases completas como "Hidrate-se o dia todo" ou "Proteja do sol diariamente"). O subtitulo deve ter no máximo 62 caracteres, sem ponto final nem ponto de exclamação. Os textos devem ser personalizados com base nas respostas da paciente — tom positivo quando o hábito é bom, orientativo quando precisa melhorar. Nunca use textos genéricos.`;
 
     const response = await fetch('https://esxgbspxuajrpoxehgam.supabase.co/functions/v1/analisar', {
       method: 'POST',
@@ -5137,7 +5138,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
           : (p.preco ? 'R$ ' + p.preco : '');
         const precoPilula = precoFormatado
-          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-weight:500;">$ ' + precoFormatado + '</span>'
+          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-weight:500;">' + precoFormatado + '</span>'
           : '';
         return '<div class="routine-step">' +
           imgHtml +
