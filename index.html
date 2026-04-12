@@ -1311,14 +1311,15 @@
     border: 1px solid rgba(255,255,255,0.55);
     border-radius: 16px;
     padding: 24px 26px;
-    margin-bottom: 14px;
+    margin-bottom: 20px;
     box-shadow:
       0 2px 0px rgba(255,255,255,0.70),
-      0 6px 18px rgba(24,16,14,0.10),
+      0 6px 14px rgba(24,16,14,0.08),
       0 1px 0 rgba(255,255,255,0.90) inset,
       0 -1px 0 rgba(0,0,0,0.06) inset;
     position: relative;
     overflow: hidden;
+    isolation: isolate;
   }
   .result-section:not(#box-idade-pele)::before {
     content: '';
@@ -1423,16 +1424,12 @@
   .dica-step {
     display: flex; align-items: center; gap: 12px;
     padding: 16px 18px;
-    background: rgba(253,250,247,0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(247,242,234,0.60);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 16px;
-    box-shadow:
-      0 2px 0px rgba(255,255,255,0.70),
-      0 6px 18px rgba(24,16,14,0.10),
-      0 1px 0 rgba(255,255,255,0.90) inset,
-      0 -1px 0 rgba(0,0,0,0.06) inset;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
     position: relative; overflow: hidden;
   }
   .dica-step::before {
@@ -2256,7 +2253,7 @@
     min-width: 0;
   }
   @media (max-width: 580px) {
-    .result-photos-wrap { margin-top: 10px; }
+    .result-photos-wrap { margin-top: 25px; }
     #resultSubtitle { margin-top: -5px; }
   }
   .result-photo-col {
@@ -5145,7 +5142,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       const caps = answers && answers['scanner_captures'];
       const wrap = document.getElementById('result-photos-wrap');
       if (!wrap) return;
-      const map = { front: 'result-photo-front', left: 'result-photo-left', right: 'result-photo-right' };
+      const map = { front: 'result-photo-front', left: 'result-photo-right', right: 'result-photo-left' };
       let anyPhoto = false;
       Object.entries(map).forEach(([key, id]) => {
         const box = document.getElementById(id);
@@ -5181,34 +5178,40 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       function startCarousel() {
         const cols = Array.from(track.children);
         if (cols.length < 3) return;
-        // Clona todos os itens para loop infinito
-        cols.forEach(col => {
-          const clone = col.cloneNode(true);
-          track.appendChild(clone);
+
+        // Clona 2 sets extras para loop visualmente contínuo
+        [1, 2].forEach(() => {
+          cols.forEach(col => track.appendChild(col.cloneNode(true)));
         });
 
-        const itemWidth = () => track.parentElement.offsetWidth / 3;
-        const gap = 14;
-        let pos = 0;
+        const GAP  = 14;
+        const SPEED = 28; // px/s
+
+        let pos      = 0;
         let lastTime = null;
-        const SPEED = 30; // px por segundo
+
+        function getItemW() {
+          return (track.parentElement.offsetWidth - GAP * 2) / 3;
+        }
 
         function tick(now) {
-          if (!lastTime) lastTime = now;
+          if (!lastTime) { lastTime = now; requestAnimationFrame(tick); return; }
           const dt = (now - lastTime) / 1000;
           lastTime = now;
           pos += SPEED * dt;
 
-          const stepSize = itemWidth() + gap;
-          const totalCols = track.children.length;
+          const itemW    = getItemW();
+          const stepSize = itemW + GAP;
 
-          // Quando passou um item completo, move-o do início para o fim
+          // DOM rotation: move primeiro filho para o fim sem resetar pos
+          // Isso elimina completamente o glitch de reset
           if (pos >= stepSize) {
             pos -= stepSize;
+            track.style.transition = 'none';
             track.appendChild(track.children[0]);
           }
 
-          track.style.transform = `translateX(-${pos.toFixed(2)}px)`;
+          track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
           requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
@@ -5941,7 +5944,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       const caps = answers && answers['scanner_captures'];
       const wrap = document.getElementById('result-photos-wrap');
       if (!wrap) return;
-      const map = { front: 'result-photo-front', left: 'result-photo-left', right: 'result-photo-right' };
+      const map = { front: 'result-photo-front', left: 'result-photo-right', right: 'result-photo-left' };
       let anyPhoto = false;
       Object.entries(map).forEach(([key, id]) => {
         const box = document.getElementById(id);
@@ -5977,34 +5980,40 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       function startCarousel() {
         const cols = Array.from(track.children);
         if (cols.length < 3) return;
-        // Clona todos os itens para loop infinito
-        cols.forEach(col => {
-          const clone = col.cloneNode(true);
-          track.appendChild(clone);
+
+        // Clona 2 sets extras para loop visualmente contínuo
+        [1, 2].forEach(() => {
+          cols.forEach(col => track.appendChild(col.cloneNode(true)));
         });
 
-        const itemWidth = () => track.parentElement.offsetWidth / 3;
-        const gap = 14;
-        let pos = 0;
+        const GAP  = 14;
+        const SPEED = 28; // px/s
+
+        let pos      = 0;
         let lastTime = null;
-        const SPEED = 30; // px por segundo
+
+        function getItemW() {
+          return (track.parentElement.offsetWidth - GAP * 2) / 3;
+        }
 
         function tick(now) {
-          if (!lastTime) lastTime = now;
+          if (!lastTime) { lastTime = now; requestAnimationFrame(tick); return; }
           const dt = (now - lastTime) / 1000;
           lastTime = now;
           pos += SPEED * dt;
 
-          const stepSize = itemWidth() + gap;
-          const totalCols = track.children.length;
+          const itemW    = getItemW();
+          const stepSize = itemW + GAP;
 
-          // Quando passou um item completo, move-o do início para o fim
+          // DOM rotation: move primeiro filho para o fim sem resetar pos
+          // Isso elimina completamente o glitch de reset
           if (pos >= stepSize) {
             pos -= stepSize;
+            track.style.transition = 'none';
             track.appendChild(track.children[0]);
           }
 
-          track.style.transform = `translateX(-${pos.toFixed(2)}px)`;
+          track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
           requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
