@@ -1321,7 +1321,7 @@
     overflow: hidden;
     isolation: isolate;
   }
-  .result-section:not(#box-idade-pele)::before {
+  .result-section:not(#box-idade-pele):not(#box-dicas-inteligentes)::before {
     content: '';
     position: absolute;
     top: 0; left: 5%; right: 5%;
@@ -1336,7 +1336,7 @@
     pointer-events: none;
     z-index: 2;
   }
-  .result-section:not(#box-idade-pele) > * { position: relative; z-index: 3; }
+  .result-section:not(#box-idade-pele):not(#box-dicas-inteligentes) > * { position: relative; z-index: 3; }
   /* Box Idade da Pele: mantém apenas margin-bottom do layout */
   #box-idade-pele { margin-bottom: 14px; }
   .rs-title {
@@ -1427,24 +1427,10 @@
     background: rgba(255,255,255,0.10);
     border: 1px solid rgba(255,255,255,0.18);
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     position: relative; overflow: hidden;
   }
-  .dica-step::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 5%; right: 5%;
-    height: 42%;
-    background: linear-gradient(
-      180deg,
-      rgba(255,255,255,0.38) 0%,
-      rgba(255,255,255,0.10) 60%,
-      transparent 100%
-    );
-    border-radius: 0 0 60% 60% / 0 0 100% 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
+
   .dica-step > * { position: relative; z-index: 1; }
   .rs-period {
     display: inline-block; align-self: flex-start;
@@ -3922,7 +3908,7 @@
       </div>
     </div>
 
-    <div class="result-section" id="box-dicas-inteligentes" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; margin-top: 6px; box-shadow:0 4px 16px rgba(74,127,165,0.18), inset 0 1px 0 rgba(255,255,255,0.07);">
+    <div class="result-section" id="box-dicas-inteligentes" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; margin-top: 6px; box-shadow:0 8px 32px rgba(74,127,165,0.22), inset 0 1px 0 rgba(255,255,255,0.07);">
       <!-- glow wine topo -->
       <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
       <!-- glow steel canto -->
