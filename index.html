@@ -1359,15 +1359,25 @@
   .routine-group-cards { display: flex; flex-direction: column; gap: 6px; }
   @media (max-width: 580px) { .routine-group-cards { margin-left: 0; } }
   .routine-step {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 14px;
-    background: rgba(247,242,234,0.92);
-    border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 13px;
-    box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--wine-pale) 0%, rgba(247,242,234,0.70) 100%);
+    border: 1.5px solid rgba(168,85,104,0.22);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(168,85,104,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+    position: relative; overflow: hidden;
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .routine-step:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.7); }
+  .routine-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 44%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, transparent 100%);
+    border-radius: 0 0 60% 60% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+  .routine-step:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .dica-step {
     display: flex; align-items: flex-start; gap: 12px;
     padding: 14px;
@@ -1385,12 +1395,14 @@
     border-radius: 100px; white-space: nowrap;
   }
   .rs-emoji {
-    width: 42px; height: 42px; border-radius: 11px;
+    width: 56px; height: 56px; border-radius: 16px;
     background: var(--ivory-dark);
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0;
+    font-size: 24px; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(168,85,104,0.15), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative; z-index: 1;
   }
-  .rs-step-name { font-size: 12px; font-weight: 400; color: var(--ink-soft); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
+  .rs-step-name { font-size: 12px; font-weight: 400; color: var(--ink-muted); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
   .rs-step-desc { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 2px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .rs-prod-name { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .rs-prod-instr { font-size: 12px; font-style: italic; color: var(--wine); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
@@ -1400,25 +1412,35 @@
   /* Produtos */
   .product-recs { display: flex; flex-direction: column; gap: 10px; }
   .prod-rec {
-    display: flex; align-items: center; gap: 13px;
-    padding: 13px 15px;
-    background: rgba(247,242,234,0.60);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.55);
-    border-radius: 13px;
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--wine-pale) 0%, rgba(247,242,234,0.70) 100%);
+    border: 1.5px solid rgba(168,85,104,0.22);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(168,85,104,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+    position: relative; overflow: hidden;
     transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 2px 8px rgba(24,16,14,0.06), inset 0 1px 0 rgba(255,255,255,0.7);
   }
-  .prod-rec:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.7); }
+  .prod-rec::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 44%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, transparent 100%);
+    border-radius: 0 0 60% 60% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+  .prod-rec:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .prod-emoji {
-    width: 42px; height: 42px; border-radius: 11px;
+    width: 56px; height: 56px; border-radius: 16px;
     background: var(--ivory-dark);
     display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0;
+    font-size: 24px; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(168,85,104,0.15), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative; z-index: 1;
   }
   .prod-name  { font-size: 15px; font-weight: 500; color: var(--ink); filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
-  .prod-brand { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
+  .prod-brand { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
   .prod-price { font-size: 12px; color: var(--wine); font-style: italic; margin-top: 1px; }
   .prod-fit {
     font-size: 11px; font-weight: 500; color: var(--wine-dark);
@@ -4996,8 +5018,8 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         // urlImagem pode vir direto da IA ou precisa ser buscada no catálogo
         const imgUrl = (p.urlImagem && p.urlImagem.trim()) ? p.urlImagem : buscarImagem(p.produto, p.marca);
         const imgHtml = imgUrl
-          ? '<img src="' + imgUrl + '" alt="' + prodNome + '" style="width:44px;height:44px;object-fit:contain;background:#fff;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
-          : '<div style="width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);">' + inicial + '</div>';
+          ? '<img src="' + imgUrl + '" alt="' + prodNome + '" style="width:56px;height:56px;object-fit:contain;background:#fff;border-radius:16px;flex-shrink:0;box-shadow:0 2px 8px rgba(168,85,104,0.15),inset 0 1px 0 rgba(255,255,255,0.6);position:relative;z-index:1;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
+          : '<div style="width:56px;height:56px;border-radius:16px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;font-weight:600;color:var(--wine);box-shadow:0 2px 8px rgba(168,85,104,0.15);position:relative;z-index:1;">' + inicial + '</div>';
         // Linha 1: nome da etapa — rs-step-name (12px, ink-soft)
         const nomeLine = (p.nome)
           ? '<div class="rs-step-name">' + p.nome + '</div>'
@@ -5032,7 +5054,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           : '';
         return '<div class="routine-step">' +
           imgHtml +
-          '<div>' + nomeLine + prodLine + brandLine + descLine + '</div>' +
+          '<div style="position:relative;z-index:1;flex:1;">' + nomeLine + prodLine + brandLine + descLine + '</div>' +
         '</div>';
       }).join('');
     }
@@ -5060,19 +5082,19 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           const inicial = nomeLimpo.charAt(0).toUpperCase();
           const imgUrlRec = (p.urlImagem && p.urlImagem.trim()) ? p.urlImagem : buscarImagem(p.nome, p.marca);
           const imgHtml = imgUrlRec
-            ? '<img src="' + imgUrlRec + '" alt="' + nomeLimpo + '" style="width:44px;height:44px;object-fit:contain;background:#fff;border-radius:10px;flex-shrink:0;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
-            : '<div style="width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);">' + inicial + '</div>';
+            ? '<img src="' + imgUrlRec + '" alt="' + nomeLimpo + '" style="width:56px;height:56px;object-fit:contain;background:#fff;border-radius:16px;flex-shrink:0;box-shadow:0 2px 8px rgba(168,85,104,0.15),inset 0 1px 0 rgba(255,255,255,0.6);position:relative;z-index:1;" onerror="this.outerHTML=\'<div style=&quot;width:44px;height:44px;border-radius:10px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:600;color:var(--wine);&quot;>' + inicial + '</div>\'">'
+            : '<div style="width:56px;height:56px;border-radius:16px;background:var(--wine-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;font-weight:600;color:var(--wine);box-shadow:0 2px 8px rgba(168,85,104,0.15);position:relative;z-index:1;">' + inicial + '</div>';
           const preco = (typeof p.preco === 'number')
             ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
             : 'R$ ' + p.preco;
           return '<div class="prod-rec">' +
             imgHtml +
-            '<div>' +
+            '<div style="position:relative;z-index:1;flex:1;">' +
               '<div class="prod-name">' + nomeLimpo + '</div>' +
               '<div class="prod-brand">' + p.marca + '</div>' +
               '<div class="prod-price">' + preco + '</div>' +
             '</div>' +
-            '<span class="prod-fit">' + p.fit + '% ❤︎</span>' +
+            '<span class="prod-fit" style="position:relative;z-index:1;">' + p.fit + '% ❤︎</span>' +
           '</div>';
         }).join('');
       }
