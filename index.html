@@ -1377,9 +1377,9 @@
     border-radius: 0 0 60% 60% / 0 0 100% 100%;
     pointer-events: none;
   }
-  .routine-step:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
+  .routine-step:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .dica-step {
-    display: flex; align-items: flex-start; gap: 12px;
+    display: flex; align-items: center; gap: 12px;
     padding: 14px;
     background: rgba(247,242,234,0.92);
     border: 1px solid rgba(255,255,255,0.55);
@@ -1430,7 +1430,7 @@
     border-radius: 0 0 60% 60% / 0 0 100% 100%;
     pointer-events: none;
   }
-  .prod-rec:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
+  .prod-rec:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .prod-emoji {
     width: 56px; height: 56px; border-radius: 16px;
     background: var(--ivory-dark);
@@ -1529,7 +1529,7 @@
   }
   .essential-product-card {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     padding: 18px 18px;
     background: linear-gradient(135deg, var(--wine-pale) 0%, rgba(247,242,234,0.70) 100%);
@@ -1540,7 +1540,7 @@
     overflow: hidden;
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .essential-product-card:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
+  .essential-product-card:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(168,85,104,0.18), inset 0 1px 0 rgba(255,255,255,0.8); }
   .essential-product-card::before {
     content: '';
     position: absolute;
@@ -3667,7 +3667,7 @@
 
     <div class="result-cta">
       <h3>Assine e veja sua pele <em>evoluir<span style="color:var(--ivory);"></span></em> a cada dia.</h3>
-      <p style="max-width:450px;margin-left:auto;margin-right:auto;">Receba ajuda de uma assistente virtual 24h capaz de ajustar seu protocolo de acordo com suas necessidades.</p>
+      <p style="max-width:450px;margin-left:auto;margin-right:auto;">Receba os cuidados de uma assistente virtual capaz de ajustar seu protocolo de acordo com suas necessidades.</p>
       <a href="#" class="btn-primary-full">Assinar agora</a>
       <p class="cta-note">🔓 7 dias grátis · Cancele quando quiser</p>
     </div>
@@ -5052,9 +5052,16 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         const descLine = (p.descricao)
           ? '<div class="rs-prod-instr">' + semPontoFinal(p.descricao).slice(0, 65) + (p.descricao.length > 65 ? '…' : '') + '</div>'
           : '';
+        const precoFormatado = (typeof p.preco === 'number')
+          ? 'R$ ' + p.preco.toFixed(2).replace('.', ',')
+          : (p.preco ? 'R$ ' + p.preco : '');
+        const precoPilula = precoFormatado
+          ? '<span class="prod-fit" style="position:relative;z-index:1;align-self:flex-start;text-transform:none;letter-spacing:0;font-style:italic;">' + precoFormatado + '</span>'
+          : '';
         return '<div class="routine-step">' +
           imgHtml +
           '<div style="position:relative;z-index:1;flex:1;">' + nomeLine + prodLine + brandLine + descLine + '</div>' +
+          precoPilula +
         '</div>';
       }).join('');
     }
