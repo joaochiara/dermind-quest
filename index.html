@@ -945,7 +945,7 @@
   /* ── AGUARDANDO ── */
   .aguardando-screen { text-align: center; padding: 16px 0; }
   @media (max-width: 580px) {
-    .aguardando-screen { transform: translateY(110px); }
+    .aguardando-screen { transform: translateY(70px); }
   }
 
   /* Fade out do conteúdo da screen aguardando após última pílula */
@@ -2230,6 +2230,108 @@
     .interblock-step.active .interblock-dot { width: 36px; height: 36px; font-size: 17px; }
   }
 
+
+  /* ── FOTO BOXES NA SCREEN RESULTADO ── */
+  .result-photos-wrap {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 28px;
+    margin-top: 0;
+  }
+  .result-photo-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 120px;
+  }
+  .result-photo-box {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 16px;
+    background: rgba(253,250,247,0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.55);
+    box-shadow:
+      0 2px 0px rgba(255,255,255,0.70),
+      0 6px 18px rgba(24,16,14,0.10),
+      0 1px 0 rgba(255,255,255,0.90) inset,
+      0 -1px 0 rgba(0,0,0,0.06) inset;
+    overflow: hidden;
+    position: relative;
+    will-change: transform;
+  }
+  .result-photo-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 38%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .result-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .result-photo-box .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--ink-muted);
+  }
+  .result-photo-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    color: var(--ivory);
+    background: rgba(253,250,247,0.70);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5px 13px;
+    border-radius: 100px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.60),
+      0 2px 8px rgba(24,16,14,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  @media (max-width: 580px) {
+    .result-photo-col { max-width: 90px; }
+    .result-photo-pill { font-size: 9px; padding: 4px 10px; }
+  }
+
+
+  /* ── GLASS BOX OPÇÃO LIVRE (screens 2, 9, 10, 13) ── */
+  .extra-option-wrap {
+    position: relative;
+    will-change: transform;
+  }
+  .extra-option-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 5%; right: 5%;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 0 0 50% 50%;
+    pointer-events: none;
+    z-index: 2;
+  }
+
   /* ── TYPEWRITER NAS SCREENS ── */
   .screen-q-typed {
     pointer-events: none;
@@ -2937,6 +3039,9 @@
       <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🐯</div><div class="opt-text"><span class="opt-label">Manchas escuras</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">👁️</div><div class="opt-text"><span class="opt-label">Olheiras</span></div></div>
     </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Outro (descreva aqui)" style="font-size:14px; padding:15px 20px;">
+      </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(1)">Voltar</button>
       <button class="btn-next" id="next-2" disabled onclick="goTo(3)">Continuar</button>
@@ -3102,7 +3207,7 @@
         <div class="opt-text"><span class="opt-label">Apenas noturna</span><span class="opt-desc">Tenho uma rotina só à noite</span></div>
       </div>
       <div class="option" onclick="selectRotinaOption(this,'nenhuma')">
-        <div class="opt-icon">👎</div>
+        <div class="opt-icon">❌</div>
         <div class="opt-text"><span class="opt-label">Não tenho uma rotina</span><span class="opt-desc">Ainda não tenho nenhum hábito regular</span></div>
       </div>
     </div>
@@ -3126,6 +3231,9 @@
       <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🍊</div><div class="opt-text"><span class="opt-label">Vitamina C</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🥛</div><div class="opt-text"><span class="opt-label">Niacinamida</span></div></div>
     </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Outro (descreva aqui)" style="font-size:14px; padding:15px 20px;">
+      </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(8)">Voltar</button>
       <button class="btn-next" id="next-9" disabled onclick="goTo(window._rotina9Next||10)">Continuar</button>
@@ -3150,6 +3258,9 @@
       <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧊</div><div class="opt-text"><span class="opt-label">Ácido salicílico</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🫟</div><div class="opt-text"><span class="opt-label">Ácido lático</span></div></div>
     </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Outro (descreva aqui)" style="font-size:14px; padding:15px 20px;">
+      </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(window._rotina10Back||9)">Voltar</button>
       <button class="btn-next" id="next-10" disabled onclick="goTo(11)">Continuar</button>
@@ -3200,7 +3311,7 @@
         <div class="opt-text"><span class="opt-label">Limpo, mas não preparo</span><span class="opt-desc">Uso apenas sabonete ou gel</span></div>
       </div>
       <div class="option" onclick="selectOption(this,'q_preparo_pele','nao')">
-        <div class="opt-icon">👎</div>
+        <div class="opt-icon">❌</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Geralmente não faço nenhum preparo</span></div>
       </div>
     </div>
@@ -3222,8 +3333,11 @@
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧻</div><div class="opt-text"><span class="opt-label">Lenço</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
-      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">👎</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">❌</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
     </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Outro (descreva aqui)" style="font-size:14px; padding:15px 20px;">
+      </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(12)">Voltar</button>
       <button class="btn-next" id="next-13" disabled onclick="goTo(14)">Continuar</button>
@@ -3324,7 +3438,7 @@
         <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Já reagi a algum produto ou ingrediente</span></div>
       </div>
       <div class="option" onclick="selectAlergiaOption(this,'nao')">
-        <div class="opt-icon">👎</div>
+        <div class="opt-icon">❌</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Nunca tive reação alérgica a cosméticos</span></div>
       </div>
     </div>
@@ -3364,7 +3478,7 @@
         <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Uso medicamento tópico com prescrição</span></div>
       </div>
       <div class="option" onclick="selectReceitaOption(this,'nao')">
-        <div class="opt-icon">👎</div>
+        <div class="opt-icon">❌</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não uso nenhum produto com receita</span></div>
       </div>
     </div>
@@ -3444,7 +3558,7 @@
     <p class="screen-hint">Alguns ativos são contraindicados nessa fase, por esse motivo perguntamos.</p>
     <div class="options" id="q_grav">
       <div class="option" onclick="selectOption(this,'q_grav','nao')">
-        <div class="opt-icon">👎</div>
+        <div class="opt-icon">❌</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não estou grávida nem amamentando</span></div>
       </div>
       <div class="option" onclick="selectOption(this,'q_grav','gravida')">
@@ -3665,7 +3779,28 @@
 <!-- RESULTADO OVERLAY — fora do quiz-wrap, posição fixa, independente de scroll -->
 <div id="result-overlay" style="display:none; position:fixed; inset:0; z-index:50; flex-direction:column; align-items:center; justify-content:flex-start; background:transparent; overflow-y:auto;">
   <div class="screen result-screen" id="screen-result" data-screen="result" style="display:block; width:100%; padding:96px 24px 120px;">
-    <div class="result-badge">✦ Protocolo</div>
+    <!-- Fotos do scanner -->
+    <div class="result-photos-wrap" id="result-photos-wrap" style="display:none;">
+      <div class="result-photo-col">
+        <div class="result-photo-box" id="result-photo-front">
+          <div class="photo-placeholder">📸</div>
+        </div>
+        <span class="result-photo-pill">Frente</span>
+      </div>
+      <div class="result-photo-col">
+        <div class="result-photo-box" id="result-photo-left">
+          <div class="photo-placeholder">📸</div>
+        </div>
+        <span class="result-photo-pill">Lado esquerdo</span>
+      </div>
+      <div class="result-photo-col">
+        <div class="result-photo-box" id="result-photo-right">
+          <div class="photo-placeholder">📸</div>
+        </div>
+        <span class="result-photo-pill">Lado direito</span>
+      </div>
+    </div>
+        <div class="result-badge">✦ Protocolo</div>
     <h2 class="result-name" id="resultTitle" style="position:relative;">
       <span id="result-title-placeholder" style="display:block; visibility:hidden; pointer-events:none;" aria-hidden="true">Seu perfil de pele é <em>mista com tendência oleosa</em>.</span>
       <span id="result-title-typed" style="display:none; position:absolute; top:0; left:0; width:100%;"></span>
@@ -4980,6 +5115,42 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (fill) fill.dataset.width = r.scores[chave] + '%';
     });
 
+
+    // Popula fotos do scanner na screen resultado
+    (function() {
+      const caps = answers && answers['scanner_captures'];
+      const wrap = document.getElementById('result-photos-wrap');
+      if (!wrap) return;
+      const map = { front: 'result-photo-front', left: 'result-photo-left', right: 'result-photo-right' };
+      let anyPhoto = false;
+      Object.entries(map).forEach(([key, id]) => {
+        const box = document.getElementById(id);
+        if (!box) return;
+        const src = caps && caps[key];
+        if (src) {
+          box.innerHTML = '';
+          const img = document.createElement('img');
+          img.src = src;
+          box.appendChild(img);
+          anyPhoto = true;
+          // Float animation nos 2 eixos
+          let t0 = performance.now();
+          const period = 3800 + Math.random() * 600;
+          const ampY = 4 + Math.random() * 2;
+          const ampX = 2 + Math.random() * 1.5;
+          const phaseX = Math.random() * Math.PI * 2;
+          (function tick(now) {
+            const t = now - t0;
+            const y = ampY * Math.sin(2 * Math.PI * t / period);
+            const x = ampX * Math.sin(2 * Math.PI * t / (period * 1.3) + phaseX);
+            box.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+            requestAnimationFrame(tick);
+          })(t0);
+        }
+      });
+      if (anyPhoto) wrap.style.display = 'flex';
+    })();
+
     const idadeInput = document.getElementById('inputIdadeNew');
     const idadeReal = idadeInput ? parseInt(idadeInput.value.trim()) : null;
     if (idadeReal && r.idadePele) {
@@ -5650,11 +5821,20 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     window.addEventListener('result-boxes-ready', function _onBoxesReady() {
       window.removeEventListener('result-boxes-ready', _onBoxesReady);
       const RESULT_BOX_GAP = 120;
-      // Barras: abaixo de 50% → wine, 50% ou mais → azul aço
+      // Barras: lógica padrão: abaixo de 50% → wine, 50% ou mais → steel
+      // Para oleosidade/sensibilidade/rugas/manchas: lógica invertida
+      const invertedScores = ['Oleosidade', 'Sensibilidade', 'Rugas', 'Manchas'];
       const fills = document.querySelectorAll('.score-bar-fill');
       fills.forEach((b) => {
+        const pill = b.closest('.score-pill');
+        const lbl = pill ? pill.querySelector('.score-lbl') : null;
+        const isInverted = lbl && invertedScores.includes(lbl.textContent.trim());
         const pct = parseInt(b.dataset.width);
-        b.style.background = pct < 50 ? 'var(--wine)' : 'var(--steel)';
+        if (isInverted) {
+          b.style.background = pct < 50 ? 'var(--steel)' : 'var(--wine)';
+        } else {
+          b.style.background = pct < 50 ? 'var(--wine)' : 'var(--steel)';
+        }
       });
 
       document.querySelectorAll('.score-bar-fill').forEach(b => {
@@ -5685,7 +5865,43 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       });
 
       // ── Popula box Idade da Pele ──
-      const idadeInput = document.getElementById('inputIdadeNew');
+  
+    // Popula fotos do scanner na screen resultado
+    (function() {
+      const caps = answers && answers['scanner_captures'];
+      const wrap = document.getElementById('result-photos-wrap');
+      if (!wrap) return;
+      const map = { front: 'result-photo-front', left: 'result-photo-left', right: 'result-photo-right' };
+      let anyPhoto = false;
+      Object.entries(map).forEach(([key, id]) => {
+        const box = document.getElementById(id);
+        if (!box) return;
+        const src = caps && caps[key];
+        if (src) {
+          box.innerHTML = '';
+          const img = document.createElement('img');
+          img.src = src;
+          box.appendChild(img);
+          anyPhoto = true;
+          // Float animation nos 2 eixos
+          let t0 = performance.now();
+          const period = 3800 + Math.random() * 600;
+          const ampY = 4 + Math.random() * 2;
+          const ampX = 2 + Math.random() * 1.5;
+          const phaseX = Math.random() * Math.PI * 2;
+          (function tick(now) {
+            const t = now - t0;
+            const y = ampY * Math.sin(2 * Math.PI * t / period);
+            const x = ampX * Math.sin(2 * Math.PI * t / (period * 1.3) + phaseX);
+            box.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+            requestAnimationFrame(tick);
+          })(t0);
+        }
+      });
+      if (anyPhoto) wrap.style.display = 'flex';
+    })();
+
+    const idadeInput = document.getElementById('inputIdadeNew');
       const idadeReal = idadeInput ? parseInt(idadeInput.value.trim()) : null;
 
       if (idadeReal && !isNaN(idadeReal)) {
@@ -5741,7 +5957,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     }
 
     function updateAttractor() {
-      const mobileOffset = window.innerWidth <= 580 ? -30 : 0;
+      const mobileOffset = window.innerWidth <= 580 ? -70 : 0;
       const el = document.getElementById('particle-attractor');
       if (!el) { cx = W / 2; cy = H / 2 + mobileOffset; return; }
       const er = el.getBoundingClientRect();
@@ -8872,6 +9088,23 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     window.addEventListener('load', pushFooterToFold);
     window.addEventListener('resize', pushFooterToFold);
   })();
+
+  
+  // Float animation nos glass boxes das screens 2, 9, 10, 13
+  document.querySelectorAll('.extra-option-wrap').forEach(function(box, i) {
+    var t0 = performance.now();
+    var period = 4200 + i * 300;
+    var ampY = 3.5;
+    var ampX = 1.8;
+    var phaseX = i * 0.9;
+    (function tick(now) {
+      var t = now - t0;
+      var y = ampY * Math.sin(2 * Math.PI * t / period);
+      var x = ampX * Math.sin(2 * Math.PI * t / (period * 1.4) + phaseX);
+      box.style.transform = 'translate(' + x.toFixed(2) + 'px, ' + y.toFixed(2) + 'px)';
+      requestAnimationFrame(tick);
+    })(t0);
+  });
 
   </script>
 </footer>
