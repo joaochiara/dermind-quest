@@ -1473,8 +1473,8 @@
   .rs-prod-name { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .rs-prod-brand { font-size: 12px; font-weight: 400; color: var(--ink-muted); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
   .rs-prod-instr { font-size: 12px; font-style: italic; color: var(--wine); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
-  .dica-title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
-  .dica-sub   { font-size: 12px; font-weight: 400; color: var(--ink-soft); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
+  .dica-title { font-size: 15px; font-weight: 500; color: var(--ivory); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
+  .dica-sub   { font-size: 12px; font-weight: 400; color: rgba(247,242,234,0.65); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
 
   /* Produtos */
   .product-recs { display: flex; flex-direction: column; gap: 10px; }
@@ -2234,11 +2234,30 @@
   /* ── FOTO BOXES NA SCREEN RESULTADO ── */
   .result-photos-wrap {
     display: flex;
-    gap: 14px;
-    justify-content: center;
+    gap: 0;
+    justify-content: flex-start;
     margin-bottom: 28px;
     margin-top: 0;
     width: 100%;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  .result-photos-track {
+    display: flex;
+    gap: 14px;
+    width: 100%;
+    will-change: transform;
+    transition: none;
+  }
+  .result-photos-track .result-photo-col {
+    flex: 0 0 calc(33.333% - 10px);
+    min-width: 0;
+  }
+  @media (max-width: 580px) {
+    .result-photos-wrap { margin-top: 10px; }
+    #resultSubtitle { margin-top: -5px; }
   }
   .result-photo-col {
     display: flex;
@@ -3037,7 +3056,7 @@
       <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">👁️</div><div class="opt-text"><span class="opt-label">Olheiras</span></div></div>
     </div>
       <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
-        <input type="text" class="input-field extra-option-input" placeholder="Não achou sua resposta? Escreva aqui" style="padding:15px 20px;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu problema? Digite aqui" style="padding:15px 20px;">
       </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(1)">Voltar</button>
@@ -3204,7 +3223,7 @@
         <div class="opt-text"><span class="opt-label">Apenas noturna</span><span class="opt-desc">Tenho uma rotina só à noite</span></div>
       </div>
       <div class="option" onclick="selectRotinaOption(this,'nenhuma')">
-        <div class="opt-icon">❌</div>
+        <div class="opt-icon">👎</div>
         <div class="opt-text"><span class="opt-label">Não tenho uma rotina</span><span class="opt-desc">Ainda não tenho nenhum hábito regular</span></div>
       </div>
     </div>
@@ -3229,7 +3248,7 @@
       <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🥛</div><div class="opt-text"><span class="opt-label">Niacinamida</span></div></div>
     </div>
       <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
-        <input type="text" class="input-field extra-option-input" placeholder="Não achou sua resposta? Escreva aqui" style="padding:15px 20px;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
       </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(8)">Voltar</button>
@@ -3256,7 +3275,7 @@
       <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🫟</div><div class="opt-text"><span class="opt-label">Ácido lático</span></div></div>
     </div>
       <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
-        <input type="text" class="input-field extra-option-input" placeholder="Não achou sua resposta? Escreva aqui" style="padding:15px 20px;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
       </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(window._rotina10Back||9)">Voltar</button>
@@ -3308,7 +3327,7 @@
         <div class="opt-text"><span class="opt-label">Limpo, mas não preparo</span><span class="opt-desc">Uso apenas sabonete ou gel</span></div>
       </div>
       <div class="option" onclick="selectOption(this,'q_preparo_pele','nao')">
-        <div class="opt-icon">❌</div>
+        <div class="opt-icon">👎</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Geralmente não faço nenhum preparo</span></div>
       </div>
     </div>
@@ -3333,7 +3352,7 @@
       <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">👎</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
     </div>
       <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
-        <input type="text" class="input-field extra-option-input" placeholder="Não achou sua resposta? Escreva aqui" style="padding:15px 20px;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
       </div>
     <div class="nav-buttons">
       <button class="btn-back" onclick="goTo(12)">Voltar</button>
@@ -3435,7 +3454,7 @@
         <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Já reagi a algum produto ou ingrediente</span></div>
       </div>
       <div class="option" onclick="selectAlergiaOption(this,'nao')">
-        <div class="opt-icon">❌</div>
+        <div class="opt-icon">👎</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Nunca tive reação alérgica a cosméticos</span></div>
       </div>
     </div>
@@ -3475,7 +3494,7 @@
         <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Uso medicamento tópico com prescrição</span></div>
       </div>
       <div class="option" onclick="selectReceitaOption(this,'nao')">
-        <div class="opt-icon">❌</div>
+        <div class="opt-icon">👎</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não uso nenhum produto com receita</span></div>
       </div>
     </div>
@@ -3555,7 +3574,7 @@
     <p class="screen-hint">Alguns ativos são contraindicados nessa fase, por esse motivo perguntamos.</p>
     <div class="options" id="q_grav">
       <div class="option" onclick="selectOption(this,'q_grav','nao')">
-        <div class="opt-icon">❌</div>
+        <div class="opt-icon">👎</div>
         <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não estou grávida nem amamentando</span></div>
       </div>
       <div class="option" onclick="selectOption(this,'q_grav','gravida')">
@@ -3784,24 +3803,26 @@
     </h2>
 
     <!-- Fotos do scanner -->
-    <div class="result-photos-wrap" id="result-photos-wrap" style="display:none;">
-      <div class="result-photo-col">
-        <div class="result-photo-box" id="result-photo-front">
-          <div class="photo-placeholder">📸</div>
+    <div class="result-photos-wrap" id="result-photos-wrap" style="display:none; overflow:hidden;">
+      <div class="result-photos-track" id="result-photos-track">
+        <div class="result-photo-col">
+          <div class="result-photo-box" id="result-photo-front">
+            <div class="photo-placeholder">📸</div>
+          </div>
+          <span class="result-photo-pill">Frente</span>
         </div>
-        <span class="result-photo-pill">Frente</span>
-      </div>
-      <div class="result-photo-col">
-        <div class="result-photo-box" id="result-photo-left">
-          <div class="photo-placeholder">📸</div>
+        <div class="result-photo-col">
+          <div class="result-photo-box" id="result-photo-left">
+            <div class="photo-placeholder">📸</div>
+          </div>
+          <span class="result-photo-pill">Lado esquerdo</span>
         </div>
-        <span class="result-photo-pill">Lado esquerdo</span>
-      </div>
-      <div class="result-photo-col">
-        <div class="result-photo-box" id="result-photo-right">
-          <div class="photo-placeholder">📸</div>
+        <div class="result-photo-col">
+          <div class="result-photo-box" id="result-photo-right">
+            <div class="photo-placeholder">📸</div>
+          </div>
+          <span class="result-photo-pill">Lado direito</span>
         </div>
-        <span class="result-photo-pill">Lado direito</span>
       </div>
     </div>
     <p class="result-sub" id="resultSubtitle" style="visibility:hidden;">Oi, <span id="resultNome">você</span>! Te avaliamos e montamos uma <strong>rotina personalizada</strong> para os próximos dias.</p>
@@ -3831,7 +3852,7 @@
       <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
       <!-- glow steel canto -->
       <div style="position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--steel) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
-      <div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ivory);margin-bottom:18px;position:relative;filter:drop-shadow(0 2px 8px rgba(168,85,104,0.08));">Idade da pele</div>
+      <div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ivory);margin-bottom:18px;position:relative;filter:drop-shadow(0 2px 8px rgba(168,85,104,0.08));">Idade da pele com <em style="color:var(--blush);">envelhecimento precoce</em></div>
       <div class="age-compare-box" style="position:relative;">
         <div class="age-col" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.10);">
           <div class="age-col-value" id="ageReal" style="color:var(--ivory);">—</div>
@@ -3897,6 +3918,16 @@
       </div>
     </div>
 
+    <div class="result-section" id="box-dicas-inteligentes" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; box-shadow:0 8px 32px rgba(74,127,165,0.22), inset 0 1px 0 rgba(255,255,255,0.07);">
+      <!-- glow wine topo -->
+      <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+      <!-- glow steel canto -->
+      <div style="position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--steel) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+      <div class="rs-title" style="color:var(--ivory);">Dicas inteligentes</div>
+      <div id="dicas-lista" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
+    </div>
+
+    <!-- BOX: Dicas Inteligentes -->
     <div class="result-section">
       <div class="rs-title">Combinam com você</div>
       <div class="product-recs" id="indicados-para-voce">
@@ -3906,12 +3937,6 @@
         <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">❤︎ 96%</span></div>
         <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">❤︎ 93%</span></div>
       </div>
-    </div>
-
-    <!-- BOX: Dicas Inteligentes -->
-    <div class="result-section" id="box-dicas-inteligentes">
-      <div class="rs-title">Dicas inteligentes</div>
-      <div id="dicas-lista" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
     </div>
 
     <div class="result-cta">
@@ -5138,6 +5163,59 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (anyPhoto) wrap.style.display = 'flex';
     })();
 
+    // ── Carrossel automático das fotos do scanner ──────────────────────
+    (function() {
+      const wrap  = document.getElementById('result-photos-wrap');
+      const track = document.getElementById('result-photos-track');
+      if (!wrap || !track) return;
+
+      // Observa quando wrap fica visível (após fade in) para iniciar
+      const observer = new MutationObserver(function() {
+        if (wrap.style.opacity === '1' && track.children.length >= 3) {
+          observer.disconnect();
+          startCarousel();
+        }
+      });
+      observer.observe(wrap, { attributes: true, attributeFilter: ['style'] });
+
+      function startCarousel() {
+        const cols = Array.from(track.children);
+        if (cols.length < 3) return;
+        // Clona todos os itens para loop infinito
+        cols.forEach(col => {
+          const clone = col.cloneNode(true);
+          track.appendChild(clone);
+        });
+
+        const itemWidth = () => track.parentElement.offsetWidth / 3;
+        const gap = 14;
+        let pos = 0;
+        let lastTime = null;
+        const SPEED = 30; // px por segundo
+
+        function tick(now) {
+          if (!lastTime) lastTime = now;
+          const dt = (now - lastTime) / 1000;
+          lastTime = now;
+          pos += SPEED * dt;
+
+          const stepSize = itemWidth() + gap;
+          const totalCols = track.children.length;
+
+          // Quando passou um item completo, move-o do início para o fim
+          if (pos >= stepSize) {
+            pos -= stepSize;
+            track.appendChild(track.children[0]);
+          }
+
+          track.style.transform = `translateX(-${pos.toFixed(2)}px)`;
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    })();
+
+
     const idadeInput = document.getElementById('inputIdadeNew');
     const idadeReal = idadeInput ? parseInt(idadeInput.value.trim()) : null;
     if (idadeReal && r.idadePele) {
@@ -5791,6 +5869,11 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
                   resultSub.style.visibility = 'visible';
                   resultSub.style.transition = 'opacity 1.4s ease';
                   resultSub.style.opacity = '1';
+                  // Fotos do scanner: fade in sincronizado com subtítulo
+                  const photosWrap = document.getElementById('result-photos-wrap');
+                  if (photosWrap && photosWrap.style.display !== 'none') {
+                    photosWrap.style.opacity = '1';
+                  }
                   setTimeout(() => { if (resultSub) resultSub.style.transition = ''; }, 1450);
                 }
                 // Slide-up + fade-in dos boxes começa junto com o subtítulo
@@ -5875,6 +5958,59 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       });
       if (anyPhoto) wrap.style.display = 'flex';
     })();
+
+    // ── Carrossel automático das fotos do scanner ──────────────────────
+    (function() {
+      const wrap  = document.getElementById('result-photos-wrap');
+      const track = document.getElementById('result-photos-track');
+      if (!wrap || !track) return;
+
+      // Observa quando wrap fica visível (após fade in) para iniciar
+      const observer = new MutationObserver(function() {
+        if (wrap.style.opacity === '1' && track.children.length >= 3) {
+          observer.disconnect();
+          startCarousel();
+        }
+      });
+      observer.observe(wrap, { attributes: true, attributeFilter: ['style'] });
+
+      function startCarousel() {
+        const cols = Array.from(track.children);
+        if (cols.length < 3) return;
+        // Clona todos os itens para loop infinito
+        cols.forEach(col => {
+          const clone = col.cloneNode(true);
+          track.appendChild(clone);
+        });
+
+        const itemWidth = () => track.parentElement.offsetWidth / 3;
+        const gap = 14;
+        let pos = 0;
+        let lastTime = null;
+        const SPEED = 30; // px por segundo
+
+        function tick(now) {
+          if (!lastTime) lastTime = now;
+          const dt = (now - lastTime) / 1000;
+          lastTime = now;
+          pos += SPEED * dt;
+
+          const stepSize = itemWidth() + gap;
+          const totalCols = track.children.length;
+
+          // Quando passou um item completo, move-o do início para o fim
+          if (pos >= stepSize) {
+            pos -= stepSize;
+            track.appendChild(track.children[0]);
+          }
+
+          track.style.transform = `translateX(-${pos.toFixed(2)}px)`;
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    })();
+
 
     const idadeInput = document.getElementById('inputIdadeNew');
       const idadeReal = idadeInput ? parseInt(idadeInput.value.trim()) : null;
