@@ -1192,21 +1192,10 @@
     }
 
     .cracha-top {
-      background: var(--wine);
-      padding: 10px 18px 14px;
+      padding: 18px 20px 0;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      position: relative;
-    }
-    .cracha-label {
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(253,250,247,0.80);
+      justify-content: flex-start;
     }
 
     .cracha-photo-wrap {
@@ -1347,8 +1336,8 @@
       display: flex;
       flex-direction: column;
     }
-    /* Em mobile: col-left visível, mas filhos específicos ocultados — produto essencial permanece visível */
-    .result-col-left > *:not(#box-produto-essencial) {
+    /* Em mobile: col-left visível, mas filhos específicos ocultados — produto essencial e combinam permanecem visíveis */
+    .result-col-left > *:not(#box-produto-essencial):not(#box-combinam) {
       display: none !important;
     }
     /* Em mobile: foto frente isolada oculta (usa o carrossel) */
@@ -4042,7 +4031,7 @@
           <div id="result-cracha">
             <!-- Topo decorativo do crachá -->
             <div class="cracha-top">
-              <span class="cracha-label">derm.ia · PACIENTE</span>
+              <div class="result-badge badge-visible" style="margin-bottom:0; opacity:1; transform:none; transition:none;">⛶ PACIENTE</div>
             </div>
             <!-- Foto -->
             <div class="cracha-photo-wrap">
@@ -4121,6 +4110,18 @@
               <span class="essential-badge" id="essentialBadge">⭑ Prioridade</span>
               <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
             </div>
+          </div>
+        </div>
+
+        <!-- BOX: Combinam com você — col-left, abaixo do produto essencial -->
+        <div class="result-section" id="box-combinam">
+          <div class="rs-title">Combinam com você</div>
+          <div class="product-recs" id="indicados-para-voce">
+            <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">❤︎ 97%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">❤︎ 94%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">❤︎ 91%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">❤︎ 96%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">❤︎ 93%</span></div>
           </div>
         </div>
 
@@ -4261,17 +4262,7 @@
 
     <!-- ── ABAIXO DAS COLUNAS: 1 coluna full-width ── -->
 
-    <!-- BOX: Combinam com você -->
-    <div class="result-section result-below-cols">
-      <div class="rs-title">Combinam com você</div>
-      <div class="product-recs" id="indicados-para-voce">
-        <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">❤︎ 97%</span></div>
-        <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">❤︎ 94%</span></div>
-        <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">❤︎ 91%</span></div>
-        <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">❤︎ 96%</span></div>
-        <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">❤︎ 93%</span></div>
-      </div>
-    </div>
+    <!-- BOX: Combinam com você — movido para col-left -->
 
     <div class="result-cta result-below-cols">
       <h3>Assine e veja sua pele <em>evoluir<span style="color:var(--ivory);"></span></em> a cada dia.</h3>
@@ -5441,10 +5432,6 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         <stop offset="0%"   stop-color="#A85568" stop-opacity="0.28"/>
         <stop offset="100%" stop-color="#4A7FA5" stop-opacity="0.18"/>
       </radialGradient>
-      <radialGradient id="radar-stroke-grad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="#A85568" stop-opacity="0.85"/>
-        <stop offset="100%" stop-color="#4A7FA5" stop-opacity="0.70"/>
-      </radialGradient>
     </defs>`;
 
     // Fundo octógono
@@ -5466,37 +5453,34 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       svgHtml += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(168,85,104,0.18)" stroke-width="1"/>`;
     }
 
-    // Polígono de dados — começa do centro, anima depois
+    // Polígono de dados — fill gradient + stroke sólido wine, começa do centro, anima depois
     const dataFull = scores.map((s, i) => polar(2 * Math.PI * i / n, maxR * s / 100));
     const dataZero = scores.map((_, i) => polar(2 * Math.PI * i / n, 0));
     svgHtml += `<polygon id="radar-data-poly"
       points="${dataZero.map(p=>p.join(',')).join(' ')}"
       fill="url(#radar-fill-grad)"
-      stroke="url(#radar-stroke-grad)"
+      stroke="rgba(168,85,104,0.75)"
       stroke-width="2"
       stroke-linejoin="round"/>`;
 
-    // Linhas conectoras (pill → dot) — começam no ponto central, animam depois
+    // Linhas conectoras (dot → borda do eixo, onde a pílula começa) — mesma cor do dot
+    // A linha vai do dot atual até o ponto na borda maxR do mesmo eixo
+    const edgePts = scores.map((_, i) => polar(2 * Math.PI * i / n, maxR));
     scores.forEach((s, i) => {
-      const angle  = 2 * Math.PI * i / n;
-      const sinA   = Math.sin(angle);
-      const [px, py] = pillPts[i];
-      const [dx, dy] = dotPts[i];
-      // Ponto de âncora na pílula (lado mais próximo do gráfico)
-      const anchorX = px + (cx - px) * 0.28;
-      const anchorY = py + (cy - py) * 0.28;
-      // Controle da curva orgânica: perpendicular leve ao eixo
-      const perpX = -(py - cy) * 0.18;
-      const perpY =  (px - cx) * 0.18;
-      const cpX = (anchorX + cx) / 2 + perpX;
-      const cpY = (anchorY + cy) / 2 + perpY;
+      const [dx, dy] = dotPts[i];   // posição final do dot (animada depois)
+      const [ex, ey] = edgePts[i];  // ponto na borda do octógono
+      // Curva orgânica: controle perpendicular suave
+      const perpX = -(ey - cy) * 0.15;
+      const perpY =  (ex - cx) * 0.15;
+      const cpX = (dx + ex) / 2 + perpX;
+      const cpY = (dy + ey) / 2 + perpY;
       svgHtml += `<path class="radar-connector" data-idx="${i}"
-        d="M ${anchorX.toFixed(1)} ${anchorY.toFixed(1)} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${cx} ${cy}"
+        d="M ${cx} ${cy} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}"
         fill="none"
         stroke="${dotColors[i]}"
         stroke-width="1.5"
         stroke-linecap="round"
-        opacity="0.55"/>`;
+        opacity="0"/>`;
     });
 
     // Pontos nos vértices — cor individual
@@ -5573,22 +5557,21 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         dot.setAttribute('opacity', ease.toFixed(2));
       });
 
-      // Anima conectores: o endpoint Q cresce do centro ao dot real
+      // Anima conectores: crescem do centro até o dot real, acompanhando a animação
       svgEl.querySelectorAll('.radar-connector').forEach((path, i) => {
         if (!dataFull[i]) return;
-        const angle   = 2 * Math.PI * i / n;
-        const [px, py] = pillPts[i];
         const [fx, fy] = dataFull[i];
+        const [ex, ey] = edgePts[i];
+        // Dot animado atual
         const curDotX = (cx + (fx - cx) * ease);
         const curDotY = (cy + (fy - cy) * ease);
-        const anchorX = px + (cx - px) * 0.28;
-        const anchorY = py + (cy - py) * 0.28;
-        const perpX = -(py - cy) * 0.18;
-        const perpY =  (px - cx) * 0.18;
-        const cpX = (anchorX + curDotX) / 2 + perpX * ease;
-        const cpY = (anchorY + curDotY) / 2 + perpY * ease;
-        path.setAttribute('d', `M ${anchorX.toFixed(1)} ${anchorY.toFixed(1)} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${curDotX.toFixed(1)} ${curDotY.toFixed(1)}`);
-        path.setAttribute('opacity', (0.55 * ease).toFixed(2));
+        // Curva orgânica perpendicular
+        const perpX = -(ey - cy) * 0.15;
+        const perpY =  (ex - cx) * 0.15;
+        const cpX = (curDotX + ex) / 2 + perpX * ease;
+        const cpY = (curDotY + ey) / 2 + perpY * ease;
+        path.setAttribute('d', `M ${curDotX.toFixed(1)} ${curDotY.toFixed(1)} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`);
+        path.setAttribute('opacity', (0.6 * ease).toFixed(2));
       });
 
       if (t < 1) requestAnimationFrame(now2 => animSvg(svgEl, now2));
