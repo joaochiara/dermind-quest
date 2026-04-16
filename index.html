@@ -1201,9 +1201,11 @@
 
     .cracha-photo-wrap {
       padding: 20px 20px 10px;
+      display: flex;
+      justify-content: center;
     }
     .cracha-photo-wrap .result-photo-box {
-      width: 100%;
+      width: 50%;
       aspect-ratio: 3/4;
       border-radius: 14px;
       overflow: hidden;
@@ -4072,6 +4074,7 @@
           <div id="radar-pill-container" style="position:relative; width:100%; max-width:400px;">
             <svg id="skin-radar" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
             <div id="radar-pills-overlay" style="position:absolute; inset:0; pointer-events:none;"></div>
+            <canvas id="radar-connector-canvas" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
           </div>
         </div>
 
@@ -4170,6 +4173,7 @@
           <div id="radar-pill-container-mobile" style="position:relative; width:100%; max-width:400px; margin:0 auto;">
             <svg id="skin-radar-mobile" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
             <div id="radar-pills-overlay-mobile" style="position:absolute; inset:0; pointer-events:none;"></div>
+            <canvas id="radar-connector-canvas-mobile" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
           </div>
         </div>
 
@@ -5458,33 +5462,13 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       stroke-width="2"
       stroke-linejoin="round"/>`;
 
-    // Linhas conectoras (dot → borda do eixo, onde a pílula começa) — mesma cor do dot
-    // A linha vai do dot atual até o ponto na borda maxR do mesmo eixo
-    const edgePts = scores.map((_, i) => polar(2 * Math.PI * i / n, maxR));
-    scores.forEach((s, i) => {
-      const [dx, dy] = dotPts[i];   // posição final do dot (animada depois)
-      const [ex, ey] = edgePts[i];  // ponto na borda do octógono
-      // Curva orgânica: controle perpendicular suave
-      const perpX = -(ey - cy) * 0.15;
-      const perpY =  (ex - cx) * 0.15;
-      const cpX = (dx + ex) / 2 + perpX;
-      const cpY = (dy + ey) / 2 + perpY;
-      svgHtml += `<path class="radar-connector" data-idx="${i}"
-        d="M ${cx} ${cy} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}"
-        fill="none"
-        stroke="${dotColors[i]}"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        opacity="0"/>`;
-    });
-
     // Pontos nos vértices — cor individual
     scores.forEach((s, i) => {
       svgHtml += `<circle class="radar-dot" cx="${cx}" cy="${cy}" r="4" fill="${dotColors[i]}" opacity="0"/>`;
     });
 
     // ── Injeta SVG e posiciona pílulas HTML ──
-    function setupRadar(svgEl, overlayEl) {
+    function setupRadar(svgEl, overlayEl, canvasEl) {
       if (!svgEl) return;
       svgEl.setAttribute('viewBox', `0 0 ${VB} ${VB}`);
       svgEl.innerHTML = svgHtml;
@@ -5492,6 +5476,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (!overlayEl) return;
       overlayEl.innerHTML = '';
 
+      const pillEls = [];
       labels.forEach((lbl, i) => {
         const angle = 2 * Math.PI * i / n;
         const sinA = Math.sin(angle);
@@ -5516,22 +5501,135 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
           white-space:nowrap;
         `;
         overlayEl.appendChild(pill);
+        pillEls.push({ pill, idx: i, translateX });
+      });
+
+      // Desenha linhas canvas pílula → dot após o layout renderizar
+      if (canvasEl) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          drawConnectors(canvasEl, svgEl, overlayEl, pillEls, 0);
+        }));
+      }
+    }
+
+    // Desenha linhas curvas orgânicas do centro de cada pílula até o dot no SVG
+    function drawConnectors(canvasEl, svgEl, overlayEl, pillEls, progress) {
+      const container = canvasEl.parentElement;
+      const cRect = container.getBoundingClientRect();
+      const W = cRect.width;
+      const H = cRect.height;
+      if (W === 0 || H === 0) return;
+
+      // Dimensiona o canvas em pixels reais
+      const dpr = window.devicePixelRatio || 1;
+      canvasEl.width  = W * dpr;
+      canvasEl.height = H * dpr;
+      const ctx = canvasEl.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, W, H);
+
+      // Escala do SVG viewBox para pixels reais
+      const svgRect = svgEl.getBoundingClientRect();
+      const scaleX = svgRect.width  / VB;
+      const scaleY = svgRect.height / VB;
+      const svgOffX = svgRect.left - cRect.left;
+      const svgOffY = svgRect.top  - cRect.top;
+
+      pillEls.forEach(({ pill, idx, translateX }) => {
+        const pillRect = pill.getBoundingClientRect();
+        const pillW = pillRect.width;
+        const pillH = pillRect.height;
+
+        // Centro da pílula
+        const pillCX = pillRect.left - cRect.left + pillW / 2;
+        const pillCY = pillRect.top  - cRect.top  + pillH / 2;
+
+        // Ponto do dot animado atual (usa dataFull * progress para animar junto)
+        const [fx, fy] = dataFull[idx];
+        const curDotSvgX = cx + (fx - cx) * progress;
+        const curDotSvgY = cy + (fy - cy) * progress;
+        const dotX = svgOffX + curDotSvgX * scaleX;
+        const dotY = svgOffY + curDotSvgY * scaleY;
+
+        // Ponto de borda da pílula mais próximo do dot
+        const dx = dotX - pillCX;
+        const dy = dotY - pillCY;
+        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+        // Ancoragem na borda da pílula (aprox metade da largura/altura)
+        const edgeX = pillCX + (dx / dist) * (pillW / 2);
+        const edgeY = pillCY + (dy / dist) * (pillH / 2);
+
+        // Curva quadrática orgânica — controle perpendicular ao eixo
+        const perpX = -dy * 0.25;
+        const perpY =  dx * 0.25;
+        const cpX = (edgeX + dotX) / 2 + perpX;
+        const cpY = (edgeY + dotY) / 2 + perpY;
+
+        ctx.beginPath();
+        ctx.moveTo(edgeX, edgeY);
+        ctx.quadraticCurveTo(cpX, cpY, dotX, dotY);
+        ctx.strokeStyle = dotColors[idx];
+        ctx.lineWidth   = 1.5;
+        ctx.lineCap     = 'round';
+        ctx.globalAlpha = 0.6 * progress;
+        ctx.stroke();
       });
     }
 
     const svg       = document.getElementById('skin-radar');
     const overlay   = document.getElementById('radar-pills-overlay');
+    const canvasEl  = document.getElementById('radar-connector-canvas');
     const svgMobile = document.getElementById('skin-radar-mobile');
     const overlayM  = document.getElementById('radar-pills-overlay-mobile');
+    const canvasMob = document.getElementById('radar-connector-canvas-mobile');
 
-    setupRadar(svg, overlay);
-    setupRadar(svgMobile, overlayM);
+    // pillEls são retornados de setupRadar — guardados por svgEl
+    const pillElsMap = new Map();
 
-    // Anima dots, polígono E conectores
+    function setupAndCapture(svgEl, overlayEl, canvasEl2) {
+      const captured = [];
+      setupRadar(svgEl, overlayEl, canvasEl2, captured);
+      if (svgEl) pillElsMap.set(svgEl, { canvasEl: canvasEl2, pillEls: captured });
+    }
+
+    // Redefine setupRadar para capturar pillEls
+    const _origSetup = setupRadar;
+    setupRadar = function(svgEl, overlayEl, canvasEl2, captureArr) {
+      if (!svgEl) return;
+      svgEl.setAttribute('viewBox', `0 0 ${VB} ${VB}`);
+      svgEl.innerHTML = svgHtml;
+      if (!overlayEl) return;
+      overlayEl.innerHTML = '';
+      const pillEls2 = [];
+      labels.forEach((lbl, i) => {
+        const angle = 2 * Math.PI * i / n;
+        const sinA = Math.sin(angle);
+        const [lx, ly] = polar(angle, PILL_DIST);
+        const pctX = (lx / VB) * 100;
+        const pctY = (ly / VB) * 100;
+        let translateX;
+        if (sinA > 0.3)       translateX = '0%';
+        else if (sinA < -0.3) translateX = '-100%';
+        else                  translateX = '-50%';
+        const pill = document.createElement('div');
+        pill.className = 'radar-label-pill';
+        pill.textContent = lbl;
+        pill.style.cssText = `position:absolute;left:${pctX.toFixed(2)}%;top:${pctY.toFixed(2)}%;transform:translate(${translateX},-50%);white-space:nowrap;`;
+        overlayEl.appendChild(pill);
+        pillEls2.push({ pill, idx: i, translateX });
+      });
+      if (captureArr) captureArr.push(...pillEls2);
+    };
+
+    const pillElsMobile = [], pillElsDesktop = [];
+    setupRadar(svg, overlay, canvasEl, pillElsDesktop);
+    setupRadar(svgMobile, overlayM, canvasMob, pillElsMobile);
+
+    // Anima dots, polígono E redesenha canvas connectors a cada frame
     const startTime = performance.now();
     const duration = 900;
 
-    function animSvg(svgEl, now) {
+    function animSvg(svgEl, canvasEl2, pillEls2, now) {
       const t = Math.min((now - startTime) / duration, 1);
       const ease = 1 - Math.pow(1 - t, 3);
 
@@ -5552,28 +5650,17 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         dot.setAttribute('opacity', ease.toFixed(2));
       });
 
-      // Anima conectores: crescem do centro até o dot real, acompanhando a animação
-      svgEl.querySelectorAll('.radar-connector').forEach((path, i) => {
-        if (!dataFull[i]) return;
-        const [fx, fy] = dataFull[i];
-        const [ex, ey] = edgePts[i];
-        // Dot animado atual
-        const curDotX = (cx + (fx - cx) * ease);
-        const curDotY = (cy + (fy - cy) * ease);
-        // Curva orgânica perpendicular
-        const perpX = -(ey - cy) * 0.15;
-        const perpY =  (ex - cx) * 0.15;
-        const cpX = (curDotX + ex) / 2 + perpX * ease;
-        const cpY = (curDotY + ey) / 2 + perpY * ease;
-        path.setAttribute('d', `M ${curDotX.toFixed(1)} ${curDotY.toFixed(1)} Q ${cpX.toFixed(1)} ${cpY.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`);
-        path.setAttribute('opacity', (0.6 * ease).toFixed(2));
-      });
+      // Redesenha linhas canvas com progress atual
+      if (canvasEl2 && pillEls2.length) {
+        const overlayEl2 = canvasEl2.parentElement.querySelector('[id$="-overlay-mobile"], [id$="-overlay"]');
+        drawConnectors(canvasEl2, svgEl, overlayEl2 || canvasEl2.previousElementSibling, pillEls2, ease);
+      }
 
-      if (t < 1) requestAnimationFrame(now2 => animSvg(svgEl, now2));
+      if (t < 1) requestAnimationFrame(now2 => animSvg(svgEl, canvasEl2, pillEls2, now2));
     }
 
-    if (svg)       requestAnimationFrame(now => animSvg(svg, now));
-    if (svgMobile) requestAnimationFrame(now => animSvg(svgMobile, now));
+    if (svg)       requestAnimationFrame(now => animSvg(svg, canvasEl, pillElsDesktop, now));
+    if (svgMobile) requestAnimationFrame(now => animSvg(svgMobile, canvasMob, pillElsMobile, now));
   };
 
   function preencherResultadoIA(r, nome) {
@@ -7862,12 +7949,22 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
 
       const ENTRY_D = 520;
       const EASE_K  = 5.5;
-      const STAGGER = 70;
       const fromY   = 32;
 
-      // Começa invisível e já posicionado no offset inicial — o transform é aplicado
-      // de forma síncrona para que os boxes nunca apareçam na posição final antes
-      // da animação de entrada.
+      // Delay customizado por ID — score-pills mantêm stagger de 70ms
+      const customDelays = {
+        'radar-chart-wrap-mobile':  0,
+        'box-avaliacao-ia':         560,
+        'box-dicas-inteligentes':   630,
+        'box-idade-pele':           700,
+        'box-produto-essencial':    770,
+        'box-protocolo-completo':   840,
+        'box-combinam':             910,
+        'result-cta-box':           980,
+        // mobile-only (ocultos em desktop, mas presentes no DOM)
+        'box-dicas-inteligentes-mobile': 630,
+      };
+
       targets.forEach(el => {
         el.style.opacity    = '0';
         el.style.transition = '';
@@ -7875,18 +7972,30 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       });
 
       const now = performance.now();
+      let scorePillIdx = 0;
       params = targets.map((el, i) => {
-        const p      = makeParamWithX(el, i);
-        p.entryStart = now + i * STAGGER;
+        const p = makeParamWithX(el, i);
+
+        // Score pills: stagger 70ms sequencial
+        let delay;
+        if (el.classList.contains('score-pill')) {
+          delay = scorePillIdx * 70;
+          scorePillIdx++;
+        } else if (el.id && customDelays[el.id] !== undefined) {
+          delay = customDelays[el.id];
+        } else {
+          delay = i * 70; // fallback
+        }
+
+        p.entryStart = now + delay;
         p.entryDur   = ENTRY_D;
         p.entryFromY = fromY;
         p.easeK      = EASE_K;
-        // Fade-in sincronizado com o slide-up — só inicia após o stagger de cada box
         setTimeout(() => {
           el.style.transition = `opacity ${ENTRY_D}ms cubic-bezier(0.4,0,0.2,1)`;
           el.style.opacity    = '1';
           setTimeout(() => { el.style.transition = ''; }, ENTRY_D + 16);
-        }, i * STAGGER);
+        }, delay);
         return p;
       });
     };
