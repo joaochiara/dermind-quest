@@ -1206,7 +1206,7 @@
 
     /* Ajuste do score-row no col-left: sem margin-top negativa do radar */
     .result-col-left #score-row-1 {
-      margin-top: 0;
+      margin-top: -30px;
     }
   }
 
@@ -1264,6 +1264,25 @@
   }
   #skin-radar {
     filter: drop-shadow(0 4px 18px rgba(168,85,104,0.12));
+  }
+
+  /* Pílulas HTML sobre o radar */
+  .radar-label-pill {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    background: rgba(253,250,247,0.70);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.60);
+    padding: 6px 14px;
+    border-radius: 100px;
+    box-shadow: 0 2px 8px rgba(24,16,14,0.07), inset 0 1px 0 rgba(255,255,255,0.8);
+    line-height: 1;
   }
 
   .result-badge {
@@ -3896,7 +3915,10 @@
 
         <!-- RADAR CHART -->
         <div id="radar-chart-wrap" style="display:flex; flex-direction:column; align-items:center;">
-          <svg id="skin-radar" viewBox="0 0 520 480" width="100%" style="max-width:520px; display:block;"></svg>
+          <div id="radar-pill-container" style="position:relative; width:100%; max-width:400px;">
+            <svg id="skin-radar" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
+            <div id="radar-pills-overlay" style="position:absolute; inset:0; pointer-events:none;"></div>
+          </div>
         </div>
 
         <div class="score-row" id="score-row-1">
@@ -3960,7 +3982,10 @@
 
         <!-- RADAR CHART — mobile only (em desktop fica na col-left) -->
         <div id="radar-chart-wrap-mobile" class="result-section-mobile-only" style="display:flex; flex-direction:column; align-items:center;">
-          <svg id="skin-radar-mobile" viewBox="0 0 520 480" width="100%" style="max-width:520px; display:block;"></svg>
+          <div id="radar-pill-container-mobile" style="position:relative; width:100%; max-width:400px;">
+            <svg id="skin-radar-mobile" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
+            <div id="radar-pills-overlay-mobile" style="position:absolute; inset:0; pointer-events:none;"></div>
+          </div>
         </div>
 
         <!-- SCORE PILLS — mobile only (em desktop ficam na col-left) -->
@@ -5223,13 +5248,16 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
   window._renderRadar = function(scores) {
     const labels = ['Hidratação','Brilho','Firmeza','Textura','Oleosidade','Sensibilidade','Rugas','Manchas'];
     const n = 8;
-    const cx = 260, cy = 220, maxR = 118;
+    const VB = 420;           // viewBox square size
+    const cx = VB / 2, cy = VB / 2, maxR = 140;
+    const PILL_DIST = maxR + 36; // distância do centro ao centro de cada pílula
 
     function polar(angle, rad) {
       return [cx + rad * Math.sin(angle), cy - rad * Math.cos(angle)];
     }
 
-    let svgHtml = `<defs></defs>`;
+    // ── SVG: só gráfico, sem labels ──
+    let svgHtml = '';
 
     // Fundo marfim — octógono externo
     let bgPts = [];
@@ -5256,92 +5284,69 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     svgHtml += `<polygon id="radar-data-poly" points="${dataZero.map(p=>p.join(',')).join(' ')}"
       fill="rgba(168,85,104,0.22)" stroke="rgba(168,85,104,0.75)" stroke-width="2" stroke-linejoin="round"/>`;
 
-    // Pontos nos vértices
+    // Cor dos dots: mesma lógica das barras de score
+    // invertidos → abaixo de 50% é steel, acima é wine; normais → inverso
+    const invertedLabels = ['Oleosidade','Sensibilidade','Rugas','Manchas'];
+    const dotColors = scores.map((s, i) => {
+      const isInverted = invertedLabels.includes(labels[i]);
+      if (isInverted) return s < 50 ? 'var(--steel)' : 'var(--wine)';
+      else            return s < 50 ? 'var(--wine)'  : 'var(--steel)';
+    });
+
+    // Pontos nos vértices — cor individual
     scores.forEach((s, i) => {
-      svgHtml += `<circle class="radar-dot" cx="${cx}" cy="${cy}" r="4" fill="var(--wine)" opacity="0"/>`;
+      svgHtml += `<circle class="radar-dot" cx="${cx}" cy="${cy}" r="4" fill="${dotColors[i]}" opacity="0"/>`;
     });
 
-    // Pílulas glassmorphism via foreignObject
-    // Para cada label, define o alinhamento horizontal baseado na posição angular
-    // e posiciona o foreignObject com largura fixa generosa, alinhando o div interno
-    const PH = 30;   // altura do foreignObject
-    const PW = 130;  // largura fixa generosa — o div interno se auto-dimensiona
-    const PILL_DIST = maxR + 52; // distância do centro ao ponto âncora da pílula
+    // ── Injeta SVG e posiciona pílulas HTML ──
+    function setupRadar(svgEl, overlayEl) {
+      if (!svgEl) return;
+      svgEl.setAttribute('viewBox', `0 0 ${VB} ${VB}`);
+      svgEl.innerHTML = svgHtml;
 
-    labels.forEach((lbl, i) => {
-      const angle = 2 * Math.PI * i / n;
-      const sinA = Math.sin(angle);
-      const cosA = Math.cos(angle);
-      const [lx, ly] = polar(angle, PILL_DIST);
+      if (!overlayEl) return;
+      overlayEl.innerHTML = '';
 
-      // Alinhamento: direita (+sin), esquerda (-sin), centro (perto de 0)
-      let align, foX;
-      if (sinA > 0.3) {
-        // lado direito → ancora à esquerda do ponto
-        align = 'left';
-        foX = lx;
-      } else if (sinA < -0.3) {
-        // lado esquerdo → ancora à direita do ponto
-        align = 'right';
-        foX = lx - PW;
-      } else {
-        // topo ou base → centralizado
-        align = 'center';
-        foX = lx - PW / 2;
-      }
+      // Converte coordenada do viewBox para % relativo ao container
+      // O SVG é width:100% com viewBox quadrado, então escala uniforme
+      labels.forEach((lbl, i) => {
+        const angle = 2 * Math.PI * i / n;
+        const sinA = Math.sin(angle);
+        // Ponto central da pílula em coordenadas do viewBox
+        const [lx, ly] = polar(angle, PILL_DIST);
 
-      // Vertical: centraliza em torno de ly
-      const foY = ly - PH / 2;
+        // Converte para % do container (viewBox é VB×VB)
+        const pctX = (lx / VB) * 100;
+        const pctY = (ly / VB) * 100;
 
-      const pillStyle = `
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        white-space:nowrap;
-        font-family:'DM Sans',sans-serif;
-        font-size:12px;
-        font-weight:500;
-        letter-spacing:0.05em;
-        color:#4A3A34;
-        background:rgba(253,250,247,0.70);
-        backdrop-filter:blur(8px);
-        -webkit-backdrop-filter:blur(8px);
-        border:1px solid rgba(255,255,255,0.60);
-        padding:6px 14px;
-        border-radius:100px;
-        box-shadow:0 2px 8px rgba(24,16,14,0.07),inset 0 1px 0 rgba(255,255,255,0.8);
-        line-height:1;
-        ${align === 'right' ? 'margin-left:auto;' : align === 'center' ? 'margin:0 auto;' : ''}
-      `;
+        // Alinhamento: transform para centralizar a pílula no ponto
+        // Lado direito: ancoramos à esquerda; lado esquerdo: à direita; centro: centraliza
+        let translateX;
+        if (sinA > 0.3)       translateX = '0%';        // direita: pill começa no ponto
+        else if (sinA < -0.3) translateX = '-100%';     // esquerda: pill termina no ponto
+        else                  translateX = '-50%';       // topo/base: centralizado
 
-      // Wrapper div para controlar alinhamento dentro do foreignObject
-      const wrapStyle = `
-        width:100%;
-        height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:${align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start'};
-      `;
-
-      svgHtml += `
-        <foreignObject x="${foX.toFixed(1)}" y="${foY.toFixed(1)}" width="${PW}" height="${PH}" overflow="visible">
-          <div xmlns="http://www.w3.org/1999/xhtml" style="${wrapStyle}">
-            <span style="${pillStyle}">${lbl}</span>
-          </div>
-        </foreignObject>`;
-    });
-
-    const svg = document.getElementById('skin-radar');
-    if (!svg) return;
-    svg.setAttribute('viewBox', '0 0 520 480');
-    svg.innerHTML = svgHtml;
-
-    // Também renderiza no SVG mobile se existir
-    const svgMobile = document.getElementById('skin-radar-mobile');
-    if (svgMobile) {
-      svgMobile.setAttribute('viewBox', '0 0 520 480');
-      svgMobile.innerHTML = svgHtml;
+        const pill = document.createElement('div');
+        pill.className = 'radar-label-pill';
+        pill.textContent = lbl;
+        pill.style.cssText = `
+          position:absolute;
+          left:${pctX.toFixed(2)}%;
+          top:${pctY.toFixed(2)}%;
+          transform: translate(${translateX}, -50%);
+          white-space:nowrap;
+        `;
+        overlayEl.appendChild(pill);
+      });
     }
+
+    const svg       = document.getElementById('skin-radar');
+    const overlay   = document.getElementById('radar-pills-overlay');
+    const svgMobile = document.getElementById('skin-radar-mobile');
+    const overlayM  = document.getElementById('radar-pills-overlay-mobile');
+
+    setupRadar(svg, overlay);
+    setupRadar(svgMobile, overlayM);
 
     // Anima do centro para os valores reais — opera em cada SVG individualmente
     const startTime = performance.now();
@@ -5368,13 +5373,8 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (t < 1) requestAnimationFrame(now2 => animSvg(svgEl, now2));
     }
 
-    function kickAnim(svgEl) {
-      if (!svgEl) return;
-      requestAnimationFrame(now => animSvg(svgEl, now));
-    }
-
-    kickAnim(svg);
-    kickAnim(svgMobile);
+    if (svg)       requestAnimationFrame(now => animSvg(svg, now));
+    if (svgMobile) requestAnimationFrame(now => animSvg(svgMobile, now));
   };
 
   function preencherResultadoIA(r, nome) {
