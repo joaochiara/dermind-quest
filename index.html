@@ -1220,23 +1220,22 @@
       display: none !important;
     }
 
-    /* Radar mobile visível em desktop na col-right, posicionado entre eyebrow e título */
+    /* Radar mobile visível em desktop na col-right, posicionado abaixo do subtítulo */
     #radar-chart-wrap-mobile {
       display: flex !important;
-      order: 1;
+      order: 5;
       margin-bottom: 16px;
     }
 
     /* Ordem dos itens da col-right no desktop */
     .result-col-right .result-badge             { order: 0; }
-    .result-col-right #radar-chart-wrap-mobile  { order: 1; }
     .result-col-right #resultTitle              { order: 2; }
     .result-col-right #result-photos-wrap       { order: 3; }
     .result-col-right #resultSubtitle           { order: 4; }
-    .result-col-right #box-avaliacao-ia         { order: 5; }
-    .result-col-right #box-idade-pele           { order: 6; }
-    .result-col-right #box-protocolo-completo   { order: 7; }
-    .result-col-right #box-produto-essencial    { order: 8; }
+    .result-col-right #radar-chart-wrap-mobile  { order: 5; }
+    .result-col-right #box-avaliacao-ia         { order: 6; }
+    .result-col-right #box-idade-pele           { order: 7; }
+    .result-col-right #box-protocolo-completo   { order: 8; }
     .result-col-right #box-dicas-inteligentes-mobile { order: 10; }
   }
 
@@ -1246,8 +1245,8 @@
       display: flex;
       flex-direction: column;
     }
-    /* Em mobile: col-left completamente oculta — todo conteúdo existe na col-right como mobile-only */
-    .result-col-left {
+    /* Em mobile: col-left visível, mas filhos específicos ocultados — produto essencial permanece visível */
+    .result-col-left > *:not(#box-produto-essencial) {
       display: none !important;
     }
     /* Em mobile: foto frente isolada oculta (usa o carrossel) */
@@ -3973,6 +3972,24 @@
           <div id="dicas-lista" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
         </div>
 
+        <!-- BOX: Produto Essencial — desktop only (em mobile aparece via col-left visível) -->
+        <div class="result-section" id="box-produto-essencial">
+          <div class="rs-title">Seu produto essencial</div>
+          <p class="diagnosis-text" style="margin-bottom:15px;">Com base na sua avaliação, a IA identificou o <strong>maior ponto fraco</strong> da sua pele - e esse é o produto que age diretamente na raiz do problema.</p>
+          <div class="essential-product-wrap">
+            <div class="essential-product-card">
+              <div class="essential-emoji-wrap" id="essentialEmoji">💧</div>
+              <div class="essential-prod-info">
+                <div class="essential-prod-name" id="essentialName">Hydra Boost Oil-Free</div>
+                <div class="essential-prod-brand" id="essentialBrand">Neutrogena</div>
+                <div class="essential-prod-brand" id="essentialPrice">~R$ 72</div>
+              </div>
+              <span class="essential-badge" id="essentialBadge">⭑ Prioridade</span>
+              <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /result-col-left -->
 
       <!-- ── COLUNA DIREITA ── -->
@@ -4064,23 +4081,6 @@
         </div>
 
         <!-- BOX: Produto Essencial -->
-        <div class="result-section" id="box-produto-essencial">
-          <div class="rs-title">Seu produto essencial</div>
-          <p class="diagnosis-text" style="margin-bottom:15px;">Com base na sua avaliação, a IA identificou o <strong>maior ponto fraco</strong> da sua pele - e esse é o produto que age diretamente na raiz do problema.</p>
-          <div class="essential-product-wrap">
-            <div class="essential-product-card">
-              <div class="essential-emoji-wrap" id="essentialEmoji">💧</div>
-              <div class="essential-prod-info">
-                <div class="essential-prod-name" id="essentialName">Hydra Boost Oil-Free</div>
-                <div class="essential-prod-brand" id="essentialBrand">Neutrogena</div>
-                <div class="essential-prod-brand" id="essentialPrice">~R$ 72</div>
-              </div>
-              <span class="essential-badge" id="essentialBadge">⭑ Prioridade</span>
-              <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
-            </div>
-          </div>
-        </div>
-
         <div class="result-section" id="box-protocolo-completo">
           <div class="routine-steps">
             <div class="routine-group">
