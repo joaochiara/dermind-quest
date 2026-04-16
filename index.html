@@ -1545,6 +1545,13 @@
   .dica-title { font-size: 15px; font-weight: 500; color: var(--ivory); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .dica-sub   { font-size: 12px; font-weight: 400; color: rgba(247,242,234,0.65); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
 
+  /* Emoji dentro do box dicas inteligentes — mesmas dimensões do opt-icon (screen 1) */
+  .dica-step .rs-emoji {
+    width: 42px; height: 42px;
+    font-size: 19px;
+    border-radius: 12px;
+  }
+
   /* Produtos */
   .product-recs { display: flex; flex-direction: column; gap: 10px; }
   .prod-rec {
@@ -3889,7 +3896,7 @@
 
         <!-- RADAR CHART -->
         <div id="radar-chart-wrap" style="display:flex; flex-direction:column; align-items:center;">
-          <svg id="skin-radar" viewBox="0 0 420 420" width="100%" style="max-width:400px; display:block;"></svg>
+          <svg id="skin-radar" viewBox="0 0 520 480" width="100%" style="max-width:400px; display:block;"></svg>
         </div>
 
         <div class="score-row" id="score-row-1">
@@ -3953,7 +3960,7 @@
 
         <!-- RADAR CHART — mobile only (em desktop fica na col-left) -->
         <div id="radar-chart-wrap-mobile" class="result-section-mobile-only" style="display:flex; flex-direction:column; align-items:center;">
-          <svg id="skin-radar-mobile" viewBox="0 0 420 420" width="100%" style="max-width:400px; display:block;"></svg>
+          <svg id="skin-radar-mobile" viewBox="0 0 520 480" width="100%" style="max-width:400px; display:block;"></svg>
         </div>
 
         <!-- SCORE PILLS — mobile only (em desktop ficam na col-left) -->
@@ -5216,7 +5223,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
   window._renderRadar = function(scores) {
     const labels = ['Hidratação','Brilho','Firmeza','Textura','Oleosidade','Sensibilidade','Rugas','Manchas'];
     const n = 8;
-    const cx = 210, cy = 210, maxR = 118;
+    const cx = 260, cy = 220, maxR = 118;
 
     function polar(angle, rad) {
       return [cx + rad * Math.sin(angle), cy - rad * Math.cos(angle)];
@@ -5255,60 +5262,95 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     });
 
     // Pílulas glassmorphism via foreignObject
-    // Largura estimada por label (font ~11px, padding 10px each side)
-    const lblWidths = { 'Hidratação':80, 'Brilho':52, 'Firmeza':56, 'Textura':57,
-                        'Oleosidade':74, 'Sensibilidade':96, 'Rugas':52, 'Manchas':64 };
-    const PH = 24;
+    // Para cada label, define o alinhamento horizontal baseado na posição angular
+    // e posiciona o foreignObject com largura fixa generosa, alinhando o div interno
+    const PH = 30;   // altura do foreignObject
+    const PW = 130;  // largura fixa generosa — o div interno se auto-dimensiona
+    const PILL_DIST = maxR + 52; // distância do centro ao ponto âncora da pílula
+
     labels.forEach((lbl, i) => {
       const angle = 2 * Math.PI * i / n;
-      const [lx, ly] = polar(angle, maxR + 42);
-      const pw = lblWidths[lbl] || 72;
-      const x = lx - pw / 2;
-      const y = ly - PH / 2;
+      const sinA = Math.sin(angle);
+      const cosA = Math.cos(angle);
+      const [lx, ly] = polar(angle, PILL_DIST);
+
+      // Alinhamento: direita (+sin), esquerda (-sin), centro (perto de 0)
+      let align, foX;
+      if (sinA > 0.3) {
+        // lado direito → ancora à esquerda do ponto
+        align = 'left';
+        foX = lx;
+      } else if (sinA < -0.3) {
+        // lado esquerdo → ancora à direita do ponto
+        align = 'right';
+        foX = lx - PW;
+      } else {
+        // topo ou base → centralizado
+        align = 'center';
+        foX = lx - PW / 2;
+      }
+
+      // Vertical: centraliza em torno de ly
+      const foY = ly - PH / 2;
+
+      const pillStyle = `
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        white-space:nowrap;
+        font-family:'DM Sans',sans-serif;
+        font-size:12px;
+        font-weight:500;
+        letter-spacing:0.05em;
+        color:#4A3A34;
+        background:rgba(253,250,247,0.70);
+        backdrop-filter:blur(8px);
+        -webkit-backdrop-filter:blur(8px);
+        border:1px solid rgba(255,255,255,0.60);
+        padding:6px 14px;
+        border-radius:100px;
+        box-shadow:0 2px 8px rgba(24,16,14,0.07),inset 0 1px 0 rgba(255,255,255,0.8);
+        line-height:1;
+        ${align === 'right' ? 'margin-left:auto;' : align === 'center' ? 'margin:0 auto;' : ''}
+      `;
+
+      // Wrapper div para controlar alinhamento dentro do foreignObject
+      const wrapStyle = `
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:${align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start'};
+      `;
+
       svgHtml += `
-        <foreignObject x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${pw + 4}" height="${PH + 4}" overflow="visible">
-          <div xmlns="http://www.w3.org/1999/xhtml" style="
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            white-space:nowrap;
-            font-family:'DM Sans',sans-serif;
-            font-size:12px;
-            font-weight:500;
-            letter-spacing:0.05em;
-            color:#4A3A34;
-            background:rgba(253,250,247,0.70);
-            backdrop-filter:blur(8px);
-            -webkit-backdrop-filter:blur(8px);
-            border:1px solid rgba(255,255,255,0.60);
-            padding:6px 14px;
-            border-radius:100px;
-            box-shadow:0 2px 8px rgba(24,16,14,0.07),inset 0 1px 0 rgba(255,255,255,0.8);
-            width:max-content;
-            line-height:1;
-          ">${lbl}</div>
+        <foreignObject x="${foX.toFixed(1)}" y="${foY.toFixed(1)}" width="${PW}" height="${PH}" overflow="visible">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="${wrapStyle}">
+            <span style="${pillStyle}">${lbl}</span>
+          </div>
         </foreignObject>`;
     });
 
     const svg = document.getElementById('skin-radar');
     if (!svg) return;
-    svg.setAttribute('viewBox', '0 0 420 420');
+    svg.setAttribute('viewBox', '0 0 520 480');
     svg.innerHTML = svgHtml;
 
     // Também renderiza no SVG mobile se existir
     const svgMobile = document.getElementById('skin-radar-mobile');
     if (svgMobile) {
-      svgMobile.setAttribute('viewBox', '0 0 420 420');
+      svgMobile.setAttribute('viewBox', '0 0 520 480');
       svgMobile.innerHTML = svgHtml;
     }
 
-    // Anima do centro para os valores reais
+    // Anima do centro para os valores reais — opera em cada SVG individualmente
     const startTime = performance.now();
     const duration = 900;
-    function animRadar(now) {
+
+    function animSvg(svgEl, now) {
       const t = Math.min((now - startTime) / duration, 1);
       const ease = 1 - Math.pow(1 - t, 3);
-      const poly = document.getElementById('radar-data-poly');
+      const poly = svgEl.querySelector('#radar-data-poly');
       if (poly) {
         const pts = dataFull.map((fp, i) => {
           const sp = dataZero[i];
@@ -5316,15 +5358,23 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
         });
         poly.setAttribute('points', pts.map(p=>p.join(',')).join(' '));
       }
-      document.querySelectorAll('.radar-dot').forEach((dot, i) => {
+      svgEl.querySelectorAll('.radar-dot').forEach((dot, i) => {
+        if (!dataFull[i]) return;
         const [fx, fy] = dataFull[i];
         dot.setAttribute('cx', (cx + (fx-cx) * ease).toFixed(2));
         dot.setAttribute('cy', (cy + (fy-cy) * ease).toFixed(2));
         dot.setAttribute('opacity', ease.toFixed(2));
       });
-      if (t < 1) requestAnimationFrame(animRadar);
+      if (t < 1) requestAnimationFrame(now2 => animSvg(svgEl, now2));
     }
-    requestAnimationFrame(animRadar);
+
+    function kickAnim(svgEl) {
+      if (!svgEl) return;
+      requestAnimationFrame(now => animSvg(svgEl, now));
+    }
+
+    kickAnim(svg);
+    kickAnim(svgMobile);
   };
 
   function preencherResultadoIA(r, nome) {
