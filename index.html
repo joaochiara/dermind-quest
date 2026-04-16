@@ -3252,7 +3252,7 @@
 
 <!-- Box inter3 — fora do quiz-wrap para escapar do stacking context -->
 <div class="interblock-bg-box" id="inter3-box" style="display:none;">
-  <p class="interblock-eyebrow">Questionário aprovado!</p>
+  <p class="interblock-eyebrow">Prontuário aprovado!</p>
   <h2 class="interblock-title" data-tw-html="Hora do <em>scanner facial</em> inteligente." style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Hora do <em>scanner facial</em> inteligente.</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;">Hora do <em>scanner facial</em> inteligente.</span></h2>
   <p class="interblock-sub">A tecnologia com IA permite analisar sua pele com mais de 95% de precisão.</p>
   <div class="interblock-video-wrap">
@@ -3295,7 +3295,7 @@
         </div>
         <div class="option float-box" id="intro-box-1" style="cursor:default; pointer-events:none; flex:1; margin-right:10px;">
           <div class="opt-icon">📝</div>
-          <div class="opt-text"><span class="opt-desc" style="margin-top:0; margin-bottom:2px;">Responda o</span><span class="opt-label">Questionário de fenótipo da pele</span></div>
+          <div class="opt-text"><span class="opt-desc" style="margin-top:0; margin-bottom:2px;">Preencha o</span><span class="opt-label">Prontuário de fenótipo da pele</span></div>
         </div>
       </div>
       <div class="intro-step-row centered">
@@ -3661,7 +3661,7 @@
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧻</div><div class="opt-text"><span class="opt-label">Lenço</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
       <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
-      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">👎</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">❌</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
     </div>
       <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
         <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
@@ -4580,6 +4580,7 @@
   }
 
   function goTo(n) {
+    window._lastGoToTime = Date.now();
     // Para o scanner quando sai dele
     if (current === 'scanner' && n !== 'scanner') {
       if (typeof window._stopScanner === 'function') window._stopScanner();
@@ -5149,7 +5150,12 @@
     setTimeout(() => goTo(window._receitaNext || 20), 220);
   }
 
+  // Proteção contra ghost click no mobile: registra o momento de cada goTo
+  // e ignora cliques em opções que cheguem dentro de 420ms após a transição.
+  window._lastGoToTime = 0;
+
   function selectOption(el, gid, val) {
+    if (Date.now() - window._lastGoToTime < 420) return;
     document.getElementById(gid).querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
     answers[gid] = val || el.querySelector('.opt-label').textContent;
@@ -5207,6 +5213,7 @@
   }
 
   function toggleMulti(el, gid, excl) {
+    if (Date.now() - window._lastGoToTime < 420) return;
     const parent = document.getElementById(gid);
     if (excl === 'none') {
       parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
