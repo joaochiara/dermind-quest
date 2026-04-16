@@ -1166,17 +1166,141 @@
       width: 100%;
     }
 
-    /* Foto frente isolada — visível apenas em desktop */
+    /* Crachá — visível apenas em desktop */
     .result-photo-front-only {
       display: flex !important;
       flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      align-items: stretch;
       margin-bottom: 20px;
     }
-    .result-photo-front-only .result-photo-box {
+
+    /* ── CRACHÁ ── */
+    #result-cracha {
+      background: rgba(253,250,247,0.60);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.65);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0px rgba(255,255,255,0.80),
+        0 10px 36px rgba(24,16,14,0.11),
+        0 1px 0 rgba(255,255,255,0.95) inset,
+        0 -1px 0 rgba(0,0,0,0.05) inset;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cracha-top {
+      background: var(--wine);
+      padding: 10px 18px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+    }
+    .cracha-clip {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 16px;
+      background: var(--wine-dark);
+      border-radius: 6px 6px 0 0;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-bottom: none;
+    }
+    .cracha-clip::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 14px;
+      background: var(--wine-dark);
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.20);
+    }
+    .cracha-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(253,250,247,0.80);
+      margin-top: 4px;
+    }
+
+    .cracha-photo-wrap {
+      padding: 20px 20px 10px;
+    }
+    .cracha-photo-wrap .result-photo-box {
       width: 100%;
       aspect-ratio: 3/4;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .cracha-photo-wrap .result-photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cracha-photo-wrap .photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 42px;
+      background: var(--ivory-dark);
+      border-radius: 14px;
+    }
+
+    .cracha-info {
+      padding: 14px 20px 22px;
+    }
+    .cracha-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 1px 4px rgba(24,16,14,0.08));
+    }
+    .cracha-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--wine-light), transparent);
+      margin-bottom: 12px;
+    }
+    .cracha-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .cracha-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .cracha-field-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+    .cracha-field-val {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-align: right;
     }
 
     /* Score rows na col-left: 2 colunas em vez de 4 */
@@ -1226,6 +1350,7 @@
       display: flex !important;
       order: 5;
       margin-bottom: 16px;
+      margin-top: -12px;
     }
 
     /* Ordem dos itens da col-right no desktop */
@@ -3936,10 +4061,43 @@
       <!-- ── COLUNA ESQUERDA ── -->
       <div class="result-col-left">
 
-        <!-- Foto Frente (apenas, sem carrossel — desktop only, sincronizada via JS) -->
+        <!-- Crachá — desktop only, substitui o photobox -->
         <div class="result-photo-front-only" id="result-photo-front-only-wrap" style="display:none;">
-          <div class="result-photo-box" id="result-photo-front-desktop">
-            <div class="photo-placeholder">📸</div>
+          <div id="result-cracha">
+            <!-- Topo decorativo do crachá -->
+            <div class="cracha-top">
+              <div class="cracha-clip"></div>
+              <span class="cracha-label">derm.ia · protocolo</span>
+            </div>
+            <!-- Foto -->
+            <div class="cracha-photo-wrap">
+              <div class="result-photo-box" id="result-photo-front-desktop">
+                <div class="photo-placeholder">📸</div>
+              </div>
+            </div>
+            <!-- Dados do usuário -->
+            <div class="cracha-info">
+              <div class="cracha-name" id="crachaName">—</div>
+              <div class="cracha-divider"></div>
+              <div class="cracha-fields">
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Idade</span>
+                  <span class="cracha-field-val" id="crachaIdade">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Cidade</span>
+                  <span class="cracha-field-val" id="craCidade">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Tipo de pele</span>
+                  <span class="cracha-field-val" id="craTipo">—</span>
+                </div>
+                <div class="cracha-field" id="cracha-alergia-row">
+                  <span class="cracha-field-label">Alergias</span>
+                  <span class="cracha-field-val" id="craAlergia">—</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -4028,9 +4186,10 @@
 
         <p class="result-sub" id="resultSubtitle" style="visibility:hidden;">Oi, <span id="resultNome">você</span>! Agora que passou por todas as etapas, aqui está a <strong>rotina personalizada</strong> que montamos para os seus próximos 15 dias.</p>
 
-        <!-- RADAR CHART — mobile only (em desktop fica na col-left) -->
-        <div id="radar-chart-wrap-mobile" class="result-section-mobile-only" style="display:flex; flex-direction:column; align-items:center;">
-          <div id="radar-pill-container-mobile" style="position:relative; width:100%; max-width:400px;">
+        <!-- RADAR CHART — mobile only (em desktop fica na col-right dentro de box) -->
+        <div id="radar-chart-wrap-mobile" class="result-section result-section-mobile-only" style="display:flex; flex-direction:column; align-items:stretch; padding:24px 26px;">
+          <div class="rs-title">Radar da pele</div>
+          <div id="radar-pill-container-mobile" style="position:relative; width:100%; max-width:400px; margin:0 auto;">
             <svg id="skin-radar-mobile" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
             <div id="radar-pills-overlay-mobile" style="position:absolute; inset:0; pointer-events:none;"></div>
           </div>
@@ -4083,6 +4242,7 @@
 
         <!-- BOX: Produto Essencial -->
         <div class="result-section" id="box-protocolo-completo">
+          <div class="rs-title">Protocolo completo</div>
           <div class="routine-steps">
             <div class="routine-group">
               <span class="rs-period">☀︎ Matinal</span>
@@ -5417,7 +5577,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
     const nomeEl = document.getElementById('resultNome');
     if (nomeEl) nomeEl.textContent = nome;
 
-    const diagEl = document.querySelector('.diagnosis-text');
+    const diagEl = document.querySelector('#box-avaliacao-ia .diagnosis-text');
     if (diagEl) {
       let diagHtml = '<span style="color:var(--wine);margin-right:6px;">✦</span>' + r.diagnostico;
       // Garante no mínimo 3 trechos em destaque (font-weight 500 via .diagnosis-text strong)
@@ -5512,6 +5672,34 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       // Exibe foto frente isolada no desktop
       const frontOnlyWrap = document.getElementById('result-photo-front-only-wrap');
       if (frontOnlyWrap) frontOnlyWrap.style.display = 'flex';
+
+      // Popula dados do crachá
+      const crachaName  = document.getElementById('crachaName');
+      const crachaIdade = document.getElementById('crachaIdade');
+      const craCidade   = document.getElementById('craCidade');
+      const craTipo     = document.getElementById('craTipo');
+      const craAlergia  = document.getElementById('craAlergia');
+      const crachaAlergiaRow = document.getElementById('cracha-alergia-row');
+
+      const _nome   = (document.getElementById('inputNomeNew') && document.getElementById('inputNomeNew').value.trim()) || '—';
+      const _idade  = (document.getElementById('inputIdadeNew') && document.getElementById('inputIdadeNew').value.trim()) || '—';
+      const _cidade = document.getElementById('city-label')?.textContent || '—';
+      const _tipo   = answers['q1'] || '—';
+      const _alergia = answers['q_alergia'] || '';
+
+      const tipoMap = { oleosa: 'Oleosa', seca: 'Seca', mista: 'Mista', normal: 'Normal' };
+
+      if (crachaName)  crachaName.textContent  = _nome;
+      if (crachaIdade) crachaIdade.textContent  = _idade ? _idade + ' anos' : '—';
+      if (craCidade)   craCidade.textContent    = _cidade;
+      if (craTipo)     craTipo.textContent      = tipoMap[_tipo] || _tipo;
+      if (craAlergia && crachaAlergiaRow) {
+        if (_alergia && _alergia !== 'nenhuma' && _alergia !== 'Nenhuma') {
+          craAlergia.textContent = _alergia;
+        } else {
+          crachaAlergiaRow.style.display = 'none';
+        }
+      }
     })();
 
     // ── Carrossel automático das fotos do scanner ──────────────────────
