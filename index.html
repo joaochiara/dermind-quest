@@ -4588,11 +4588,6 @@
     window._lastGoToTime = Date.now();
     console.log('[GOTO] n='+n+' from='+current+' t='+window._lastGoToTime);
     if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
-    // Invalida todos os tokens de touchstart para impedir ghost clicks nas options
-    // da próxima screen (o ghost chega ~300ms depois, mas sem touchstart próprio)
-    document.querySelectorAll('.option[data-ts-at]').forEach(function(o) {
-      o.removeAttribute('data-ts-at');
-    });
     // Bloqueia pointer-events em todo o quiz durante a transição
     // para evitar ghost clicks no mobile (touchend → click sintético ~300ms depois)
     const _qw = document.querySelector('.quiz-wrap');
@@ -10283,89 +10278,126 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
   }, true); // capture phase — antes dos onclick inline
 })();
 
-// ── GHOST CLICK BLOCKER v2 — touchstart pairing ──────────────────────────────
-// Estratégia: um .option só é interagível se tiver recebido seu próprio
-// touchstart há menos de PAIR_WINDOW ms. Ghost clicks nunca têm touchstart
-// precedente — chegam como click/touchend sintético sem par real.
-//
-// Adicionalmente mantém o bloqueio global por timestamp de goTo como
-// segunda barreira independente.
+// ── OPTION INTERACTION ENGINE — substitui todos os onclick inline das .option ──
+// Estratégia definitiva contra ghost clicks:
+//   1. Remove os onclick inline das .option no DOMContentLoaded
+//   2. Usa touchstart como evento primário (não existe ghost touchstart)
+//   3. Chama preventDefault() no touchstart para suprimir o click sintético
+//   4. Guard de movimento: cancela se o dedo arrastou > 8px (scroll)
+//   5. Guard de transição: ignora toques por 700ms após goTo()
+//   6. Em desktop (sem touch), usa click normalmente
 (function() {
 
-  var PAIR_WINDOW = 700; // ms máximo entre touchstart e click/touchend válidos
+  // ── Estado ────────────────────────────────────────────────────────────────
+  var _touchStartX = 0, _touchStartY = 0;
+  var _touchMoved  = false;
+  var _pendingEl   = null;   // elemento .option com touchstart ativo
+  var _transitioning = false;
+  var _transTimer    = null;
 
-  // ── Barreira 1: touchstart pairing ───────────────────────────────────────
-  // Cada elemento recebe um atributo data-ts-at com o timestamp do último
-  // touchstart real que tocou nele (ou em descendente seu).
-  document.addEventListener('touchstart', function(e) {
-    var el = e.touches[0] ? document.elementFromPoint(
-      e.touches[0].clientX, e.touches[0].clientY
-    ) : e.target;
-    // Sobe até 6 níveis procurando .option e carimba todos no caminho
+  // Exposto para goTo() bloquear durante transições
+  window._blockOptionClicks = function(ms) {
+    _transitioning = true;
+    clearTimeout(_transTimer);
+    _transTimer = setTimeout(function() { _transitioning = false; }, ms || 700);
+    // Também descarta qualquer toque pendente
+    _pendingEl = null;
+  };
+
+  // ── Extrai o handler original do onclick inline e o remove do elemento ───
+  // Feito uma única vez após o DOM estar pronto, para que os handlers
+  // não possam ser chamados diretamente pelo browser via click sintético.
+  function stripOnclicks() {
+    document.querySelectorAll('.option[onclick]').forEach(function(el) {
+      // Salva o handler como função no elemento para chamada posterior
+      var fn = el.onclick;  // o browser já compilou o onclick string → Function
+      el._optionHandler = fn;
+      el.removeAttribute('onclick');
+      el.onclick = null;
+    });
+  }
+
+  // ── Sobe na árvore DOM procurando .option com handler ────────────────────
+  function findOption(target) {
+    var el = target;
     for (var i = 0; i < 6; i++) {
-      if (!el) break;
-      if (el.classList && el.classList.contains('option')) {
-        el.setAttribute('data-ts-at', Date.now());
-      }
+      if (!el) return null;
+      if (el.classList && el.classList.contains('option') && el._optionHandler) return el;
       el = el.parentElement;
+    }
+    return null;
+  }
+
+  // ── Despacha a ação da option ─────────────────────────────────────────────
+  function fireOption(optEl) {
+    if (!optEl || !optEl._optionHandler) return;
+    // Guard: durante transição de tela, ignora
+    if (_transitioning) return;
+    // Guard: pointer-events none (set pelo goTo) — verifica no elemento e pais
+    var el = optEl;
+    for (var i = 0; i < 4; i++) {
+      if (!el) break;
+      if (window.getComputedStyle(el).pointerEvents === 'none') return;
+      el = el.parentElement;
+    }
+    optEl._optionHandler.call(optEl, { target: optEl, currentTarget: optEl });
+  }
+
+  // ── Listeners de touch ────────────────────────────────────────────────────
+  document.addEventListener('touchstart', function(e) {
+    _touchMoved = false;
+    var t = e.touches[0];
+    _touchStartX = t.clientX;
+    _touchStartY = t.clientY;
+
+    var opt = findOption(t.target || document.elementFromPoint(t.clientX, t.clientY));
+    _pendingEl = opt || null;
+
+    // Previne o click sintético que o browser geraria ~300ms depois
+    // Só faz isso em elements interativos (option), para não quebrar scroll e outros
+    if (_pendingEl) {
+      e.preventDefault();
+    }
+  }, { passive: false, capture: true });
+
+  document.addEventListener('touchmove', function(e) {
+    var t = e.touches[0];
+    if (Math.abs(t.clientX - _touchStartX) > 8 || Math.abs(t.clientY - _touchStartY) > 8) {
+      _touchMoved = true;
+      _pendingEl  = null;
     }
   }, { passive: true, capture: true });
 
-  // Verifica se o elemento alvo tem par de touchstart recente
-  function hasFreshTouch(target) {
-    var el = target;
-    for (var i = 0; i < 6; i++) {
-      if (!el) break;
-      if (el.classList && el.classList.contains('option')) {
-        var ts = parseInt(el.getAttribute('data-ts-at') || '0', 10);
-        return (Date.now() - ts) < PAIR_WINDOW;
-      }
-      el = el.parentElement;
-    }
-    return true; // sem .option no caminho → não bloquear (desktop etc.)
-  }
+  document.addEventListener('touchend', function(e) {
+    if (_touchMoved || !_pendingEl) { _pendingEl = null; return; }
+    var opt = _pendingEl;
+    _pendingEl = null;
+    fireOption(opt);
+  }, { passive: true, capture: true });
 
-  // ── Barreira 2: bloqueio global por goTo (mantido como fallback) ─────────
-  var _blocked = false;
-  var _blockTimer = null;
-
-  window._blockOptionClicks = function(ms) {
-    _blocked = true;
-    clearTimeout(_blockTimer);
-    _blockTimer = setTimeout(function() { _blocked = false; }, ms || 700);
-  };
-
-  // ── Interceptador unificado (capture phase) ───────────────────────────────
-  function interceptEvent(e) {
-    // Determina se o alvo é (ou está dentro de) um .option
-    var el = e.target;
-    var isOption = false;
-    for (var i = 0; i < 6; i++) {
-      if (!el) break;
-      if (el.classList && el.classList.contains('option')) { isOption = true; break; }
-      el = el.parentElement;
-    }
-    if (!isOption) return; // não é option — não interferir
-
-    // Barreira 2: bloqueio global
-    if (_blocked) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
+  // ── Fallback para desktop (mouse/trackpad) ─────────────────────────────────
+  // Em dispositivos sem touch, os onclick foram removidos — restaura via click.
+  document.addEventListener('click', function(e) {
+    // Se é dispositivo touch real, bloqueia o click sintético sempre
+    if (navigator.maxTouchPoints > 0) {
+      var opt = findOption(e.target);
+      if (opt) { e.preventDefault(); e.stopImmediatePropagation(); }
       return;
     }
+    // Desktop: dispara normalmente
+    var opt = findOption(e.target);
+    if (opt) fireOption(opt);
+  }, true);
 
-    // Barreira 1: touchstart pairing — bloqueia se não houve toque real recente
-    // Só aplica em eventos sintéticos (isTrusted=false) ou quando é dispositivo touch
-    // (navigator.maxTouchPoints > 0). Em desktop com mouse, hasFreshTouch retorna true.
-    if (navigator.maxTouchPoints > 0 && !hasFreshTouch(e.target)) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return;
-    }
+  // ── Strip onclicks após DOM pronto ─────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', stripOnclicks);
+  } else {
+    stripOnclicks();
   }
 
-  document.addEventListener('click',    interceptEvent, true);
-  document.addEventListener('touchend', interceptEvent, true);
+  // Reaplica strip se novas options forem inseridas dinamicamente
+  window._stripOptionOnclicks = stripOnclicks;
 
 })();
 </script>
