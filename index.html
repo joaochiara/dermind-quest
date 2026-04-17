@@ -459,16 +459,21 @@
     pointer-events: none;
     z-index: 0;
   }
-  .option:hover {
-    border-color: var(--wine);
-    box-shadow:
-      0 2px 0px rgba(255,255,255,0.70),
-      0 8px 24px rgba(168,85,104,0.15),
-      0 1px 0 rgba(255,255,255,0.90) inset,
-      0 -1px 0 rgba(0,0,0,0.06) inset;
+  /* Hover só em dispositivos com ponteiro real (mouse).
+     Em touch (iOS/Android) :hover fica preso após o toque e causa
+     o efeito visual de "opção selecionada" na screen seguinte. */
+  @media (hover: hover) {
+    .option:hover {
+      border-color: var(--wine);
+      box-shadow:
+        0 2px 0px rgba(255,255,255,0.70),
+        0 8px 24px rgba(168,85,104,0.15),
+        0 1px 0 rgba(255,255,255,0.90) inset,
+        0 -1px 0 rgba(0,0,0,0.06) inset;
+    }
+    .option:hover::after { opacity: 1; }
+    .option:hover::before { opacity: 0.7; }
   }
-  .option:hover::after { opacity: 1; }
-  .option:hover::before { opacity: 0.7; }
   .option.selected {
     border-color: var(--wine);
     background: var(--wine-pale);
@@ -627,16 +632,18 @@
     pointer-events: none;
     z-index: 0;
   }
-  .photo-slot:hover {
-    border-color: var(--wine);
-    box-shadow:
-      0 2px 0px rgba(255,255,255,0.70),
-      0 8px 24px rgba(168,85,104,0.15),
-      0 1px 0 rgba(255,255,255,0.90) inset,
-      0 -1px 0 rgba(0,0,0,0.06) inset;
+  @media (hover: hover) {
+    .photo-slot:hover {
+      border-color: var(--wine);
+      box-shadow:
+        0 2px 0px rgba(255,255,255,0.70),
+        0 8px 24px rgba(168,85,104,0.15),
+        0 1px 0 rgba(255,255,255,0.90) inset,
+        0 -1px 0 rgba(0,0,0,0.06) inset;
+    }
+    .photo-slot:hover::after { opacity: 1; }
+    .photo-slot:hover::before { opacity: 0.7; }
   }
-  .photo-slot:hover::after { opacity: 1; }
-  .photo-slot:hover::before { opacity: 0.7; }
   .photo-slot.has-photo {
     border-style: solid; border-color: var(--wine);
     box-shadow:
@@ -4587,14 +4594,7 @@
   function goTo(n) {
     window._lastGoToTime = Date.now();
     console.log('[GOTO] n='+n+' from='+current+' t='+window._lastGoToTime);
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(1000);
-    // Remove classe 'selected' de todas as options da screen atual antes de sair.
-    const _curScreen = document.querySelector('.screen.active');
-    if (_curScreen) {
-      _curScreen.querySelectorAll('.option.selected').forEach(function(o) {
-        o.classList.remove('selected');
-      });
-    }
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     // Bloqueia pointer-events em todo o quiz durante a transição
     // para evitar ghost clicks no mobile (touchend → click sintético ~300ms depois)
     const _qw = document.querySelector('.quiz-wrap');
@@ -10285,113 +10285,51 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
   }, true); // capture phase — antes dos onclick inline
 })();
 
-// ── GHOST CLICK BLOCKER — abordagem definitiva ───────────────────────────────
-// O ghost click no iOS/Android chega como evento 'click' sintético ~300ms após
-// o touchend real. A única forma confiável de bloqueá-lo é substituir os onclick
-// inline por touchstart próprio, com controle total do ciclo de vida do evento.
-//
-// Funcionamento:
-//   1. Remove todos os onclick inline das .option (o browser não consegue
-//      disparar o ghost se não há handler registrado)
-//   2. Registra touchstart nas .option para capturar o toque real
-//   3. Só executa a ação no touchend se:
-//      a) Houve touchstart no mesmo elemento (sem ghost touchstart)
-//      b) O dedo não se moveu (não é scroll)
-//      c) Não estamos em transição de tela
-//   4. Bloqueia qualquer evento click/touchend que chegue nas .option
-//      por 1000ms após cada goTo() — cobertura extra
+// ── GHOST CLICK BLOCKER ──────────────────────────────────────────────────────
+// Bloqueia clicks/taps em .option durante e após transições de screen.
+// Usa capture phase no document — intercepta ANTES de qualquer onclick inline,
+// independente de pointer-events, touch-action ou estrutura do DOM.
 (function() {
+  var _blocked = false;
+  var _blockTimer = null;
 
-  var _goToTime    = 0;       // timestamp do último goTo()
-  var _BLOCK_MS    = 1000;    // ms de bloqueio após goTo
-  var _touchEl     = null;    // .option que recebeu touchstart
-  var _touchX      = 0;
-  var _touchY      = 0;
-  var _moved       = false;
-
-  // ── Exposto para goTo() ───────────────────────────────────────────────────
+  // Expõe função para o goTo ativar o bloqueio
   window._blockOptionClicks = function(ms) {
-    _goToTime = Date.now();
-    _BLOCK_MS = ms || 1000;
-    _touchEl  = null; // descarta toque pendente imediatamente
+    _blocked = true;
+    clearTimeout(_blockTimer);
+    _blockTimer = setTimeout(function() { _blocked = false; }, ms || 600);
   };
 
-  // ── Sobe na árvore procurando .option ────────────────────────────────────
-  function closestOption(el) {
-    for (var i = 0; i < 6; i++) {
-      if (!el) return null;
-      if (el.classList && el.classList.contains('option')) return el;
+  // Captura phase: roda antes de qualquer onclick inline
+  document.addEventListener('click', function(e) {
+    if (!_blocked) return;
+    var el = e.target;
+    // Sobe na árvore até 4 níveis procurando .option
+    for (var i = 0; i < 4; i++) {
+      if (!el) break;
+      if (el.classList && el.classList.contains('option')) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        return;
+      }
       el = el.parentElement;
     }
-    return null;
-  }
+  }, true); // true = capture phase
 
-  // ── Remove onclick inline e salva handler ────────────────────────────────
-  function stripOnclicks() {
-    document.querySelectorAll('.option[onclick]').forEach(function(el) {
-      el._optFn = el.onclick;
-      el.removeAttribute('onclick');
-      el.onclick = null;
-    });
-  }
-
-  // ── Verifica se estamos no período de bloqueio pós-goTo ──────────────────
-  function isBlocked() {
-    return (Date.now() - _goToTime) < _BLOCK_MS;
-  }
-
-  // ── touchstart: registra qual .option foi tocada ──────────────────────────
-  document.addEventListener('touchstart', function(e) {
-    _moved   = false;
-    _touchEl = null;
-    var t    = e.touches[0];
-    _touchX  = t.clientX;
-    _touchY  = t.clientY;
-    var opt  = closestOption(document.elementFromPoint(t.clientX, t.clientY));
-    if (opt && !isBlocked()) {
-      _touchEl = opt;
-      // Previne o click sintético que o iOS geraria ~300ms depois
-      e.preventDefault();
-    }
-  }, { passive: false, capture: true });
-
-  // ── touchmove: cancela se o dedo arrastou (scroll) ───────────────────────
-  document.addEventListener('touchmove', function(e) {
-    var t = e.touches[0];
-    if (Math.abs(t.clientX - _touchX) > 8 || Math.abs(t.clientY - _touchY) > 8) {
-      _moved   = true;
-      _touchEl = null;
-    }
-  }, { passive: true, capture: true });
-
-  // ── touchend: executa ação se toque válido ────────────────────────────────
+  // Também bloqueia touchend direto nas options (iOS Safari bypassa click às vezes)
   document.addEventListener('touchend', function(e) {
-    var opt = _touchEl;
-    _touchEl = null;
-    if (!opt || _moved || isBlocked()) return;
-    if (!opt._optFn) return;
-    opt._optFn.call(opt, e);
-  }, { passive: true, capture: true });
-
-  // ── Bloqueia click sintético que chegar em .option ────────────────────────
-  // Cobre casos onde preventDefault() no touchstart não foi suficiente
-  document.addEventListener('click', function(e) {
-    var opt = closestOption(e.target);
-    if (!opt) return;
-    // Sempre bloqueia click em dispositivo touch — usamos touchend como canal
-    if (navigator.maxTouchPoints > 0) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
+    if (!_blocked) return;
+    var el = e.target;
+    for (var i = 0; i < 4; i++) {
+      if (!el) break;
+      if (el.classList && el.classList.contains('option')) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        return;
+      }
+      el = el.parentElement;
     }
   }, true);
-
-  // ── Inicializa após DOM pronto ────────────────────────────────────────────
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', stripOnclicks);
-  } else {
-    stripOnclicks();
-  }
-
 })();
 </script>
 
