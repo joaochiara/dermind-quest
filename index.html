@@ -5102,8 +5102,9 @@
   }
 
   function selectRotinaOption(el, val) {
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     const _dt = Date.now() - window._lastGoToTime;
+    alert('selectRotinaOption val='+val+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug);
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] selectRotinaOption val='+val+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
     // Seleciona visualmente
@@ -5144,8 +5145,9 @@
   }
 
   function selectMaquiagemOption(el, val) {
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     const _dt = Date.now() - window._lastGoToTime;
+    alert('selectMaquiagemOption val='+val+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug);
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] selectMaquiagemOption val='+val+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
     document.getElementById('q_maquiagem').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -5159,8 +5161,9 @@
   }
 
   function selectAlergiaOption(el, val) {
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     const _dt = Date.now() - window._lastGoToTime;
+    alert('selectAlergiaOption val='+val+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug);
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] selectAlergiaOption val='+val+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
     document.getElementById('q_alergia').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -5174,8 +5177,9 @@
   }
 
   function selectReceitaOption(el, val) {
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     const _dt = Date.now() - window._lastGoToTime;
+    alert('selectReceitaOption val='+val+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug);
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] selectReceitaOption val='+val+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
     document.getElementById('q_receita').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
@@ -5194,7 +5198,10 @@
 
   function selectOption(el, gid, val) {
     const _dt = Date.now() - window._lastGoToTime;
-    alert('selectOption gid='+gid+' val='+(val||'?')+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug+'\n_blocked='+window._blocked_debug);
+    // Debug: verifica se o onclick ainda existe no elemento (não deveria após stripOnclicks)
+    const hasOnclick = !!el.getAttribute('onclick');
+    const hasHandler = !!el._optionHandler;
+    alert('selectOption gid='+gid+' val='+(val||'?')+' dt='+_dt+'ms screen='+current+'\nonclick attr='+hasOnclick+' _optionHandler='+hasHandler+'\n_transitioning='+window._transitioning_debug);
     if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] selectOption gid='+gid+' val='+(val||'?')+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
@@ -5255,8 +5262,9 @@
   }
 
   function toggleMulti(el, gid, excl) {
-    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     const _dt = Date.now() - window._lastGoToTime;
+    alert('toggleMulti gid='+gid+' dt='+_dt+'ms screen='+current+'\n_transitioning='+window._transitioning_debug);
+    if (typeof window._blockOptionClicks === 'function') window._blockOptionClicks(700);
     console.log('[SELECT] toggleMulti gid='+gid+' dt='+_dt+'ms screen='+current);
     if (_dt < 800) { console.log('[SELECT] BLOQUEADO'); return; }
     const parent = document.getElementById(gid);
@@ -10404,6 +10412,33 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
   // Reaplica strip se novas options forem inseridas dinamicamente
   window._stripOptionOnclicks = stripOnclicks;
 
+})();
+
+// ── DEBUG: MutationObserver que detecta quando .selected é adicionado a .option ──
+(function() {
+  var obs = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.type !== 'attributes' || m.attributeName !== 'class') return;
+      var el = m.target;
+      if (!el.classList.contains('option')) return;
+      var hadSelected = (m.oldValue || '').includes('selected');
+      var hasSelected = el.classList.contains('selected');
+      if (!hadSelected && hasSelected) {
+        // Uma opção acabou de receber a classe 'selected'
+        var screen = el.closest('.screen');
+        var screenId = screen ? screen.id : 'fora-de-screen';
+        var isActive = screen ? screen.classList.contains('active') : false;
+        var stack = '';
+        try { throw new Error('stack'); } catch(e) { stack = e.stack ? e.stack.split('\n').slice(1,4).join(' | ') : ''; }
+        alert('SELECTED adicionado!\nscreen: '+screenId+' (active='+isActive+')\nopção: '+(el.querySelector('.opt-label')||el).textContent.trim().slice(0,30)+'\ncallstack: '+stack);
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.option').forEach(function(el) {
+      obs.observe(el, { attributes: true, attributeOldValue: true });
+    });
+  });
 })();
 </script>
 
