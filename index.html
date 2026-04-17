@@ -3279,7 +3279,6 @@
 <header>
   <div class="header-island">
     <a href="#" class="logo">derm<span>.ia</span></a>
-    <button onclick="goTo(26)" style="font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-muted);background:none;border:none;cursor:pointer;padding:4px 8px;opacity:0.6;letter-spacing:0.04em;" title="[DEV] Pular para screen 26">pular →</button>
     <div class="step-counter" id="stepCounter"></div>
     <a href="#planos" class="header-cta" id="headerCta">Assinar agora</a>
     <button class="btn-back inter-header-back" id="interblock-back-btn" onclick="" style="display:none;">Voltar</button>
@@ -5966,7 +5965,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (craAlergia && crachaAlergiaRow) {
         const alergiaLower = (_alergia || '').toLowerCase().trim();
         if (_alergia && alergiaLower !== 'nenhuma' && alergiaLower !== 'nao' && alergiaLower !== 'não' && alergiaLower !== '') {
-          craAlergia.textContent = _alergia;
+          craAlergia.textContent = _alergia.charAt(0).toUpperCase() + _alergia.slice(1);
         } else {
           craAlergia.textContent = 'Nenhuma';
         }
@@ -5983,7 +5982,7 @@ dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentaca
       if (mTipo)   mTipo.textContent   = tipoMap[_tipo] || _tipo;
       if (mAler) {
         const alergiaLower = (_alergia || '').toLowerCase().trim();
-        mAler.textContent = (_alergia && alergiaLower !== 'nenhuma' && alergiaLower !== 'nao' && alergiaLower !== 'não' && alergiaLower !== '') ? _alergia : 'Nenhuma';
+        mAler.textContent = (_alergia && alergiaLower !== 'nenhuma' && alergiaLower !== 'nao' && alergiaLower !== 'não' && alergiaLower !== '') ? _alergia.charAt(0).toUpperCase() + _alergia.slice(1) : 'Nenhuma';
       }
       // Exibe o clone mobile
       const crachaMobileWrap = document.getElementById('cracha-mobile-wrap');
