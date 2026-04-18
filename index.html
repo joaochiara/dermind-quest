@@ -5510,11 +5510,11 @@ Nos nomes dos produtos, NUNCA use travessão (—). Se o nome original contiver 
 O conjunto de produtos indicados na rotinaMatinal, rotinaNoturna, rotinaSemanal e indicadosParaVoce deve obrigatoriamente incluir produtos de no mínimo 3 marcas diferentes. Se a seleção natural resultar em menos de 3 marcas, substitua um ou mais produtos por equivalentes de outras marcas disponíveis na lista, mantendo a adequação clínica.
 dicasInteligentes deve conter exatamente os 5 campos: agua, protetor, alimentacao, luzAzul e sono. Cada campo tem um titulo OBRIGATORIAMENTE com no máximo 33 caracteres (nunca mais que 33, nunca use reticências ou corte de texto — use frases curtas e diretas como "Beba mais água" ou "Proteja do sol"). O subtitulo deve ter OBRIGATORIAMENTE entre 55 e 75 caracteres (nunca menos que 55 nem mais que 75), sem ponto final nem ponto de exclamação. Os textos devem ser personalizados com base nas respostas da paciente — tom positivo quando o hábito é bom, orientativo quando precisa melhorar. Nunca use textos genéricos.`;
 
-    const response = await fetch('https://esxgbspxuajrpoxehgam.supabase.co/functions/v1/analisar', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzeGdic3B4dWFqcnBveGVoZ2FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4NDc4ODcsImV4cCI6MjA5MTQyMzg4N30.I64fotSZME94Oy6ABwIE541L-HxABOST1GjEcQNo56o' },
-      body: JSON.stringify({ prompt })
-    });
+const response = await fetch('/api/analisar', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ prompt })
+});
 
     if (!response.ok) throw new Error('Erro na chamada à IA');
     const data = await response.json();
