@@ -145,7 +145,7 @@ body {
   font-family: var(--sans);
   background: var(--ivory);
   color: var(--ink);
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -368,7 +368,7 @@ header.cc-open .inter-header-back {
   flex: 1;
   display: flex; align-items: center; justify-content: center;
   padding: 96px 24px 120px;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow: visible;
   position: relative;
   z-index: 1;
@@ -1951,7 +1951,8 @@ header.cc-open .inter-header-back {
       position: relative;
       margin-top: auto;
       padding-top: 35px;
-      height: 150px;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      height: calc(150px + env(safe-area-inset-bottom, 0px));
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
