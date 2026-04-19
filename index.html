@@ -57,6 +57,8 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 #screen-0 .float-box{opacity:0}
 #screen-0 .interblock-dot-wrap{opacity:0}
 
+#screen-0 .intro-sub-1{opacity:0;transition:opacity 1.4s ease}
+#screen-0 .intro-sub-1.sub-visible{opacity:1}
 @media(max-width:580px){
 .quiz-wrap{align-items:flex-start;padding:82px 16px 120px}
 .screen-h1{font-size:42px;margin-inline:6px}
@@ -71,6 +73,10 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 #screen-0 #intro-box-1,#screen-0 #intro-box-2,#screen-0 #intro-box-3{flex:unset!important;margin-right:0!important;margin-left:0!important;width:fit-content;max-width:100%;transform:scale(0.85);transform-origin:center center;margin-top:-10px!important;margin-bottom:-10px!important}
 #screen-0 #intro-box-2,#screen-0 #intro-box-3{margin-top:-15px!important}
 #screen-0 #intro-btn{transform:translateY(2px)}
+.intro-step-row .interblock-dot-wrap{display:none}
+.intro-step-row .option{flex:1}
+#screen-0 .intro-step-row{justify-content:center}
+#screen-0 .intro-step-row .option{flex:unset;width:fit-content;margin-right:0!important;margin-left:0!important}
 }</style>
 <!-- ═══ PRELOAD LCP ═══
   O elemento LCP é o <h1 class="screen-h1"> que usa DM Serif Text.
