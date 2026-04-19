@@ -24,8 +24,6 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#F7F2EA">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Dermind | Protocolo de pele</title>
 <meta name="description" content="Descubra seu protocolo de skincare ideal com inteligência artificial. Avaliação personalizada em minutos.">
 <link rel="icon" type="image/png" href="favicon.png?v=2">
@@ -142,11 +140,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html {
-  scroll-behavior: smooth;
-  background: var(--ivory);
-  min-height: 100lvh;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--sans);
@@ -167,9 +161,12 @@ body {
 /* ── MIST CANVAS ── */
 #mist-canvas {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -150px;
   width: 100%;
-  height: 100lvh;
+  height: auto;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
