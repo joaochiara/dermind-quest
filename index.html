@@ -96,8 +96,8 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"></noscript>
-<link rel="preload" href="style.css" as="style" fetchpriority="high">
-<link rel="stylesheet" href="style.css">
+<link rel="preload" href="style.css" as="style" fetchpriority="high" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="style.css"></noscript>
 </head>
 <body>
 
@@ -166,8 +166,8 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
   <div class="screen active" id="screen-0" data-screen="0">
     <p class="screen-eyebrow">Inteligência artificial para sua pele</p>
     <h1 class="screen-h1" id="intro-title" style="position:relative;">
-      <span id="intro-placeholder" style="display:block;opacity:0;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
-      <span id="intro-typed" style="position:absolute; top:0; left:0; width:100%;"></span>
+      <span id="intro-placeholder" style="visibility:hidden; display:block;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
+      <span id="intro-typed" style="position:absolute; top:0; left:0; width:100%;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
     </h1>
     <p class="screen-sub intro-sub-2" style="margin-bottom: 25px;">Conte com a tecnologia para avaliar sua pele com <strong>+95% de precisão</strong> sem sair de casa.</p>
     <div class="intro-steps" style="margin-bottom: 32px;">
