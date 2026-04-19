@@ -2157,43 +2157,11 @@ header.cc-open .inter-header-back {
     if (_interacted) return;
     _interacted = true;
     if (_origRIC) window.requestIdleCallback = _origRIC;
-    if (!_mistPending) return;
-    var fn = _mistPending;
-    _mistPending = null;
-
-    // Throttle o rAF do mist nos primeiros 4s após início:
-    // executa a cada ~200ms em vez de 60fps, reduzindo TBT 10x.
-    // Após 4s restaura velocidade normal (60fps).
-    var _origRAF = window.requestAnimationFrame;
-    var _mistStart = performance.now();
-    var _lastMistFrame = 0;
-    var _throttleUntil = _mistStart + 4000;
-    var _rafOverrideActive = true;
-
-    window.requestAnimationFrame = function(cb) {
-      if (!_rafOverrideActive) return _origRAF(cb);
-      var now = performance.now();
-      if (now > _throttleUntil) {
-        _rafOverrideActive = false;
-        window.requestAnimationFrame = _origRAF;
-        return _origRAF(cb);
-      }
-      var delay = Math.max(0, 200 - (now - _lastMistFrame));
-      return setTimeout(function() {
-        _lastMistFrame = performance.now();
-        _origRAF(cb);
-      }, delay);
-    };
-
-    fn();
-
-    // Garante restauração após 4s mesmo se o throttle não foi atingido
-    setTimeout(function() {
-      if (_rafOverrideActive) {
-        _rafOverrideActive = false;
-        window.requestAnimationFrame = _origRAF;
-      }
-    }, 4500);
+    if (_mistPending) {
+      var fn = _mistPending;
+      _mistPending = null;
+      fn();
+    }
   }
 
   ['click','touchstart','scroll','mousemove'].forEach(function(evt) {
