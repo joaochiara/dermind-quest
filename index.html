@@ -23,7 +23,6 @@
   });
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#F7F2EA">
 <title>Dermind | Protocolo de pele</title>
 <meta name="description" content="Descubra seu protocolo de skincare ideal com inteligência artificial. Avaliação personalizada em minutos.">
 <link rel="icon" type="image/png" href="favicon.png?v=2">
@@ -140,13 +139,17 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background: transparent;
+}
 
 body {
   font-family: var(--sans);
   background: var(--ivory);
   color: var(--ink);
   min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -161,12 +164,9 @@ body {
 /* ── MIST CANVAS ── */
 #mist-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -150px;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
