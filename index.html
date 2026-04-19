@@ -149,8 +149,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  overflow-y: auto;
-  position: relative;
   touch-action: pan-y;
 }
 @media (max-width: 580px) {
@@ -160,10 +158,9 @@ body {
 /* ── MIST CANVAS ── */
 #mist-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: calc(100lvh + env(safe-area-inset-bottom, 0px) + 150px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
