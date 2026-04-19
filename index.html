@@ -2146,7 +2146,6 @@ header.cc-open .inter-header-back {
   var _interacted = false;
 
   window.requestIdleCallback = function(cb, opts) {
-    // Detecta a chamada do mist: timeout:500 e cb é função (não arrow inline)
     if (opts && opts.timeout === 500 && !_interacted) {
       _mistPending = cb;
       return 0;
@@ -2157,27 +2156,51 @@ header.cc-open .inter-header-back {
   function startMist() {
     if (_interacted) return;
     _interacted = true;
-    // Restaura rIC original antes de executar
     if (_origRIC) window.requestIdleCallback = _origRIC;
-    if (_mistPending) {
-      var fn = _mistPending;
-      _mistPending = null;
-      fn();
-    }
+    if (!_mistPending) return;
+    var fn = _mistPending;
+    _mistPending = null;
+
+    // Throttle o rAF do mist nos primeiros 4s após início:
+    // executa a cada ~200ms em vez de 60fps, reduzindo TBT 10x.
+    // Após 4s restaura velocidade normal (60fps).
+    var _origRAF = window.requestAnimationFrame;
+    var _mistStart = performance.now();
+    var _lastMistFrame = 0;
+    var _throttleUntil = _mistStart + 4000;
+    var _rafOverrideActive = true;
+
+    window.requestAnimationFrame = function(cb) {
+      if (!_rafOverrideActive) return _origRAF(cb);
+      var now = performance.now();
+      if (now > _throttleUntil) {
+        _rafOverrideActive = false;
+        window.requestAnimationFrame = _origRAF;
+        return _origRAF(cb);
+      }
+      var delay = Math.max(0, 200 - (now - _lastMistFrame));
+      return setTimeout(function() {
+        _lastMistFrame = performance.now();
+        _origRAF(cb);
+      }, delay);
+    };
+
+    fn();
+
+    // Garante restauração após 4s mesmo se o throttle não foi atingido
+    setTimeout(function() {
+      if (_rafOverrideActive) {
+        _rafOverrideActive = false;
+        window.requestAnimationFrame = _origRAF;
+      }
+    }, 4500);
   }
 
   ['click','touchstart','scroll','mousemove'].forEach(function(evt) {
     window.addEventListener(evt, startMist, { once: true, passive: true });
   });
 
-  // Fallback: inicia o mist quando o browser estiver ocioso (thread livre),
-  // com timeout de 2s como garantia. Isso evita TBT porque o rIC só dispara
-  // quando não há tarefas pendentes — naturalmente após o TTI.
-  if (window.requestIdleCallback) {
-    requestIdleCallback(startMist, { timeout: 2000 });
-  } else {
-    setTimeout(startMist, 2000);
-  }
+  setTimeout(startMist, 1500);
 })();
 </script>
 <script>
