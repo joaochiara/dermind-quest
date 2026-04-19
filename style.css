@@ -40,7 +40,7 @@
     body { overflow-x: hidden; }
   }
 
-  /* ── MIST CANVAS ── */
+  /* â”€â”€ MIST CANVAS â”€â”€ */
   #mist-canvas {
     position: fixed;
     inset: 0;
@@ -51,7 +51,7 @@
     overflow: hidden;
   }
 
-  /* ── HEADER ILHA FLUTUANTE ── */
+  /* â”€â”€ HEADER ILHA FLUTUANTE â”€â”€ */
   header {
     position: fixed; top: 17px; left: 12px; right: 12px;
     transform: none;
@@ -113,7 +113,7 @@
     pointer-events: none;
     z-index: 2;
   }
-  /* Sobreposição wine-pale sutil */
+  /* SobreposiÃ§Ã£o wine-pale sutil */
   .header-island::after {
     content: '';
     position: absolute; inset: 0;
@@ -153,17 +153,17 @@
       width: calc(100% - 2px);
     }
     .header-island { padding: 10px 14px; border-radius: 17px; }
-    /* Logo 1px mais à direita, counter 1px mais à esquerda */
+    /* Logo 1px mais Ã  direita, counter 1px mais Ã  esquerda */
     header .logo        { margin-left: 1px; }
     header .step-counter { margin-right: 1px; }
   }
 
-  /* ── CONTROL CENTER: overlay independente que expande sobre o header ── */
+  /* â”€â”€ CONTROL CENTER: overlay independente que expande sobre o header â”€â”€ */
   #cc-panel {
     display: none;
   }
 
-  /* Overlay da CC — começa invisível, JS posiciona e anima */
+  /* Overlay da CC â€” comeÃ§a invisÃ­vel, JS posiciona e anima */
   #cc-overlay {
     position: fixed;
     z-index: 54;
@@ -189,7 +189,7 @@
     will-change: top, left, width, height, border-radius, opacity;
     overflow: hidden;
   }
-  /* Reflexo bolha no topo — igual ao header-island */
+  /* Reflexo bolha no topo â€” igual ao header-island */
   #cc-overlay::before {
     content: '';
     position: absolute;
@@ -206,7 +206,7 @@
     z-index: 2;
     transition: opacity 0.4s ease;
   }
-  /* Quando fullscreen, reflexo some pois a bolha já é a tela toda */
+  /* Quando fullscreen, reflexo some pois a bolha jÃ¡ Ã© a tela toda */
   #cc-overlay.cc-fullscreen::before {
     opacity: 0;
   }
@@ -221,7 +221,7 @@
     pointer-events: auto;
   }
 
-  /* Barra de progresso fica acima do painel quando este está aberto */
+  /* Barra de progresso fica acima do painel quando este estÃ¡ aberto */
   .progress-wrap { z-index: 56; }
 
   .logo {
@@ -236,7 +236,7 @@
     text-shadow: 0 2px 6px rgba(24,16,14,0.10);
   }
 
-  /* ── PROGRESS ── */
+  /* â”€â”€ PROGRESS â”€â”€ */
   .progress-wrap {
     position: fixed; top: 0; left: 0; right: 0; z-index: 51;
     pointer-events: none;
@@ -249,7 +249,7 @@
     margin-top: 0;
   }
 
-  /* ── WRAPPER ── */
+  /* â”€â”€ WRAPPER â”€â”€ */
   .quiz-wrap {
     flex: 1;
     display: flex; align-items: center; justify-content: center;
@@ -267,7 +267,7 @@
     }
   }
 
-  /* ── SCREENS ── */
+  /* â”€â”€ SCREENS â”€â”€ */
   .screen {
     display: none;
     width: 100%; max-width: 620px;
@@ -276,14 +276,14 @@
     display: block;
   }
 
-  /* Animações de scroll vertical (screens 1–14) */
+  /* AnimaÃ§Ãµes de scroll vertical (screens 1â€“14) */
   .screen.enter-up {
     animation: enterFromBelow 0.48s cubic-bezier(0.32, 0, 0.18, 1) forwards;
   }
   .screen.exit-up {
     animation: exitToTop 0.38s cubic-bezier(0.32, 0, 0.18, 1) forwards;
   }
-  /* Animação de volta (screens voltando) */
+  /* AnimaÃ§Ã£o de volta (screens voltando) */
   .screen.enter-down {
     animation: enterFromTop 0.48s cubic-bezier(0.32, 0, 0.18, 1) forwards;
   }
@@ -291,7 +291,7 @@
     animation: exitToBottom 0.38s cubic-bezier(0.32, 0, 0.18, 1) forwards;
   }
 
-  /* Animação padrão (fade suave) para screens fora do range 1–14 */
+  /* AnimaÃ§Ã£o padrÃ£o (fade suave) para screens fora do range 1â€“14 */
   .screen.enter-fade {
     animation: fadeIn 0.38s cubic-bezier(0.4,0,0.2,1) forwards;
   }
@@ -324,7 +324,7 @@
     to   { opacity: 0; transform: translateY(-18px); }
   }
 
-  /* ── WIDGET INTER: box surge/some dentro do header expandido ── */
+  /* â”€â”€ WIDGET INTER: box surge/some dentro do header expandido â”€â”€ */
   @keyframes widgetIn {
     0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.78); }
     65%  { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
@@ -344,7 +344,7 @@
     pointer-events: none;
   }
 
-  /* ── TYPOGRAPHY ── */
+  /* â”€â”€ TYPOGRAPHY â”€â”€ */
   .screen-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
@@ -392,7 +392,7 @@
   }
   .screen-hint.sub-visible { opacity: 1; }
 
-  /* ── OPTIONS ── */
+  /* â”€â”€ OPTIONS â”€â”€ */
   .options {
     display: flex; flex-direction: column; gap: 9px;
     max-width: 440px;
@@ -400,7 +400,7 @@
   }
   .options.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
 
-  /* Ghost click fix: options invisíveis não recebem cliques/toques */
+  /* Ghost click fix: options invisÃ­veis nÃ£o recebem cliques/toques */
 
   .option {
     background: rgba(253,250,247,0.55);
@@ -421,11 +421,11 @@
     /* Sombra externa profunda + halo difuso */
     box-shadow:
       0 2px 0px rgba(255,255,255,0.70),          /* borda superior brilhante */
-      0 6px 18px rgba(24,16,14,0.10),             /* sombra de elevação */
+      0 6px 18px rgba(24,16,14,0.10),             /* sombra de elevaÃ§Ã£o */
       0 1px 0 rgba(255,255,255,0.90) inset,       /* reflexo topo interno */
       0 -1px 0 rgba(0,0,0,0.06) inset;            /* sombra base interna */
   }
-  /* Reflexo de luz curva no topo — simula superfície esférica/bolha */
+  /* Reflexo de luz curva no topo â€” simula superfÃ­cie esfÃ©rica/bolha */
   .option::before {
     content: '';
     position: absolute;
@@ -450,9 +450,9 @@
     pointer-events: none;
     z-index: 0;
   }
-  /* Hover só em dispositivos com ponteiro real (mouse).
-     Em touch (iOS/Android) :hover fica preso após o toque e causa
-     o efeito visual de "opção selecionada" na screen seguinte. */
+  /* Hover sÃ³ em dispositivos com ponteiro real (mouse).
+     Em touch (iOS/Android) :hover fica preso apÃ³s o toque e causa
+     o efeito visual de "opÃ§Ã£o selecionada" na screen seguinte. */
   @media (hover: hover) {
     .option:hover {
       border-color: var(--wine);
@@ -493,14 +493,14 @@
 
   .options.grid-2 .option { flex-direction: column; align-items: flex-start; padding: 18px 16px; }
 
-  /* ── LOADING DOTS (conteúdo gerenciado por JS) ── */
+  /* â”€â”€ LOADING DOTS (conteÃºdo gerenciado por JS) â”€â”€ */
   .loading-dots {
     font-size: 15px; font-weight: 500; color: var(--ink);
     font-family: var(--sans);
     letter-spacing: 1px;
   }
 
-  /* ── CITY SEARCH ── */
+  /* â”€â”€ CITY SEARCH â”€â”€ */
   .city-search-wrap {
     position: relative;
     margin-bottom: 14px;
@@ -570,9 +570,9 @@
     transition: opacity 1.0s ease;
   }
   .multi-hint.sub-visible { opacity: 1; }
-  .multi-hint::before { content: '✦'; color: var(--wine); font-size: 12px; }
+  .multi-hint::before { content: 'âœ¦'; color: var(--wine); font-size: 12px; }
 
-  /* ── PHOTO UPLOAD ── */
+  /* â”€â”€ PHOTO UPLOAD â”€â”€ */
   .photo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 6px; }
 
   .photo-slot {
@@ -645,7 +645,7 @@
   }
   .photo-slot.has-photo::after { opacity: 1; }
   .photo-slot.has-photo::before { opacity: 0.5; }
-  /* Estado aprovado do scanner — cor azul/steel */
+  /* Estado aprovado do scanner â€” cor azul/steel */
   .photo-slot.scanner-approved {
     border-style: solid; border-color: var(--steel);
     box-shadow:
@@ -671,9 +671,9 @@
     display: flex; gap: 10px; align-items: flex-start;
     font-size: 12px; color: var(--ink-soft); line-height: 1.5;
   }
-  .photo-tip::before { content: '💡'; flex-shrink: 0; margin-top: 1px; font-size: 15px; }
+  .photo-tip::before { content: 'ðŸ’¡'; flex-shrink: 0; margin-top: 1px; font-size: 15px; }
 
-  /* Efeito de abertura genius para o box estático da screen 24 */
+  /* Efeito de abertura genius para o box estÃ¡tico da screen 24 */
   @keyframes tipGenius {
     from { max-height: 0; opacity: 0; margin-top: 0; }
     to   { max-height: 120px; opacity: 1; margin-top: 20px; }
@@ -690,7 +690,7 @@
     animation: tipGenius 0.45s cubic-bezier(0.4,0,0.2,1) forwards;
   }
 
-  /* ── INPUTS ── */
+  /* â”€â”€ INPUTS â”€â”€ */
   .input-wrap {
     position: relative;
     margin-bottom: 10px;
@@ -714,7 +714,7 @@
       0 1px 0 rgba(255,255,255,0.90) inset,
       0 -1px 0 rgba(0,0,0,0.06) inset;
   }
-  /* Reflexo de bolha no topo — igual ao .option::before */
+  /* Reflexo de bolha no topo â€” igual ao .option::before */
   .input-wrap::before {
     content: '';
     position: absolute;
@@ -746,7 +746,7 @@
   .input-field:not(:placeholder-shown) { font-weight: 500; } /* typed text weight */
   .input-field::placeholder { color: var(--ink-muted); font-weight: 300; }
 
-  /* ── BUTTONS ── */
+  /* â”€â”€ BUTTONS â”€â”€ */
   .nav-buttons {
     display: flex; align-items: center; justify-content: space-between;
     margin-top: 28px; gap: 12px;
@@ -759,12 +759,12 @@
     will-change: transform;
   }
   .btn-back:hover { color: var(--ivory-mid); transform: scale(1.05); }
-  .btn-back::before { content: '←'; font-size: 15px; }
+  .btn-back::before { content: 'â†'; font-size: 15px; }
   /* Nas inter screens, btn-back fica fora do box, abaixo, cor marfim */
   .interblock-btn-back-wrap {
     display: none !important;
   }
-  /* Botão voltar no header durante inter screens */
+  /* BotÃ£o voltar no header durante inter screens */
   .inter-header-back {
     font-size: 14px;
     color: var(--ink);
@@ -780,7 +780,7 @@
     position: relative;
     z-index: 3;
   }
-  .inter-header-back::before { content: '←'; font-size: 14px; }
+  .inter-header-back::before { content: 'â†'; font-size: 14px; }
   .inter-header-back:hover { color: var(--ink-soft); transform: scale(1.05); }
 
   .btn-next {
@@ -793,7 +793,7 @@
     transition: background 0.22s, box-shadow 0.22s, transform 0.15s, opacity 0.22s;
     box-shadow: 0 4px 18px rgba(168,85,104,0.45), inset 0 1px 0 rgba(255,255,255,0.25);
   }
-  .btn-next::after { content: '→'; font-size: 16px; transition: transform 0.18s; }
+  .btn-next::after { content: 'â†’'; font-size: 16px; transition: transform 0.18s; }
   .btn-next:hover { background: var(--wine-dark); box-shadow: inset 0 1px 0 rgba(255,255,255,0.30); transform: translateY(-2px) scale(1.05); }
   .btn-next:hover::after { transform: translateX(3px); }
   .btn-next:disabled { opacity: 0.32; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -825,11 +825,16 @@
     50%       { opacity: 0; }
   }
 
-  /* ── INTRO ENTRANCE ANIMATIONS ── */
+  /* â”€â”€ INTRO ENTRANCE ANIMATIONS â”€â”€ */
 
-  /* Title: overlay typed text sits on top of hidden placeholder */
+  /* Eyebrow, title and subtitles all fade in together */
+  #screen-0 .screen-eyebrow {
+    opacity: 0;
+    transition: opacity 1.4s ease;
+  }
   #screen-0 .screen-h1 {
-    opacity: 1;
+    opacity: 0;
+    transition: opacity 1.4s ease;
   }
 
   @media (min-width: 581px) {
@@ -861,6 +866,8 @@
     #screen-0 .intro-steps  { margin-bottom: 27px !important; }
   }
 
+  #screen-0 .screen-eyebrow.sub-visible,
+  #screen-0 .screen-h1.sub-visible,
   #screen-0 .intro-sub-1.sub-visible,
   #screen-0 .intro-sub-2.sub-visible {
     opacity: 1;
@@ -897,7 +904,7 @@
     opacity: 1;
     transform: translateY(0);
   }
-  /* Após a animação, reseta a transition para o hover funcionar */
+  /* ApÃ³s a animaÃ§Ã£o, reseta a transition para o hover funcionar */
   #screen-0 .intro-btn.btn-ready {
     transition: background 0.22s, box-shadow 0.22s, transform 0.15s, opacity 0.22s;
   }
@@ -905,7 +912,7 @@
     transform: translateY(-2px) scale(1.05);
   }
 
-  /* ── FLOAT UNIVERSAL — todas as screens ── */
+  /* â”€â”€ FLOAT UNIVERSAL â€” todas as screens â”€â”€ */
   .option, .input-wrap, #city-box,
   #intro-box-1, #intro-box-2, #intro-box-3 {
     will-change: transform;
@@ -945,26 +952,26 @@
   }
   .intro-card > * { position: relative; z-index: 3; }
 
-  /* ── AGUARDANDO ── */
+  /* â”€â”€ AGUARDANDO â”€â”€ */
   .aguardando-screen { text-align: center; padding: 16px 0; }
   @media (max-width: 580px) {
     .aguardando-screen { transform: translateY(30px); }
   }
 
-  /* Fade out do conteúdo da screen aguardando após última pílula */
+  /* Fade out do conteÃºdo da screen aguardando apÃ³s Ãºltima pÃ­lula */
   .aguardando-fadeout .aguardando-title,
   .aguardando-fadeout .loading-steps {
     transition: opacity 0.4s ease, transform 0.4s ease;
     opacity: 0 !important;
     transform: translateY(-12px);
   }
-  /* Header faz fade out junto — sincronizado com o título */
+  /* Header faz fade out junto â€” sincronizado com o tÃ­tulo */
   header.aguardando-fadeout .header-island {
     transition: opacity 0.4s ease !important;
     opacity: 0 !important;
   }
 
-  /* Ícone à esquerda do texto da pílula */
+  /* Ãcone Ã  esquerda do texto da pÃ­lula */
   .pill-icon {
     display: inline-flex;
     align-items: center;
@@ -976,7 +983,7 @@
     position: relative;
     z-index: 3;
   }
-  /* Spinner wine enquanto está carregando */
+  /* Spinner wine enquanto estÃ¡ carregando */
   .loading-pill.filling .pill-icon::before {
     content: '';
     display: block;
@@ -987,9 +994,9 @@
     animation: pillSpin 0.7s linear infinite;
   }
   @keyframes pillSpin { to { transform: rotate(360deg); } }
-  /* ✦ quando preenchida */
+  /* âœ¦ quando preenchida */
   .loading-pill.filled .pill-icon::before {
-    content: '✦';
+    content: 'âœ¦';
     display: block;
     width: auto; height: auto;
     border: none;
@@ -1002,11 +1009,11 @@
   .loading-steps {
     display: flex; flex-direction: column; gap: 10px;
     max-width: 340px; margin: 28px auto 0; text-align: center; align-items: center;
-    /* Posicionamento de pilha única: altura fixa para acomodar uma pílula */
+    /* Posicionamento de pilha Ãºnica: altura fixa para acomodar uma pÃ­lula */
     position: relative;
     min-height: 44px;
   }
-  /* Em modo pilha única, todos os pill-float-wrap ficam sobrepostos */
+  /* Em modo pilha Ãºnica, todos os pill-float-wrap ficam sobrepostos */
   .loading-steps .pill-float-wrap {
     position: absolute;
     top: 0; left: 0;
@@ -1014,7 +1021,7 @@
     display: flex;
     justify-content: center;
   }
-  /* Wrappers das pílulas: invisíveis por padrão, JS controla fade in + slide up */
+  /* Wrappers das pÃ­lulas: invisÃ­veis por padrÃ£o, JS controla fade in + slide up */
   .pill-float-wrap {
     opacity: 0;
   }
@@ -1034,7 +1041,7 @@
     border: none;
     padding: 7px 17px;
     border-radius: 100px;
-    /* box-shadow externo não é clipado pelo overflow:hidden — funciona como borda */
+    /* box-shadow externo nÃ£o Ã© clipado pelo overflow:hidden â€” funciona como borda */
     box-shadow:
       0 0 0 1px rgba(255,255,255,0.60),
       0 2px 8px rgba(24,16,14,0.07),
@@ -1045,7 +1052,7 @@
     overflow: hidden;
     will-change: transform;
     isolation: isolate;
-    /* Começa invisível — fade in controlado pelo JS */
+    /* ComeÃ§a invisÃ­vel â€” fade in controlado pelo JS */
     opacity: 0;
     transition:
       opacity   0.45s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1064,12 +1071,12 @@
       0 2px 10px rgba(168,85,104,0.13),
       inset 0 1px 0 rgba(255,255,255,0.7);
   }
-  /* Visível: fade in antes do preenchimento */
+  /* VisÃ­vel: fade in antes do preenchimento */
   .loading-pill.pill-visible {
     opacity: 1;
   }
 
-  /* Camada de preenchimento wine — pseudo-elemento que desliza da esquerda */
+  /* Camada de preenchimento wine â€” pseudo-elemento que desliza da esquerda */
   .loading-pill::before {
     content: '';
     position: absolute;
@@ -1082,7 +1089,7 @@
     z-index: 0;
   }
 
-  /* Wrapper do texto — duas camadas sobrepostas */
+  /* Wrapper do texto â€” duas camadas sobrepostas */
   .loading-pill > span {
     position: relative;
     z-index: 2;
@@ -1090,7 +1097,7 @@
     text-transform: uppercase;
   }
 
-  /* Camada base: texto marfim (sempre visível, por baixo) */
+  /* Camada base: texto marfim (sempre visÃ­vel, por baixo) */
   .loading-pill > span::before {
     content: attr(data-text);
     position: absolute;
@@ -1100,9 +1107,9 @@
     pointer-events: none;
   }
 
-  /* Camada wine: começa com clip-path fechado à esquerda, revela da esq pra dir */
+  /* Camada wine: comeÃ§a com clip-path fechado Ã  esquerda, revela da esq pra dir */
   .loading-pill > span {
-    color: transparent; /* o span em si é transparente */
+    color: transparent; /* o span em si Ã© transparente */
   }
   .loading-pill > span::after {
     content: attr(data-text);
@@ -1115,7 +1122,7 @@
     pointer-events: none;
   }
 
-  /* Estado: sendo preenchida — revela wine em sincronia com o ::before */
+  /* Estado: sendo preenchida â€” revela wine em sincronia com o ::before */
   .loading-pill.filling::before {
     transition: transform 2.52s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: translateX(0%);
@@ -1125,7 +1132,7 @@
     clip-path: inset(0 0% 0 0);
   }
 
-  /* Estado: preenchida — consolida */
+  /* Estado: preenchida â€” consolida */
   .loading-pill.filled::before {
     transform: translateX(0%);
     transition: none;
@@ -1140,16 +1147,16 @@
   .loading-step.done   { color: var(--ink); }
   .loading-step.active { color: var(--wine); }
 
-  /* ── RESULT ── */
+  /* â”€â”€ RESULT â”€â”€ */
   .result-screen { max-width: 600px; }
 
-  /* result-overlay: coluna para que footer role junto com o conteúdo */
+  /* result-overlay: coluna para que footer role junto com o conteÃºdo */
   #result-overlay { flex-direction: column; align-items: center; }
   @media (max-width: 580px) {
     #result-overlay { flex-direction: column; align-items: center; }
   }
 
-  /* Desktop: compensa a scrollbar do result-overlay que sobrepõe em vez de deslocar */
+  /* Desktop: compensa a scrollbar do result-overlay que sobrepÃµe em vez de deslocar */
   @media (min-width: 581px) {
     header.result-active { right: var(--header-result-right, 26px); width: var(--header-result-width, calc(100% - 38px)); }
   }
@@ -1158,7 +1165,7 @@
     .result-screen { max-width: 1050px; padding-top: 128px !important; padding-bottom: 120px !important; }
   }
 
-  /* ── DESKTOP 2-COLUMN LAYOUT ── */
+  /* â”€â”€ DESKTOP 2-COLUMN LAYOUT â”€â”€ */
   @media (min-width: 581px) {
     /* Wrapper das 2 colunas */
     .result-two-col-wrap {
@@ -1169,7 +1176,7 @@
       width: 100%;
     }
 
-    /* Crachá — visível apenas em desktop */
+    /* CrachÃ¡ â€” visÃ­vel apenas em desktop */
     .result-photo-front-only {
       display: flex !important;
       flex-direction: column;
@@ -1182,7 +1189,7 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Carrossel de fotos — oculto em desktop (substituído pela foto frente isolada) */
+    /* Carrossel de fotos â€” oculto em desktop (substituÃ­do pela foto frente isolada) */
     .result-col-right .result-photos-wrap {
       display: none !important;
     }
@@ -1208,7 +1215,7 @@
       margin-top: 0;
     }
 
-    /* ── REORDENAÇÃO DESKTOP: col-right usa flexbox para order funcionar ── */
+    /* â”€â”€ REORDENAÃ‡ÃƒO DESKTOP: col-right usa flexbox para order funcionar â”€â”€ */
     .result-col-right {
       display: flex;
       flex-direction: column;
@@ -1219,7 +1226,7 @@
       display: none !important;
     }
 
-    /* Radar mobile visível em desktop na col-right, posicionado abaixo do subtítulo */
+    /* Radar mobile visÃ­vel em desktop na col-right, posicionado abaixo do subtÃ­tulo */
     #radar-chart-wrap-mobile {
       display: flex !important;
       order: 5;
@@ -1242,7 +1249,7 @@
 
   /* Mobile: layout da screen resultado */
   @media (max-width: 580px) {
-    /* Two-col vira coluna única empilhada */
+    /* Two-col vira coluna Ãºnica empilhada */
     .result-two-col-wrap {
       display: flex;
       flex-direction: column;
@@ -1252,29 +1259,29 @@
     .result-col-right {
       width: 100%;
     }
-    /* col-left oculta no mobile — crachá é movido para col-right via JS */
+    /* col-left oculta no mobile â€” crachÃ¡ Ã© movido para col-right via JS */
     .result-col-left  { display: none !important; }
     .result-col-right { order: 1; display: flex; flex-direction: column; }
 
-    /* Crachá (movido para col-right via JS) visível no mobile */
+    /* CrachÃ¡ (movido para col-right via JS) visÃ­vel no mobile */
     .result-photo-front-only {
       display: block !important;
     }
-    /* Carrossel oculto no mobile (substituído pelo crachá) */
+    /* Carrossel oculto no mobile (substituÃ­do pelo crachÃ¡) */
     .result-photos-wrap,
     #result-photos-wrap {
       display: none !important;
     }
-    /* Boxes mobile-only visíveis */
+    /* Boxes mobile-only visÃ­veis */
     .result-section-mobile-only {
       display: block !important;
     }
-    /* Score rows mantêm display:grid (não podem ser display:block) */
+    /* Score rows mantÃªm display:grid (nÃ£o podem ser display:block) */
     .score-row.result-section-mobile-only {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr);
     }
-    /* Box dicas-inteligentes original (col-left) oculto — existe clone mobile-only na col-right */
+    /* Box dicas-inteligentes original (col-left) oculto â€” existe clone mobile-only na col-right */
     #box-dicas-inteligentes {
       display: none !important;
     }
@@ -1282,7 +1289,7 @@
     .result-col-right .result-badge                   { order: 1; align-self: flex-start; }
     .result-col-right #resultTitle                    { order: 2; }
     .result-col-right #resultSubtitle                 { order: 3; }
-    /* 4: crachá mobile — entre subtítulo e radar */
+    /* 4: crachÃ¡ mobile â€” entre subtÃ­tulo e radar */
     .result-col-right #cracha-mobile-wrap             { order: 4; margin-top: -10px; }
     /* 5: radar da pele */
     .result-col-right #radar-chart-wrap-mobile        { order: 5; }
@@ -1302,7 +1309,7 @@
     /* 6 e 7: 2 linhas com 4 score pills cada */
     .result-col-right #score-row-1-mobile             { order: 6; margin-top: 20px; }
     .result-col-right #score-row-2-mobile             { order: 7; }
-    /* 8: box avaliação da ia */
+    /* 8: box avaliaÃ§Ã£o da ia */
     .result-col-right #box-avaliacao-ia               { order: 8; }
     /* 9: box idade da pele */
     .result-col-right #box-idade-pele                 { order: 9; }
@@ -1312,14 +1319,14 @@
     .result-col-right #box-protocolo-completo         { order: 11; }
     /* 12: box dicas inteligentes mobile */
     .result-col-right #box-dicas-inteligentes-mobile  { order: 12; }
-    /* 13: box combinam com você mobile */
+    /* 13: box combinam com vocÃª mobile */
     .result-col-right #box-combinam-mobile            { order: 13; }
     /* 14: box cta */
     .result-col-right #result-cta-box                 { order: 14; }
   }
 
-  /* Animações de entrada do título e subtítulo da screen resultado — igual à screen 0 */
-  /* Boxes da screen resultado: começam invisíveis — JS anima a entrada */
+  /* AnimaÃ§Ãµes de entrada do tÃ­tulo e subtÃ­tulo da screen resultado â€” igual Ã  screen 0 */
+  /* Boxes da screen resultado: comeÃ§am invisÃ­veis â€” JS anima a entrada */
   #screen-result .score-pill,
   #screen-result .result-section,
   #screen-result .result-cta,
@@ -1343,7 +1350,7 @@
     opacity: 1;
   }
 
-  /* ── CRACHÁ (global — funciona em desktop e mobile) ── */
+  /* â”€â”€ CRACHÃ (global â€” funciona em desktop e mobile) â”€â”€ */
   #result-cracha,
   #result-cracha-mobile {
     background: rgba(253,250,247,0.60);
@@ -1468,7 +1475,7 @@
     text-align: right;
   }
 
-  /* ── RADAR CHART ── */
+  /* â”€â”€ RADAR CHART â”€â”€ */
   #radar-chart-wrap {
     margin-top: 8px;
     margin-bottom: 24px;
@@ -1477,7 +1484,7 @@
     filter: drop-shadow(0 4px 18px rgba(168,85,104,0.12));
   }
 
-  /* Pílulas HTML sobre o radar */
+  /* PÃ­lulas HTML sobre o radar */
   .radar-label-pill {
     display: inline-flex;
     align-items: center;
@@ -1598,7 +1605,7 @@
     color: #fcd523;
   }
 
-  /* ::after — overlay bloqueador em todos os score-pills (impede herança de fundo rosa) */
+  /* ::after â€” overlay bloqueador em todos os score-pills (impede heranÃ§a de fundo rosa) */
   .score-pill::after {
     content: '';
     position: absolute; inset: 0;
@@ -1608,11 +1615,11 @@
     z-index: 0;
   }
   .score-pill.pill-wine {
-    /* Mantém o mesmo glassmorphism — só a barra muda de cor via JS */
+    /* MantÃ©m o mesmo glassmorphism â€” sÃ³ a barra muda de cor via JS */
     background: rgba(253,250,247,0.55);
   }
   .score-pill.pill-steel {
-    /* Mantém o mesmo glassmorphism — só a barra muda de cor via JS */
+    /* MantÃ©m o mesmo glassmorphism â€” sÃ³ a barra muda de cor via JS */
     background: rgba(253,250,247,0.55);
   }
   /* Reflexo bolha mantido em todas as variantes */
@@ -1621,7 +1628,7 @@
     background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.08) 60%, transparent 100%);
   }
 
-  /* Result sections — aparência padrão (igual a .option) */
+  /* Result sections â€” aparÃªncia padrÃ£o (igual a .option) */
   .result-section:not(#box-idade-pele) {
     background: rgba(253,250,247,0.55);
     backdrop-filter: blur(12px);
@@ -1655,7 +1662,7 @@
     z-index: 2;
   }
   .result-section:not(#box-idade-pele):not(#box-dicas-inteligentes):not(#box-dicas-inteligentes-mobile) > * { position: relative; z-index: 3; }
-  /* Box Idade da Pele: mantém apenas margin-bottom do layout */
+  /* Box Idade da Pele: mantÃ©m apenas margin-bottom do layout */
   #box-idade-pele { margin-bottom: 14px; }
   .rs-title {
     font-family: var(--serif);
@@ -1775,7 +1782,7 @@
   .dica-title { font-size: 15px; font-weight: 500; color: var(--ivory); margin-bottom: 1px; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.06)); }
   .dica-sub   { font-size: 12px; font-weight: 400; color: rgba(247,242,234,0.65); line-height: 1.5; filter: drop-shadow(0 1px 4px rgba(24,16,14,0.05)); }
 
-  /* Emoji dentro do box dicas inteligentes — mesmas dimensões do opt-icon (screen 1) */
+  /* Emoji dentro do box dicas inteligentes â€” mesmas dimensÃµes do opt-icon (screen 1) */
   .dica-step .rs-emoji {
     width: 42px; height: 42px;
     font-size: 19px;
@@ -1864,7 +1871,7 @@
     text-transform: uppercase; letter-spacing: 0.07em;
   }
 
-  /* ── BOX IDADE DA PELE ── */
+  /* â”€â”€ BOX IDADE DA PELE â”€â”€ */
   .age-compare-box {
     display: flex;
     align-items: center;
@@ -1935,7 +1942,7 @@
     opacity: 0.5;
   }
 
-  /* ── BOX PRODUTO ESSENCIAL ── */
+  /* â”€â”€ BOX PRODUTO ESSENCIAL â”€â”€ */
   .essential-product-wrap {
     display: flex;
     flex-direction: column;
@@ -2073,7 +2080,7 @@
     margin-top: 12px; position: relative;
   }
 
-  /* ── INTRO STEPS (screen 0) ── */
+  /* â”€â”€ INTRO STEPS (screen 0) â”€â”€ */
   .intro-steps {
     display: flex; flex-direction: column; gap: 9px;
     max-width: 400px;
@@ -2086,7 +2093,7 @@
   #screen-0 #intro-box-1, #screen-0 #intro-box-2, #screen-0 #intro-box-3 {
     flex: unset !important; margin-right: 0 !important;
   }
-  /* Círculo vazado — sem preenchimento, fundo transparente mostrando a névoa */
+  /* CÃ­rculo vazado â€” sem preenchimento, fundo transparente mostrando a nÃ©voa */
   .interblock-dot.intro-dot {
     background: transparent;
     color: var(--ivory);
@@ -2132,9 +2139,9 @@
     font-size: 14px; font-weight: 300; color: rgba(247,242,234,0.55);
     line-height: 1.6; margin-bottom: 36px;
     filter: none;
-    opacity: 1; /* Entra junto com o box — sem fade próprio */
+    opacity: 1; /* Entra junto com o box â€” sem fade prÃ³prio */
   }
-  /* ── INTERBLOCK VIDEO ── */
+  /* â”€â”€ INTERBLOCK VIDEO â”€â”€ */
   .interblock-video-wrap {
     position: relative;
     width: 500px;
@@ -2148,8 +2155,8 @@
     background: var(--ivory-dark);
     align-self: center;
   }
-  /* Borda glassmorphism renderizada por cima do vídeo via ::after,
-     fora do overflow:hidden — elimina artefato de borda preta */
+  /* Borda glassmorphism renderizada por cima do vÃ­deo via ::after,
+     fora do overflow:hidden â€” elimina artefato de borda preta */
   .interblock-video-wrap::after {
     content: '';
     position: absolute;
@@ -2209,7 +2216,7 @@
     }
   }
 
-  /* ── INTERBLOCK CAROUSEL STEPS ── */
+  /* â”€â”€ INTERBLOCK CAROUSEL STEPS â”€â”€ */
   .interblock-steps {
     display: flex;
     flex-direction: column;
@@ -2224,7 +2231,7 @@
     align-items: center;
     gap: 12px;
     position: relative;
-    /* Largura do row ajusta ao conteúdo */
+    /* Largura do row ajusta ao conteÃºdo */
     width: fit-content;
     max-width: 100%;
   }
@@ -2237,7 +2244,7 @@
   }
   .interblock-step.done::after { background: rgba(200,223,240,0.35); }
 
-  /* ── Step card: regras idênticas ao .option da screen 6 ── */
+  /* â”€â”€ Step card: regras idÃªnticas ao .option da screen 6 â”€â”€ */
   .interblock-step-card {
     width: fit-content;
     flex-shrink: 0;
@@ -2265,7 +2272,7 @@
       0 1px 0 rgba(255,255,255,0.90) inset,
       0 -1px 0 rgba(0,0,0,0.06) inset;
   }
-  /* ::before — reflexo de luz curva no topo, igual ao .option::before */
+  /* ::before â€” reflexo de luz curva no topo, igual ao .option::before */
   .interblock-step-card::before {
     content: '';
     position: absolute;
@@ -2282,7 +2289,7 @@
     z-index: 2;
     transition: opacity 0.28s;
   }
-  /* ::after — overlay wine-pale, igual ao .option::after */
+  /* ::after â€” overlay wine-pale, igual ao .option::after */
   .interblock-step-card::after {
     content: '';
     position: absolute; inset: 0;
@@ -2294,7 +2301,7 @@
   }
   .interblock-step-card > * { position: relative; z-index: 3; }
 
-  /* ACTIVE card — efeitos de bolha do concluído, cor vinho */
+  /* ACTIVE card â€” efeitos de bolha do concluÃ­do, cor vinho */
   .interblock-step.active .interblock-step-card {
     width: fit-content;
     padding: 13px 16px;
@@ -2314,7 +2321,7 @@
   }
   .interblock-step.active .interblock-step-card::after { display: none; }
 
-  /* DONE card — bolha vazada: fundo transparente com efeitos de superfície */
+  /* DONE card â€” bolha vazada: fundo transparente com efeitos de superfÃ­cie */
   .interblock-step.done .interblock-step-card {
     background: rgba(247,242,234,0.08);
     backdrop-filter: blur(10px);
@@ -2416,12 +2423,12 @@
   .interblock-step.active .interblock-dot-wrap {
     filter: drop-shadow(0 3px 10px rgba(24,16,14,0.12)) drop-shadow(0 1px 0 rgba(255,255,255,0.70));
   }
-  /* Variante menor para steps não-ativos nas interblocos */
+  /* Variante menor para steps nÃ£o-ativos nas interblocos */
   .interblock-dot--sm {
     width: 40px; height: 40px;
     font-family: var(--serif); font-size: 20px; font-weight: 700;
   }
-  /* dots concluídos — bolha vazada: número marfim, borda marfim */
+  /* dots concluÃ­dos â€” bolha vazada: nÃºmero marfim, borda marfim */
   .interblock-step.done .interblock-dot--sm {
     background: transparent;
     color: var(--ivory);
@@ -2430,7 +2437,7 @@
     box-shadow: none;
     opacity: 1;
   }
-  /* dots inativos — bolha vazada, cores marfim */
+  /* dots inativos â€” bolha vazada, cores marfim */
   .interblock-step:not(.done):not(.active) .interblock-dot--sm {
     background: transparent;
     color: var(--ivory);
@@ -2439,7 +2446,7 @@
     box-shadow: none;
     opacity: 1;
   }
-  /* Reflexo interno marfim para dots concluídos */
+  /* Reflexo interno marfim para dots concluÃ­dos */
   .interblock-step.done .interblock-dot--sm::before {
     background: linear-gradient(180deg, rgba(247,242,234,0.38) 0%, transparent 100%);
   }
@@ -2447,7 +2454,7 @@
   .interblock-step:not(.done):not(.active) .interblock-dot--sm::before {
     background: linear-gradient(180deg, rgba(247,242,234,0.38) 0%, transparent 100%);
   }
-  /* badge ✅ no wrapper do dot */
+  /* badge âœ… no wrapper do dot */
   .interblock-step.done .interblock-dot-wrap .interblock-badge {
     display: block;
     position: absolute;
@@ -2458,9 +2465,9 @@
     z-index: 10;
   }
   .interblock-dot-wrap .interblock-badge { display: none !important; }
-  /* Dot 3 da inter 1 — opacidade via .interblock-dot-wrap da regra de inativo */
+  /* Dot 3 da inter 1 â€” opacidade via .interblock-dot-wrap da regra de inativo */
 
-  /* Step-name inside card — tipografia idêntica ao .opt-label da screen 0 */
+  /* Step-name inside card â€” tipografia idÃªntica ao .opt-label da screen 0 */
   .interblock-step-card .interblock-step-name {
     font-family: var(--sans);
     font-size: 15px;
@@ -2505,7 +2512,7 @@
     #screen-0 .intro-step-row .option { flex: unset; width: fit-content; margin-right: 0 !important; margin-left: 0 !important; }
     .input-field { font-size: 16px; }
 
-    /* Redução de 15% nos boxes da screen 0 em mobile */
+    /* ReduÃ§Ã£o de 15% nos boxes da screen 0 em mobile */
     #screen-0 #intro-box-1,
     #screen-0 #intro-box-2,
     #screen-0 #intro-box-3 {
@@ -2520,7 +2527,7 @@
       margin-top: -15px !important;
     }
 
-    /* Move botão para cima em mobile */
+    /* Move botÃ£o para cima em mobile */
     #screen-0 #intro-btn {
       transform: translateY(2px);
     }
@@ -2537,7 +2544,7 @@
   }
 
 
-  /* ── FOTO BOXES NA SCREEN RESULTADO ── */
+  /* â”€â”€ FOTO BOXES NA SCREEN RESULTADO â”€â”€ */
   .result-photos-wrap {
     display: flex;
     gap: 0;
@@ -2642,7 +2649,7 @@
   }
 
 
-  /* ── GLASS BOX OPÇÃO LIVRE (screens 2, 9, 10, 13) ── */
+  /* â”€â”€ GLASS BOX OPÃ‡ÃƒO LIVRE (screens 2, 9, 10, 13) â”€â”€ */
   .extra-option-wrap {
     max-width: 440px;
     margin-inline: auto;
@@ -2663,18 +2670,18 @@
     z-index: 2;
   }
 
-  /* ── TYPEWRITER NAS SCREENS ── */
+  /* â”€â”€ TYPEWRITER NAS SCREENS â”€â”€ */
   .screen-q-typed {
     pointer-events: none;
     visibility: hidden; /* JS controla quando mostrar */
   }
-  /* Inter screens: título visível desde o início, entra com o box */
+  /* Inter screens: tÃ­tulo visÃ­vel desde o inÃ­cio, entra com o box */
   .screen.interblock .screen-q-typed,
   .interblock-bg-box .screen-q-typed {
     visibility: visible;
   }
 
-  /* ── INTERBLOCK BG BOX ── */
+  /* â”€â”€ INTERBLOCK BG BOX â”€â”€ */
   .interblock-bg-box {
     position: fixed;
     top: calc(50% + 35px); left: 50%;
@@ -2695,7 +2702,7 @@
     box-shadow:
       0 8px 32px rgba(168,85,104,0.22),
       inset 0 1px 0 rgba(255,255,255,0.07);
-    /* Layout do conteúdo interno — replica exatamente o .interblock original */
+    /* Layout do conteÃºdo interno â€” replica exatamente o .interblock original */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -2734,7 +2741,7 @@
     transform: translateX(-50%) translateY(-2px) scale(1.02);
     box-shadow: 0 6px 24px rgba(168,85,104,0.55), inset 0 1px 0 rgba(255,255,255,0.30);
   }
-  /* Inter 1, 2 e 3 desktop: mesma posição */
+  /* Inter 1, 2 e 3 desktop: mesma posiÃ§Ã£o */
   #inter1-box .nav-buttons .btn-next,
   #inter2-box .nav-buttons .btn-next,
   #inter3-box .nav-buttons .btn-next {
@@ -2798,19 +2805,19 @@
     border-radius: 50%;
     pointer-events: none; z-index: 0;
   }
-  /* Círculos das inter screens: acima do box, float independente */
+  /* CÃ­rculos das inter screens: acima do box, float independente */
   .screen.interblock .interblock-dot-wrap {
     position: relative;
     z-index: 4;
   }
-  /* Conteúdo dentro do box: acima do ::before/::after do box */
+  /* ConteÃºdo dentro do box: acima do ::before/::after do box */
   .interblock-bg-box > * {
     position: relative;
     z-index: 1;
   }
 
 
-  /* ── SCANNER OVERLAY ── */
+  /* â”€â”€ SCANNER OVERLAY â”€â”€ */
   #scanner-overlay {
     position: fixed;
     inset: 0;
@@ -2851,7 +2858,7 @@
     z-index: 4;
   }
 
-  /* Oval guia — sem borda visível, efeito de gradiente no SVG */
+  /* Oval guia â€” sem borda visÃ­vel, efeito de gradiente no SVG */
   #guide-ellipse {
     transition: opacity 0.6s ease;
   }
@@ -2875,7 +2882,7 @@
     50%       { stroke: rgba(247,242,234,0); stroke-width: 0; }
   }
 
-  /* Cantos de targeting — quatro quinas ao redor do oval */
+  /* Cantos de targeting â€” quatro quinas ao redor do oval */
   .scan-corner {
     position: absolute;
     width: 22px; height: 22px;
@@ -2895,7 +2902,7 @@
   .scan-corner::before { width: 2px; height: 22px; top: 0; left: 0; }
   .scan-corner::after  { width: 22px; height: 2px; top: 0; left: 0; }
 
-  /* Wrapper para os cantos — posicionado ao redor do oval */
+  /* Wrapper para os cantos â€” posicionado ao redor do oval */
   #scan-corners-wrap {
     position: absolute;
     z-index: 5;
@@ -2903,7 +2910,7 @@
     /* JS vai posicionar dinamicamente */
   }
 
-  /* HUD data readout — textos técnicos nos cantos */
+  /* HUD data readout â€” textos tÃ©cnicos nos cantos */
   .scan-hud {
     position: absolute;
     font-family: 'DM Mono', 'Courier New', monospace;
@@ -3019,7 +3026,7 @@
     box-shadow: 0 0 8px rgba(247,242,234,0.6);
   }
 
-  /* Instrução central */
+  /* InstruÃ§Ã£o central */
   #scanner-instruction {
     position: absolute;
     bottom: 60px;
@@ -3115,7 +3122,7 @@
   }
   #scanner-flash.flashing { opacity: 0.75; }
 
-  /* Mensagem de câmera bloqueada */
+  /* Mensagem de cÃ¢mera bloqueada */
   #scanner-blocked {
     display: none;
     position: absolute;
@@ -3174,7 +3181,7 @@
       font-size: 11.9px;
     }
   }
-  /* Botão voltar dentro do scanner */
+  /* BotÃ£o voltar dentro do scanner */
   #scanner-back-btn {
     position: absolute;
     top: 36px;
@@ -3195,9 +3202,9 @@
     will-change: transform;
   }
   #scanner-back-btn:hover { opacity: 1; transform: scale(1.05); }
-  #scanner-back-btn::before { content: '←'; font-size: 15px; }
+  #scanner-back-btn::before { content: 'â†'; font-size: 15px; }
 
-  /* ── Scanner overlay: overrides mobile ── */
+  /* â”€â”€ Scanner overlay: overrides mobile â”€â”€ */
   @media (max-width: 580px) {
     #hud-tl, #hud-tr { top: 158px; }
     #hud-bl, #hud-br { display: block; bottom: 110px; }
@@ -3207,7 +3214,7 @@
     #scanner-progress-wrap { bottom: 32px; }
   }
 
-  /* ── Pílula WhatsApp footer ── */
+  /* â”€â”€ PÃ­lula WhatsApp footer â”€â”€ */
   .footer-wa-pill {
     transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
@@ -3216,5 +3223,4 @@
     box-shadow: 0 2px 8px rgba(24,16,14,0.07), inset 0 1px 0 rgba(255,255,255,0.8) !important;
     transform: scale(1.06) !important;
   }
-
 
