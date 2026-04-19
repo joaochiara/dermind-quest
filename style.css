@@ -29,12 +29,16 @@
     background: var(--ivory);
     color: var(--ink);
     min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
     touch-action: pan-y;
+  }
+  html {
+    background: transparent;
   }
   @media (max-width: 580px) {
     body { overflow-x: hidden; }
@@ -43,12 +47,9 @@
   /* ── MIST CANVAS ── */
   #mist-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: -150px;
+    inset: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
