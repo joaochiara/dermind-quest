@@ -56,7 +56,18 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 #screen-0 .intro-sub-2.sub-visible{opacity:1}
 #screen-0 .float-box{opacity:0}
 #screen-0 .interblock-dot-wrap{opacity:0}
-</style>
+
+@media(max-width:580px){
+.quiz-wrap{align-items:flex-start;padding:82px 16px 120px}
+.screen-h1{font-size:42px;margin-inline:6px}
+.screen-sub{padding-inline:6px}
+#screen-0 .screen-h1{font-size:40px;max-width:100%;margin-top:5px;transform:translateY(-5px)}
+#screen-0 .screen-h1 .intro-highlight{font-size:40px}
+#screen-0 .screen-h1 .intro-finale{font-size:40px}
+#screen-0 .intro-sub-1{padding-top:10px!important;margin-bottom:3px!important;transform:translateY(-5px)}
+#screen-0 .intro-sub-2{padding-top:10px!important;margin-bottom:20px!important;margin-top:-10px!important;transform:translateY(-5px)}
+#screen-0 .intro-steps{margin-bottom:27px!important}
+}</style>
 <!-- ═══ PRELOAD LCP ═══
   O elemento LCP é o <h1 class="screen-h1"> que usa DM Serif Text.
   Fazemos preload das três fontes críticas antes de qualquer outra coisa,
@@ -81,8 +92,7 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"></noscript>
-<link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="style.css"></noscript>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
