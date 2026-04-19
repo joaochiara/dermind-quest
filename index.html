@@ -37,6 +37,9 @@
 <!-- ════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Google Fonts CSS (async) — cobre os pesos adicionais (300, 500, 700, 900)
+     não definidos no @font-face inline. Carrega via media=print swap,
+     não bloqueia o FCP. -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"></noscript>
 <!-- ═══ CSS CRÍTICO INLINE ═══
@@ -49,6 +52,34 @@
   para manter CLS em 0.
 -->
 <style>
+/* ═══ @FONT-FACE INLINE ═══
+   Definidos aqui para garantir font-display:swap aplicado ANTES do CSS
+   do Google Fonts chegar. Evita FOIT (Flash of Invisible Text) que
+   estava segurando o LCP em ~1,4s de "atraso de renderização".
+   URLs idênticas aos preloads no <head> — o browser reaproveita o cache.
+*/
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Serif Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmseriftext/v13/rnCu-xZa_krGokauCeNq1wWyWfSFXVAKArc.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Serif Text';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmseriftext/v13/rnCw-xZa_krGokauCeNq1wWyWfG1X1oNILVaqA.woff2') format('woff2');
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    above-fold.css — CSS crítico da tela 0 (Dermind)
    ─────────────────────────────────────────────────────────────────────
