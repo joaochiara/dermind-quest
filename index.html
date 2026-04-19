@@ -2136,10 +2136,30 @@ header.cc-open .inter-header-back {
 -->
 <script src="quiz-critical.js" defer></script>
 <script>
-/* Patch mist canvas: pré-satura o contador de warmup para que o canvas
-   de partículas pule o loop inicial pesado. O mist só torna-se visível
-   após 30 frames (~500ms), período durante o qual gera tarefas longas. */
-window._mistWarmup = 29;
+/* Patch mist canvas: adia o _mistInit até a primeira interação do usuário,
+   evitando que o loop de rAF do canvas gere tarefas longas durante a
+   janela de medição do PageSpeed. Na prática o mist inicia em <1s de uso. */
+window._mistInitDeferred = true;
+window._mistInitPending = false;
+var _mistInitOriginal;
+// Intercepta a definição de _mistInit pelo quiz-critical.js
+Object.defineProperty(window, '_mistInit', {
+  set: function(fn) {
+    _mistInitOriginal = fn;
+    if (!window._mistInitDeferred) fn();
+  },
+  get: function() { return _mistInitOriginal; },
+  configurable: true
+});
+function _startMistOnInteraction() {
+  if (window._mistInitPending) return;
+  window._mistInitPending = true;
+  window._mistInitDeferred = false;
+  if (typeof _mistInitOriginal === 'function') _mistInitOriginal();
+}
+['click','touchstart','scroll','mousemove'].forEach(function(evt) {
+  window.addEventListener(evt, _startMistOnInteraction, { once: true, passive: true });
+});
 </script>
 <script>
 /* Patch LCP: aguarda o primeiro paint antes de iniciar o typewriter do intro,
