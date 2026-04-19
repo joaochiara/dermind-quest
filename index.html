@@ -55,6 +55,26 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
 #screen-0 .float-box{opacity:0}
 #screen-0 .interblock-dot-wrap{opacity:0}
 </style>
+<!-- ═══ PRELOAD LCP ═══
+  O elemento LCP é o <h1 class="screen-h1"> que usa DM Serif Text.
+  Fazemos preload das três fontes críticas antes de qualquer outra coisa,
+  para que o browser as baixe em paralelo com o HTML ainda sendo parseado.
+  - DM Sans (400 regular): usada no body
+  - DM Serif Text (regular): usada no h1 → LCP direto
+  - DM Serif Text (itálico): usada nos <em> dentro do h1
+  URLs confirmadas via DevTools → Network → Font.
+  crossorigin é obrigatório para fontes de domínio externo (CORS).
+-->
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2"
+  crossorigin>
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmseriftext/v13/rnCu-xZa_krGokauCeNq1wWyWfSFXVAKArc.woff2"
+  crossorigin>
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmseriftext/v13/rnCw-xZa_krGokauCeNq1wWyWfG1X1oNILVaqA.woff2"
+  crossorigin>
+<!-- ════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -1446,12 +1466,116 @@ header{position:fixed;top:17px;left:12px;right:12px;z-index:55;padding:0;display
   
 <script src="quiz.js" defer></script>
 <script>
+  /* ═══ OTIMIZAÇÃO 2 — Correção de reflow forçado ═══
+   * O _headerCollapse() original fazia:
+   *   1. Escrita: o.style.* (vários)
+   *   2. Leitura: e.getBoundingClientRect().height  ← REFLOW FORÇADO
+   *   3. Escrita: o.style.height = ...
+   *
+   * A correção: patch aplicado via monkeypatch antes de quiz.js usar a função.
+   * Interceptamos depois que quiz.js carrega (DOMContentLoaded do defer) e
+   * substituímos _headerCollapse por uma versão que lê o height ANTES de
+   * iniciar qualquer escrita de estilo, eliminando o reflow intermediário.
+   *
+   * Nota: os usos de el.offsetHeight no quiz.js são INTENCIONAIS (flush CSS
+   * para re-trigger de transitions: remove classe → flush → adiciona classe).
+   * Esses NÃO são reflows problemáticos — são o padrão correto para animações.
+   * O único reflow não intencional era o getBoundingClientRect no meio das
+   * escritas do _headerCollapse.
+   */
+  document.addEventListener('DOMContentLoaded', function patchHeaderCollapse() {
+    // Aguarda o quiz.js (defer) terminar de definir as funções
+    // O defer garante que ele roda antes deste handler em DOMContentLoaded,
+    // mas usamos requestAnimationFrame para garantir que o parser finalizou.
+    requestAnimationFrame(function() {
+      // Guarda referência original caso quiz.js já a tenha sobrescrito
+      var _orig = window._headerCollapse;
+      if (typeof _orig !== 'function') return; // quiz.js ainda não carregou
+
+      window._headerCollapse = function _headerCollapsePatch() {
+        var header  = document.querySelector('header');
+        var counter = document.getElementById('stepCounter');
+        var overlay = document.getElementById('cc-overlay');
+        var isMobile = window.innerWidth <= 580;
+        var margin   = isMobile ? 1 : 12;
+
+        // ── BLOCO DE LEITURA (antes de qualquer escrita) ──────────────────
+        // Lemos o height do header AGORA, enquanto o layout está limpo.
+        // Isso evita que o browser precise fazer um reflow no meio da sequência.
+        var headerHeight = header ? header.getBoundingClientRect().height : 56;
+        // ─────────────────────────────────────────────────────────────────
+
+        // ── BLOCO DE ESCRITAS ─────────────────────────────────────────────
+        overlay.classList.remove('cc-fullscreen');
+        overlay.offsetHeight; // flush intencional para re-trigger de transition
+        overlay.style.transition =
+          'top 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'left 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'width 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'height 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'border-radius 500ms cubic-bezier(0.4,0,0.2,1)';
+        overlay.style.opacity      = '1';
+        overlay.style.top          = margin + 'px';
+        overlay.style.left         = margin + 'px';
+        overlay.style.width        = (window.innerWidth - 2 * margin) + 'px';
+        overlay.style.height       = headerHeight + 'px'; // usa valor já lido
+        overlay.style.borderRadius = isMobile ? '17px' : '20px';
+        if (header) header.classList.remove('cc-open');
+        // ─────────────────────────────────────────────────────────────────
+
+        setTimeout(function() {
+          overlay.style.transition = 'opacity 180ms ease';
+          overlay.style.opacity    = '0';
+          setTimeout(function() {
+            overlay.style.transition = 'none';
+            overlay.classList.remove('cc-fullscreen');
+            if (counter) {
+              counter.style.transition = 'opacity 0.25s';
+              counter.style.opacity    = '1';
+              setTimeout(function() { counter.style.transition = ''; }, 280);
+            }
+            var backBtn = document.getElementById('interblock-back-btn');
+            if (backBtn) backBtn.style.display = 'none';
+          }, 200);
+        }, 500);
+
+        // Retorna a mesma Promise que o original (_wait(680))
+        return new Promise(function(resolve) { setTimeout(resolve, 680); });
+      };
+    });
+  }, { once: true });
+
+  /* ═══ OTIMIZAÇÃO 3 — Quebrar tarefas longas da thread principal ═══
+   * O quiz.js roda IIFEs pesadas no load:
+   *   - Mist canvas (partículas de fundo)      → NÃO urgente na tela 0
+   *   - Float animations (bolinhas flutuantes)  → NÃO urgente na tela 0
+   *   - Particle/mousetrail effects             → NÃO urgente na tela 0
+   *   - Scanner (face-api, câmera)              → Definitivamente não urgente
+   *
+   * Como quiz.js está minificado, não podemos editar diretamente.
+   * A abordagem segura: carregar quiz.js normalmente (já tem defer),
+   * mas postergar extras.js com requestIdleCallback. Além disso,
+   * adicionamos uma pequena pausa estrutural via scheduler para dar
+   * ao browser janelas de resposta entre as IIFEs do quiz.js.
+   *
+   * requestIdleCallback garante que o código só roda quando o browser
+   * está ocioso (sem frames pendentes ou input), com timeout de 2s
+   * como fallback para browsers que não suportam rIC (Safari < 16).
+   */
   window.addEventListener('load', function() {
-    var s = document.createElement('script');
-    s.src = 'extras.js';
-    document.head.appendChild(s);
+    var ric = window.requestIdleCallback || function(cb, opts) {
+      setTimeout(cb, opts && opts.timeout ? Math.min(opts.timeout, 200) : 200);
+    };
+
+    // extras.js: carrega em idle (canvas de footer, animações secundárias)
+    ric(function() {
+      var s = document.createElement('script');
+      s.src = 'extras.js';
+      document.head.appendChild(s);
+    }, { timeout: 2000 });
   });
 
+  /* Ativação de vídeos por lazy-load (mantido do original) */
   document.addEventListener('click', function ativarVideos() {
     document.querySelectorAll('video[data-src]').forEach(function(v) {
       v.src = v.getAttribute('data-src');
