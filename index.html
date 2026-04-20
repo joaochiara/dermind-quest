@@ -177,17 +177,6 @@ body {
   pointer-events: none;
 }
 
-/* ── MIST BOTTOM FILL — fica antes do wrapper no DOM; wrapper o cobre na viewport; aparece só atrás da barra Safari iOS ── */
-#mist-bottom-fill {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: calc(100svh - 70px);
-  height: 220px;
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* ── HEADER ILHA FLUTUANTE ── */
 header {
   position: fixed; top: 17px; left: 12px; right: 12px;
@@ -757,7 +746,6 @@ header.cc-open .inter-header-back {
 </head>
 <body>
 
-<div id="mist-bottom-fill"></div>
 <div id="mist-wrapper"><canvas id="mist-canvas"></canvas></div>
 <div id="cc-panel"></div>
 <div id="cc-overlay"></div>
