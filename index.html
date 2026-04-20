@@ -177,13 +177,13 @@ body {
   pointer-events: none;
 }
 
-/* ── MIST BOTTOM FILL — espelha os blobs atrás da barra do Safari iOS ── */
+/* ── MIST BOTTOM FILL — fica antes do wrapper no DOM; wrapper o cobre na viewport; aparece só atrás da barra Safari iOS ── */
 #mist-bottom-fill {
   position: fixed;
   left: 0;
   right: 0;
-  top: 100svh;
-  height: 160px;
+  top: calc(100svh - 70px);
+  height: 220px;
   pointer-events: none;
   z-index: 0;
 }
@@ -757,8 +757,8 @@ header.cc-open .inter-header-back {
 </head>
 <body>
 
-<div id="mist-wrapper"><canvas id="mist-canvas"></canvas></div>
 <div id="mist-bottom-fill"></div>
+<div id="mist-wrapper"><canvas id="mist-canvas"></canvas></div>
 <div id="cc-panel"></div>
 <div id="cc-overlay"></div>
 
