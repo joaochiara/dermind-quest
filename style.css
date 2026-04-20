@@ -38,11 +38,11 @@
     body { overflow-x: hidden; }
   }
 
-  /* ── MIST WRAPPER ── */
+  /* ── MIST WRAPPER — estende além da viewport pra cobrir atrás das barras do Safari ── */
   #mist-wrapper {
     position: fixed;
-    top: 0;
-    bottom: -150px;
+    top: -100px;
+    bottom: -100px;
     left: 0;
     right: 0;
     pointer-events: none;
