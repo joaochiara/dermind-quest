@@ -3221,15 +3221,3 @@
     transform: scale(1.06) !important;
   }
 
-
-/* Safari 26 Liquid Glass: ativa barra de navegação semitransparente no iOS */
-.safari-tint-sentinel {
-  position: fixed;
-  bottom: 3px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: transparent;
-  pointer-events: none;
-  z-index: 0;
-}
