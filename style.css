@@ -26,16 +26,13 @@
 
   body {
     font-family: var(--sans);
-    background: transparent;
+    background: var(--ivory);
     color: var(--ink);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     touch-action: pan-y;
-  }
-  html {
-    background: var(--ivory);
   }
   @media (max-width: 580px) {
     body { overflow-x: hidden; }
