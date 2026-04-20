@@ -48,7 +48,7 @@
       radial-gradient(ellipse 54% 30% at 25% 45%, rgba(74,127,165,0.39) 0%, rgba(74,127,165,0.14) 42%, transparent 100%),
       radial-gradient(ellipse 50% 28% at 88% 38%, rgba(200,137,154,0.36) 0%, rgba(200,137,154,0.12) 42%, transparent 100%),
       linear-gradient(rgba(247,242,234,1), rgba(247,242,234,1));
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-color: transparent;
     color: var(--ink);
     min-height: 100vh;
@@ -83,7 +83,7 @@
         radial-gradient(ellipse 54% 30% at 25% 35%, rgba(74,127,165,0.39) 0%, rgba(74,127,165,0.14) 42%, transparent 100%),
         radial-gradient(ellipse 50% 28% at 88% 25%, rgba(200,137,154,0.36) 0%, rgba(200,137,154,0.12) 42%, transparent 100%),
         linear-gradient(rgba(247,242,234,1), rgba(247,242,234,1));
-      background-attachment: fixed;
+      background-attachment: scroll;
       background-color: transparent;
       overflow-x: hidden;
     }
