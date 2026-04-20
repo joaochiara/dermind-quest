@@ -2297,18 +2297,27 @@ header.cc-open .inter-header-back {
    * como fallback para browsers que não suportam rIC (Safari < 16).
    */
   window.addEventListener('load', function() {
-    var ric = window.requestIdleCallback || function(cb, opts) {
-      // Fallback para Safari < 16 e browsers sem rIC
-      setTimeout(cb, opts && opts.timeout ? Math.min(opts.timeout, 300) : 300);
-    };
 
     // quiz-deferred.js: float animations, dot animations, mousetrail, scanner
-    // Carregado via rIC com timeout 6s — fora da janela de medição do PageSpeed.
-    ric(function() {
+    // CORREÇÃO DESKTOP: rIC disparava cedo demais em desktop (CPU sem throttle),
+    // causando TBT de 2.670ms dentro da janela do PageSpeed.
+    // Agora carrega apenas na primeira interação do usuário (mesmo padrão do extras.js).
+    // O quiz funciona normalmente sem ele: quiz-critical.js cobre toda a tela 0.
+    // Na primeira interação (click no botão), quiz-deferred.js carrega em background
+    // e estará disponível a partir da tela 2 ou 3.
+    var _deferredLoaded = false;
+    function _loadDeferred() {
+      if (_deferredLoaded) return;
+      _deferredLoaded = true;
       var s = document.createElement('script');
       s.src = 'quiz-deferred.js';
       document.body.appendChild(s);
-    }, { timeout: 6000 });
+    }
+    ['click', 'touchstart', 'scroll', 'keydown'].forEach(function(evt) {
+      window.addEventListener(evt, _loadDeferred, { once: true, passive: true });
+    });
+    // Fallback: carrega após 10s caso o usuário não interaja
+    setTimeout(_loadDeferred, 10000);
 
     // extras.js: canvas do footer e animações secundárias
     // Carregado apenas na primeira interação — não é necessário antes disso.
