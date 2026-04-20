@@ -3221,11 +3221,12 @@
     transform: scale(1.06) !important;
   }
 
-/* fix for ios transparent url bar (Safari 26 Liquid Glass) */
+
+/* Safari 26 Liquid Glass: ativa barra de navegação semitransparente no iOS */
 .safari-tint-sentinel {
   position: fixed;
-  left: 0;
   bottom: 3px;
+  left: 0;
   width: 100%;
   height: 3px;
   background: transparent;
