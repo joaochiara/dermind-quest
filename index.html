@@ -753,7 +753,7 @@ header.cc-open .inter-header-back {
 </head>
 <body>
 
-<canvas id="mist-canvas"></canvas>
+
 <div id="cc-panel"></div>
 <div id="cc-overlay"></div>
 
@@ -2151,45 +2151,6 @@ header.cc-open .inter-header-back {
     com timeout de 3s como garantia mínima.
 -->
 <script src="quiz-critical.js" defer></script>
-<script>
-/* Patch mist canvas: intercepta requestIdleCallback para atrasar _mistInit
-   até a primeira interação. O quiz-critical.js chama rIC(_mistInit, {timeout:500})
-   — ao substituir rIC temporariamente, capturamos essa chamada e a executamos
-   só quando o usuário interagir, eliminando o TBT do canvas no PageSpeed. */
-(function() {
-  var _origRIC = window.requestIdleCallback;
-  var _mistPending = null;
-  var _interacted = false;
-
-  window.requestIdleCallback = function(cb, opts) {
-    if (opts && opts.timeout === 500 && !_interacted) {
-      // Captura a chamada do mist e restaura rIC imediatamente
-      // para não afetar nenhuma outra chamada posterior
-      _mistPending = cb;
-      if (_origRIC) window.requestIdleCallback = _origRIC;
-      return 0;
-    }
-    return _origRIC ? _origRIC(cb, opts) : setTimeout(cb, (opts && opts.timeout) ? Math.min(opts.timeout, 300) : 0);
-  };
-
-  function startMist() {
-    if (_interacted) return;
-    _interacted = true;
-    if (_origRIC) window.requestIdleCallback = _origRIC;
-    if (_mistPending) {
-      var fn = _mistPending;
-      _mistPending = null;
-      fn();
-    }
-  }
-
-  ['click','touchstart','scroll','mousemove'].forEach(function(evt) {
-    window.addEventListener(evt, startMist, { once: true, passive: true });
-  });
-
-  setTimeout(startMist, 1500);
-})();
-</script>
 <script>
 /* Patch LCP: aguarda o primeiro paint antes de iniciar o typewriter do intro,
    garantindo que o browser registre o texto estático como LCP */
