@@ -3229,14 +3229,3 @@
     box-shadow: 0 2px 8px rgba(24,16,14,0.07), inset 0 1px 0 rgba(255,255,255,0.8) !important;
     transform: scale(1.06) !important;
   }
-
-/* ── MIST BOTTOM FILL — fica antes do wrapper no DOM; wrapper o cobre na viewport; aparece só atrás da barra Safari iOS ── */
-#mist-bottom-fill {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: calc(100svh - 70px);
-  height: 220px;
-  pointer-events: none;
-  z-index: 0;
-}
