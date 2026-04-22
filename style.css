@@ -1363,6 +1363,10 @@
     opacity: 0;
   }
 
+  #result-cracha {
+    transform: translateY(32px);
+  }
+
   #screen-result .result-name {
     opacity: 0;
     transition: opacity 1.4s ease;
