@@ -1,5 +1,4 @@
 const ALLOWED_ORIGINS = [
-  "https://dermind.app/ava",
   "https://dermind.app",
   "http://localhost:8080",
   "http://localhost:3000",
