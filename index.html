@@ -611,7 +611,8 @@ header.cc-open .inter-header-back {
 }
 
 @media (min-width: 581px) {
-  #screen-0 { max-width: 590px; }
+  #screen-0 .screen-h1,
+  #screen-0 .intro-sub-1 { max-width: 590px; margin-inline: auto; }
   .sub1-desktop { display: inline; }
   .sub1-mobile  { display: none; }
 }
@@ -628,19 +629,13 @@ header.cc-open .inter-header-back {
   opacity: 0;
   transition: opacity 1.4s ease;
 }
-#screen-0 .intro-sub-2 {
-  opacity: 0;
-  transition: opacity 1.4s ease;
-}
 @media (max-width: 580px) {
   #screen-0 .intro-sub-1 { padding-top: 10px !important; margin-bottom: 3px !important; transform: translateY(-5px); }
-  #screen-0 .intro-sub-2 { padding-top: 10px !important; margin-bottom: 20px !important; margin-top: -10px !important; transform: translateY(-5px); }
   #screen-0 .intro-steps  { margin-bottom: 27px !important; }
 }
 
 #screen-0 .screen-eyebrow.sub-visible,
-#screen-0 .intro-sub-1.sub-visible,
-#screen-0 .intro-sub-2.sub-visible {
+#screen-0 .intro-sub-1.sub-visible {
   opacity: 1;
 }
 
@@ -860,7 +855,7 @@ header.cc-open .inter-header-back {
     <h1 class="screen-h1" id="intro-title" style="position:relative;">
       <span id="intro-placeholder" style="visibility:visible; display:block;">Você cuida da pele.<span class="br-mobile"><br></span> Mas será que usa<span class="br-mobile"><br></span> os <span class="intro-highlight"><em>produtos certos</em></span>?</span>
     </h1>
-    <p class="screen-sub intro-sub-2" style="margin-bottom: 25px;">Descubra em  6 minutos qual protocolo realmente funciona para sua pele -<strong> com mais de 95% de precisão, sem consulta, sem espera e sem achismos</strong>.</p>
+    <p class="screen-sub" style="margin-bottom: 25px;">Descubra em  6 minutos qual protocolo realmente funciona para sua pele -<strong> com mais de 95% de precisão, sem consulta, sem espera e sem achismos</strong>.</p>
     <div class="intro-steps" style="margin-bottom: 32px;">
       <div class="intro-step-row centered">
         <div class="interblock-dot-wrap">
