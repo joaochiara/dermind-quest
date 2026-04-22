@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<base href="/ava/">
+<!-- Google tag (gtag.js) — carregado na primeira interação para não bloquear TBT -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-16B1S788P4');
+  var _gtagLoaded = false;
+  function _loadGtag() {
+    if (_gtagLoaded) return;
+    _gtagLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-16B1S788P4';
+    document.head.appendChild(s);
+  }
+  ['click', 'touchstart', 'scroll', 'mousemove'].forEach(function(evt) {
+    window.addEventListener(evt, _loadGtag, { once: true, passive: true });
+  });
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dermind | Protocolo de pele</title>
+<meta name="description" content="Descubra seu protocolo de skincare ideal com inteligência artificial. Avaliação personalizada em minutos.">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
+<!-- ═══ PRELOAD LCP ═══
+  O elemento LCP é o <h1 class="screen-h1"> que usa DM Serif Text.
+  Fazemos preload das três fontes críticas antes de qualquer outra coisa,
+  para que o browser as baixe em paralelo com o HTML ainda sendo parseado.
+  - DM Sans (400 regular): usada no body
+  - DM Serif Text (regular): usada no h1 → LCP direto
+  - DM Serif Text (itálico): usada nos <em> dentro do h1
+  URLs confirmadas via DevTools → Network → Font.
+  crossorigin é obrigatório para fontes de domínio externo (CORS).
+-->
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2"
+  crossorigin>
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmseriftext/v13/rnCu-xZa_krGokauCeNq1wWyWfSFXVAKArc.woff2"
+  crossorigin>
+<link rel="preload" as="font" type="font/woff2"
+  href="https://fonts.gstatic.com/s/dmseriftext/v13/rnCw-xZa_krGokauCeNq1wWyWfG1X1oNILVaqA.woff2"
+  crossorigin>
+<!-- ════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Google Fonts CSS (async) — cobre os pesos adicionais (300, 500, 700, 900)
+     não definidos no @font-face inline. Carrega via media=print swap,
+     não bloqueia o FCP. -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet"></noscript>
+<!-- ═══ CSS CRÍTICO INLINE ═══
+  Contém APENAS as regras da tela 0 (~19KB).
+  Inline evita round-trip de rede (328ms de latência no caminho crítico
+  quando estava como arquivo externo) e mantém o FCP baixo.
+  O style.css (~100KB) restante é carregado assincronamente
+  via preload + onload swap, sem bloquear o FCP.
+  Regra crítica: cada declaração aqui é BIT-A-BIT idêntica ao style.css
+  para manter CLS em 0.
+-->
+<style>
+/* ═══ @FONT-FACE INLINE ═══
+   Definidos aqui para garantir font-display:swap aplicado ANTES do CSS
+   do Google Fonts chegar. Evita FOIT (Flash of Invisible Text) que
+   estava segurando o LCP em ~1,4s de "atraso de renderização".
+   URLs idênticas aos preloads no <head> — o browser reaproveita o cache.
+*/
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmsans/v17/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K6z9mXg.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Serif Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmseriftext/v13/rnCu-xZa_krGokauCeNq1wWyWfSFXVAKArc.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'DM Serif Text';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmseriftext/v13/rnCw-xZa_krGokauCeNq1wWyWfG1X1oNILVaqA.woff2') format('woff2');
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   above-fold.css — CSS crítico da tela 0 (Dermind)
+   ─────────────────────────────────────────────────────────────────────
+   Este arquivo contém APENAS as regras que afetam elementos visíveis
+   no primeiro paint (tela 0 do quiz). Deve ser carregado de forma
+   BLOQUEANTE no <head>, antes do style.css assíncrono.
+
+   Regra de ouro: cada declaração aqui precisa ser BIT-A-BIT idêntica
+   à do style.css. Qualquer divergência reintroduz o CLS de 0.284.
+
+   Conteúdo coberto:
+   - Variáveis (:root)
+   - Reset + html + body
+   - Header, header-island, cc-overlay, progress, logo
+   - quiz-wrap, screen base, animações de screen (enter/exit/fade)
+   - Typography: screen-eyebrow, screen-h1, screen-sub, screen-q-typed
+   - Intro: intro-steps, intro-step-row, float-box, intro-dot,
+     float animations (#screen-0 .float-box, .intro-btn, etc.)
+   - Option base (porque .float-box herda visual do .option)
+   - Opt-icon, opt-label, opt-desc (dentro dos float-box)
+   - Btn-primary-full
+   - Todos os media queries de tela 0 (580px e 581px)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── VARIÁVEIS ── */
+:root {
+  --ivory:        #F7F2EA;
+  --ivory-dark:   #EDE5D8;
+  --ivory-mid:    #E4DBCC;
+  --wine:         #A85568;
+  --wine-dark:    #8A3A52;
+  --wine-light:   #F0D4DC;
+  --wine-pale:    #FAF0F3;
+  --steel:        #4A7FA5;
+  --steel-dark:   #2E5F82;
+  --steel-light:  #C8DFF0;
+  --steel-pale:   #EBF4FA;
+  --blush:        #D9A8B2;
+  --ink:          #18100E;
+  --ink-soft:     #4A3A34;
+  --ink-muted:    #8A7A74;
+  --white:        #FDFAF7;
+
+  --serif:        'DM Serif Text', Georgia, serif;
+  --sans:         'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background:
+    linear-gradient(to bottom, rgba(247,242,234,0.85) 0%, rgba(247,242,234,0.4) 35%, rgba(247,242,234,0) 65%),
+    radial-gradient(ellipse 70% 42% at 20% 92%, rgba(168,85,104,0.85) 0%, rgba(168,85,104,0.30) 42%, transparent 100%),
+    radial-gradient(ellipse 68% 40% at 80% 88%, rgba(74,127,165,0.85) 0%, rgba(74,127,165,0.30) 42%, transparent 100%),
+    radial-gradient(ellipse 64% 34% at 15% 97%, rgba(168,85,104,0.85) 0%, rgba(168,85,104,0.30) 42%, transparent 100%),
+    radial-gradient(ellipse 60% 34% at 55% 95%, rgba(200,137,154,0.85) 0%, rgba(200,137,154,0.30) 42%, transparent 100%),
+    radial-gradient(ellipse 58% 32% at 88% 93%, rgba(74,127,165,0.85) 0%, rgba(74,127,165,0.30) 42%, transparent 100%),
+    radial-gradient(ellipse 66% 40% at 65% 70%, rgba(74,127,165,0.72) 0%, rgba(74,127,165,0.25) 42%, transparent 100%),
+    radial-gradient(ellipse 62% 38% at 35% 75%, rgba(168,85,104,0.68) 0%, rgba(168,85,104,0.24) 42%, transparent 100%),
+    radial-gradient(ellipse 70% 44% at 88% 80%, rgba(200,137,154,0.69) 0%, rgba(200,137,154,0.24) 42%, transparent 100%),
+    radial-gradient(ellipse 64% 38% at 10% 82%, rgba(74,127,165,0.63) 0%, rgba(74,127,165,0.22) 42%, transparent 100%),
+    radial-gradient(ellipse 68% 40% at 55% 87%, rgba(168,85,104,0.60) 0%, rgba(168,85,104,0.21) 42%, transparent 100%),
+    radial-gradient(ellipse 58% 32% at 30% 90%, rgba(200,137,154,0.57) 0%, rgba(200,137,154,0.20) 42%, transparent 100%),
+    radial-gradient(ellipse 62% 36% at 90% 68%, rgba(168,85,104,0.54) 0%, rgba(168,85,104,0.19) 42%, transparent 100%),
+    radial-gradient(ellipse 56% 32% at 48% 78%, rgba(200,137,154,0.54) 0%, rgba(200,137,154,0.19) 42%, transparent 100%),
+    radial-gradient(ellipse 64% 38% at 18% 55%, rgba(168,85,104,0.53) 0%, rgba(168,85,104,0.18) 42%, transparent 100%),
+    radial-gradient(ellipse 60% 36% at 82% 50%, rgba(74,127,165,0.48) 0%, rgba(74,127,165,0.17) 42%, transparent 100%),
+    radial-gradient(ellipse 56% 30% at 50% 60%, rgba(200,137,154,0.45) 0%, rgba(200,137,154,0.16) 42%, transparent 100%),
+    radial-gradient(ellipse 52% 30% at 70% 42%, rgba(168,85,104,0.42) 0%, rgba(168,85,104,0.15) 42%, transparent 100%),
+    radial-gradient(ellipse 54% 30% at 25% 45%, rgba(74,127,165,0.39) 0%, rgba(74,127,165,0.14) 42%, transparent 100%),
+    radial-gradient(ellipse 50% 28% at 88% 38%, rgba(200,137,154,0.36) 0%, rgba(200,137,154,0.12) 42%, transparent 100%),
+    linear-gradient(rgba(247,242,234,1), rgba(247,242,234,1));
+  background-attachment: scroll;
+  background-color: transparent;
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  touch-action: pan-y;
+}
+@media (max-width: 580px) {
+  body {
+    background:
+      linear-gradient(to bottom, rgba(247,242,234,0.75) 0%, rgba(247,242,234,0.25) 20%, rgba(247,242,234,0) 40%),
+      radial-gradient(ellipse 70% 42% at 20% 92%, rgba(168,85,104,0.85) 0%, rgba(168,85,104,0.30) 42%, transparent 100%),
+      radial-gradient(ellipse 68% 40% at 80% 88%, rgba(74,127,165,0.85) 0%, rgba(74,127,165,0.30) 42%, transparent 100%),
+      radial-gradient(ellipse 64% 34% at 15% 97%, rgba(168,85,104,0.85) 0%, rgba(168,85,104,0.30) 42%, transparent 100%),
+      radial-gradient(ellipse 60% 34% at 55% 95%, rgba(200,137,154,0.85) 0%, rgba(200,137,154,0.30) 42%, transparent 100%),
+      radial-gradient(ellipse 58% 32% at 88% 93%, rgba(74,127,165,0.85) 0%, rgba(74,127,165,0.30) 42%, transparent 100%),
+      radial-gradient(ellipse 66% 40% at 65% 70%, rgba(74,127,165,0.72) 0%, rgba(74,127,165,0.25) 42%, transparent 100%),
+      radial-gradient(ellipse 62% 38% at 35% 75%, rgba(168,85,104,0.68) 0%, rgba(168,85,104,0.24) 42%, transparent 100%),
+      radial-gradient(ellipse 70% 44% at 88% 80%, rgba(200,137,154,0.69) 0%, rgba(200,137,154,0.24) 42%, transparent 100%),
+      radial-gradient(ellipse 64% 38% at 10% 82%, rgba(74,127,165,0.63) 0%, rgba(74,127,165,0.22) 42%, transparent 100%),
+      radial-gradient(ellipse 68% 40% at 55% 87%, rgba(168,85,104,0.60) 0%, rgba(168,85,104,0.21) 42%, transparent 100%),
+      radial-gradient(ellipse 58% 32% at 30% 90%, rgba(200,137,154,0.57) 0%, rgba(200,137,154,0.20) 42%, transparent 100%),
+      radial-gradient(ellipse 62% 36% at 90% 68%, rgba(168,85,104,0.54) 0%, rgba(168,85,104,0.19) 42%, transparent 100%),
+      radial-gradient(ellipse 56% 32% at 48% 78%, rgba(200,137,154,0.54) 0%, rgba(200,137,154,0.19) 42%, transparent 100%),
+      radial-gradient(ellipse 64% 38% at 18% 45%, rgba(168,85,104,0.53) 0%, rgba(168,85,104,0.18) 42%, transparent 100%),
+      radial-gradient(ellipse 60% 36% at 82% 38%, rgba(74,127,165,0.48) 0%, rgba(74,127,165,0.17) 42%, transparent 100%),
+      radial-gradient(ellipse 56% 30% at 50% 52%, rgba(200,137,154,0.45) 0%, rgba(200,137,154,0.16) 42%, transparent 100%),
+      radial-gradient(ellipse 52% 30% at 70% 30%, rgba(168,85,104,0.42) 0%, rgba(168,85,104,0.15) 42%, transparent 100%),
+      radial-gradient(ellipse 54% 30% at 25% 35%, rgba(74,127,165,0.39) 0%, rgba(74,127,165,0.14) 42%, transparent 100%),
+      radial-gradient(ellipse 50% 28% at 88% 25%, rgba(200,137,154,0.36) 0%, rgba(200,137,154,0.12) 42%, transparent 100%),
+      linear-gradient(rgba(247,242,234,1), rgba(247,242,234,1));
+    background-attachment: scroll;
+    background-color: transparent;
+    overflow-x: hidden;
+  }
+}
+
+
+/* ── HEADER ILHA FLUTUANTE ── */
+header {
+  position: fixed; top: 17px; left: 12px; right: 12px;
+  transform: none;
+  z-index: 55;
+  padding: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+  width: calc(100% - 24px);
+  max-width: none;
+  transition:
+    top 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    right 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.58s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: top, left, right, width, height;
+}
+.header-island {
+  pointer-events: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+  height: auto;
+  padding: 13px 22px;
+  background: rgba(253,250,247,0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 20px;
+  box-shadow:
+    0 2px 0px rgba(255,255,255,0.70),
+    0 8px 28px rgba(24,16,14,0.11),
+    0 1px 0 rgba(255,255,255,0.90) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset;
+  position: relative;
+  overflow: hidden;
+  transition:
+    height 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    backdrop-filter 0.3s ease,
+    -webkit-backdrop-filter 0.3s ease;
+  will-change: height, border-radius;
+}
+/* Reflexo de bolha no topo da ilha */
+.header-island::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 5%; right: 5%;
+  height: 46%;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.38) 0%,
+    rgba(255,255,255,0.10) 60%,
+    transparent 100%
+  );
+  border-radius: 0 0 60% 60% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+/* Sobreposição wine-pale sutil */
+.header-island::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--wine-pale);
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: 0;
+}
+header .logo,
+header .step-counter {
+  position: relative; z-index: 3;
+}
+header .logo { pointer-events: auto; }
+header .step-counter { pointer-events: auto; }
+.header-cta {
+  display: none;
+  background: var(--wine);
+  color: var(--white);
+  padding: 9px 19px;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 18px rgba(168,85,104,0.45), inset 0 1px 0 rgba(255,255,255,0.25);
+  position: relative; z-index: 3;
+  white-space: nowrap;
+}
+.header-cta:hover { background: var(--wine-dark); transform: scale(1.05); }
+@media (max-width: 580px) {
+  header {
+    top: 2px;
+    left: 1px; right: 1px;
+    width: calc(100% - 2px);
+  }
+  .header-island { padding: 10px 14px; border-radius: 17px; }
+  /* Logo 1px mais à direita, counter 1px mais à esquerda */
+  header .logo        { margin-left: 1px; }
+  header .step-counter { margin-right: 1px; }
+}
+
+/* ── CONTROL CENTER: overlay independente que expande sobre o header ── */
+#cc-panel {
+  display: none;
+}
+
+/* Overlay da CC — começa invisível, JS posiciona e anima */
+#cc-overlay {
+  position: fixed;
+  z-index: 54;
+  pointer-events: none;
+  background: rgba(253,250,247,0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow:
+    0 2px 0px rgba(255,255,255,0.70),
+    0 8px 28px rgba(24,16,14,0.11),
+    0 1px 0 rgba(255,255,255,0.90) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset;
+  opacity: 0;
+  border-radius: 20px;
+  transition:
+    top    0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    left   0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    width  0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.58s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease;
+  will-change: top, left, width, height, border-radius, opacity;
+  overflow: hidden;
+}
+#cc-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 5%; right: 5%;
+  height: 46%;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.38) 0%,
+    rgba(255,255,255,0.10) 60%,
+    transparent 100%
+  );
+  border-radius: 0 0 60% 60% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+#cc-overlay.cc-fullscreen::before {
+  opacity: 0;
+}
+header.cc-open {
+  z-index: 55;
+}
+header.cc-open .header-island {
+  pointer-events: none;
+}
+header.cc-open .inter-header-back {
+  pointer-events: auto;
+}
+
+/* Barra de progresso fica acima do painel quando este está aberto */
+.progress-wrap { z-index: 56; }
+
+.logo {
+  font-family: var(--serif);
+  font-size: 20px; font-weight: 700; color: var(--ink);
+  text-decoration: none; letter-spacing: -0.02em;
+}
+.logo span { color: var(--wine); }
+
+.step-counter {
+  font-size: 14px; color: #8A7A74;
+  text-shadow: 0 2px 6px rgba(24,16,14,0.10);
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 51;
+  pointer-events: none;
+}
+.progress-fill {
+  height: 6px;
+  background: linear-gradient(90deg, var(--wine), var(--steel));
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+  margin-top: 0;
+}
+
+/* ── WRAPPER ── */
+.quiz-wrap {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 96px 24px 120px;
+  min-height: 100vh;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 580px) {
+  .quiz-wrap {
+    overflow: visible;
+    align-items: flex-start;
+    padding-bottom: 120px;
+  }
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  width: 100%; max-width: 620px;
+}
+.screen.active {
+  display: block;
+}
+
+/* Animações de scroll vertical (screens 1–14) */
+.screen.enter-up {
+  animation: enterFromBelow 0.48s cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+.screen.exit-up {
+  animation: exitToTop 0.38s cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+.screen.enter-down {
+  animation: enterFromTop 0.48s cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+.screen.exit-down {
+  animation: exitToBottom 0.38s cubic-bezier(0.32, 0, 0.18, 1) forwards;
+}
+.screen.enter-fade {
+  animation: fadeIn 0.38s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.screen.exit-fade {
+  animation: fadeOut 0.28s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes exitToTop {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-105vh); }
+}
+@keyframes enterFromBelow {
+  from { opacity: 0; transform: translateY(105vh); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes exitToBottom {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(105vh); }
+}
+@keyframes enterFromTop {
+  from { opacity: 0; transform: translateY(-105vh); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-18px); }
+}
+
+/* ── TYPOGRAPHY ── */
+.screen-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--wine);
+  margin-bottom: 14px;
+}
+.screen-eyebrow::before {
+  content: ''; display: block;
+  width: 16px; height: 1px; background: var(--wine);
+}
+
+.screen-h1 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 5vw, 50px);
+  font-weight: 700;
+  line-height: 1.08; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 14px;
+  filter: drop-shadow(0 2px 10px rgba(168,85,104,0.10)) drop-shadow(0 1px 3px rgba(24,16,14,0.06));
+}
+.screen-h1 em { font-style: italic; color: var(--wine); }
+
+.screen-sub {
+  font-size: 16px; font-weight: 400; line-height: 1.7;
+  color: var(--ink-soft); margin-bottom: 32px;
+  filter: drop-shadow(0 2px 6px rgba(24,16,14,0.06));
+}
+.screen-sub strong {
+  font-weight: 900;
+}
+
+/* ── TYPEWRITER ── */
+.screen-q-typed {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ── OPTION (base, herdada por .float-box) ── */
+.option {
+  background: rgba(253,250,247,0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.28s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.28s cubic-bezier(0.4,0,0.2,1),
+              background 0.28s cubic-bezier(0.4,0,0.2,1),
+              opacity 0.28s cubic-bezier(0.4,0,0.2,1);
+  display: flex; align-items: center; gap: 13px;
+  position: relative; overflow: hidden;
+  box-shadow:
+    0 2px 0px rgba(255,255,255,0.70),
+    0 6px 18px rgba(24,16,14,0.10),
+    0 1px 0 rgba(255,255,255,0.90) inset,
+    0 -1px 0 rgba(0,0,0,0.06) inset;
+}
+.option::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 5%; right: 5%;
+  height: 42%;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.38) 0%,
+    rgba(255,255,255,0.10) 60%,
+    transparent 100%
+  );
+  border-radius: 0 0 60% 60% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.28s;
+}
+.option::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--wine-pale);
+  opacity: 0; transition: opacity 0.28s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.opt-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: var(--ivory-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; flex-shrink: 0;
+  position: relative; z-index: 3;
+  transition: background 0.28s;
+}
+.opt-text { position: relative; z-index: 3; }
+.opt-label { font-size: 15px; font-weight: 500; color: var(--ink); display: block; }
+.opt-desc  { font-size: 12px; color: var(--ink-soft); margin-top: 2px; display: block; line-height: 1.4; }
+
+/* ── BTN PRIMARY FULL ── */
+.btn-primary-full {
+  background: var(--wine);
+  color: var(--ivory);
+  padding: 17px 38px; border-radius: 100px;
+  font-size: 16px; font-weight: 500;
+  border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  text-decoration: none;
+  transition: background 0.22s, box-shadow 0.22s, transform 0.15s;
+  box-shadow: 0 4px 18px rgba(168,85,104,0.45), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.btn-primary-full:hover { background: var(--wine-dark); box-shadow: inset 0 1px 0 rgba(255,255,255,0.30); transform: translateY(-2px) scale(1.05); }
+.btn-primary-full.wide { width: 100%; justify-content: center; }
+
+/* ── INTRO ENTRANCE ANIMATIONS (#screen-0) ── */
+#screen-0 .screen-eyebrow {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+#screen-0 .screen-h1 {
+  opacity: 1;
+}
+
+@media (min-width: 581px) {
+  #screen-0 { max-width: 740px; }
+  .sub1-desktop { display: inline; }
+  .sub1-mobile  { display: none; }
+}
+
+@media (max-width: 580px) {
+  #screen-0 .screen-h1 { font-size: 40px; max-width: 100%; margin-top: 5px; transform: translateY(-5px); }
+  #screen-0 .screen-h1 .intro-highlight { font-size: 40px; }
+  #screen-0 .screen-h1 .intro-finale { font-size: 40px; }
+  .sub1-desktop { display: none; }
+  .sub1-mobile  { display: inline; }
+}
+
+/* Subtitles: fade in */
+#screen-0 .intro-sub-1 {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+#screen-0 .intro-sub-2 {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+@media (max-width: 580px) {
+  #screen-0 .intro-sub-1 { padding-top: 10px !important; margin-bottom: 3px !important; transform: translateY(-5px); }
+  #screen-0 .intro-sub-2 { padding-top: 10px !important; margin-bottom: 20px !important; margin-top: -10px !important; transform: translateY(-5px); }
+  #screen-0 .intro-steps  { margin-bottom: 27px !important; }
+}
+
+#screen-0 .screen-eyebrow.sub-visible,
+#screen-0 .intro-sub-1.sub-visible,
+#screen-0 .intro-sub-2.sub-visible {
+  opacity: 1;
+}
+
+/* Boxes: slide up from below, staggered */
+#screen-0 .float-box {
+  opacity: 0;
+}
+#screen-0 .interblock-dot-wrap { opacity: 0; }
+#screen-0 .float-box.box-entered {
+  opacity: 1;
+}
+#screen-0 .float-box:nth-child(1) { animation: none; }
+#screen-0 .float-box:nth-child(2) { animation: none; }
+#screen-0 .float-box:nth-child(3) { animation: none; }
+
+@keyframes introBoxUp {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(7px); }
+}
+@keyframes introBoxUpMobile {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(5px); }
+}
+
+/* Button: slide up from below + fade in */
+#screen-0 .intro-btn {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.52s cubic-bezier(0.22,1,0.36,1), transform 0.52s cubic-bezier(0.22,1,0.36,1);
+}
+#screen-0 .intro-btn.btn-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+#screen-0 .intro-btn.btn-ready {
+  transition: background 0.22s, box-shadow 0.22s, transform 0.15s, opacity 0.22s;
+}
+#screen-0 .intro-btn.btn-ready:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* ── FLOAT UNIVERSAL ── */
+.option, .input-wrap, #city-box,
+#intro-box-1, #intro-box-2, #intro-box-3 {
+  will-change: transform;
+}
+
+/* ── INTRO STEPS (screen 0) ── */
+.intro-steps {
+  display: flex; flex-direction: column; gap: 9px;
+  max-width: 400px;
+  margin-inline: auto;
+}
+.intro-step-row {
+  display: flex; align-items: center; gap: 12px;
+}
+.intro-step-row.centered { justify-content: center; }
+#screen-0 #intro-box-1, #screen-0 #intro-box-2, #screen-0 #intro-box-3 {
+  flex: unset !important; margin-right: 0 !important;
+}
+
+/* ── INTERBLOCK DOT (base + variant intro-dot) ── */
+.interblock-dot {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 20px; font-weight: 700; flex-shrink: 0;
+  background: rgba(247,242,234,0.12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--ivory);
+  position: relative; z-index: 1;
+  border: 1px solid rgba(255,255,255,0.20);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  clip-path: circle(50%);
+  will-change: transform;
+}
+.interblock-dot-wrap {
+  position: relative; flex-shrink: 0;
+  filter: drop-shadow(0 3px 10px rgba(24,16,14,0.12)) drop-shadow(0 1px 0 rgba(255,255,255,0.70));
+}
+.interblock-dot::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%; height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, transparent 100%);
+  border-radius: 0 0 60% 60% / 0 0 100% 100%;
+  pointer-events: none;
+}
+
+/* Círculo vazado para tela 0 (intro-dot) */
+.interblock-dot.intro-dot {
+  background: transparent;
+  color: var(--ivory);
+  border-color: rgba(247,242,234,0.35);
+  border-width: 1.5px;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  flex-shrink: 0;
+  font-family: var(--serif);
+  font-size: 28px; font-weight: 700;
+  box-shadow: none;
+}
+.interblock-dot.intro-dot::before {
+  background: linear-gradient(180deg, rgba(247,242,234,0.45) 0%, transparent 100%);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE — max-width: 580px (consolidado, todas as regras de tela 0)
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 580px) {
+  header { padding: 14px 20px; }
+  .quiz-wrap { padding: 82px 16px 120px; }
+  .screen-h1 { font-size: 42px; margin-inline: 6px; }
+  .screen-sub { padding-inline: 6px; }
+  .intro-step-row .interblock-dot-wrap { display: none; }
+  .intro-steps { align-items: center; }
+  .intro-step-row .option { flex: 1; }
+  #screen-0 #intro-box-1,
+  #screen-0 #intro-box-2,
+  #screen-0 #intro-box-3 { width: fit-content; max-width: 100%; margin-right: 0 !important; margin-left: 0 !important; }
+  #screen-0 .intro-step-row { justify-content: center; }
+  #screen-0 .intro-step-row .option { flex: unset; width: fit-content; margin-right: 0 !important; margin-left: 0 !important; }
+
+  /* Redução de 15% nos boxes da screen 0 em mobile */
+  #screen-0 #intro-box-1,
+  #screen-0 #intro-box-2,
+  #screen-0 #intro-box-3 {
+    transform: scale(0.85);
+    transform-origin: center center;
+    margin-top: -10px !important;
+    margin-bottom: -10px !important;
+  }
+  /* Box 2 e 3: 5px para cima */
+  #screen-0 #intro-box-2,
+  #screen-0 #intro-box-3 {
+    margin-top: -15px !important;
+  }
+
+  /* Move botão para cima em mobile */
+  #screen-0 #intro-btn {
+    transform: translateY(2px);
+  }
+}
+
+</style>
+<link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="style.css"></noscript>
+</head>
+<body>
+
+
+<div id="safari-bar-fix" style="position:fixed;bottom:-3px;left:0;width:100%;height:3px;pointer-events:none;z-index:1;background-color:rgb(180,150,162);"></div>
+<div id="cc-panel"></div>
+<div id="cc-overlay"></div>
+
+<!-- Box inter1 — fora do quiz-wrap para escapar do stacking context -->
+<div class="interblock-bg-box" id="inter1-box" style="display:none;">
+  <p class="interblock-eyebrow">Demos os primeiros passos!</p>
+  <h2 class="interblock-title" data-tw-html="Vamos falar sobre a <em>sua rotina</em>." style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Vamos falar sobre a <em>sua rotina</em>.</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;">Vamos falar sobre a <em>sua rotina</em>.</span></h2>
+  <p class="interblock-sub">Nessa etapa, queremos conhecer seus hábitos de cuidado com a pele.</p>
+  <div class="interblock-video-wrap">
+    <span class="interblock-video-pill"><span class="interblock-video-pill-spinner"></span>Agora</span>
+    <video class="interblock-video" data-src="videos/Step_3_opt.mp4" autoplay muted loop playsinline preload="none"></video>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn-next" onclick="goTo(8)">Ir para a próxima etapa</button>
+  </div>
+</div>
+
+<!-- Box inter2 — fora do quiz-wrap para escapar do stacking context -->
+<div class="interblock-bg-box" id="inter2-box" style="display:none;">
+  <p class="interblock-eyebrow">Estamos quase lá!</p>
+  <h2 class="interblock-title" data-tw-html="Como é <em>seu histórico</em> de saúde?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Como é <em>seu histórico</em> de saúde?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;">Como é <em>seu histórico</em> de saúde?</span></h2>
+  <p class="interblock-sub">Depois disso, teremos mais liberdade e segurança para criar seu protocolo.</p>
+  <div class="interblock-video-wrap">
+    <span class="interblock-video-pill"><span class="interblock-video-pill-spinner"></span>Agora</span>
+    <video class="interblock-video" data-src="videos/Step_1_opt.mp4" autoplay muted loop playsinline preload="none"></video>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn-next" onclick="goTo(17)">Ir para a última etapa</button>
+  </div>
+</div>
+
+<!-- Box inter3 — fora do quiz-wrap para escapar do stacking context -->
+<div class="interblock-bg-box" id="inter3-box" style="display:none;">
+  <p class="interblock-eyebrow">Prontuário aprovado!</p>
+  <h2 class="interblock-title" data-tw-html="Hora do <em>scanner facial</em> inteligente." style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Hora do <em>scanner facial</em> inteligente.</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;">Hora do <em>scanner facial</em> inteligente.</span></h2>
+  <p class="interblock-sub">A tecnologia com IA permite analisar sua pele com mais de 95% de precisão.</p>
+  <div class="interblock-video-wrap">
+    <span class="interblock-video-pill"><span class="interblock-video-pill-spinner"></span>Agora</span>
+    <video class="interblock-video" data-src="videos/Step_2_opt.mp4" autoplay muted loop playsinline preload="none"></video>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn-next" onclick="goTo(24)">Ir para o scanner</button>
+  </div>
+</div>
+
+<header>
+  <div class="header-island">
+    <a href="#" class="logo">derm<span>ind</span></a>
+    <div class="step-counter" id="stepCounter"></div>
+    <a href="#planos" class="header-cta" id="headerCta">Assinar agora</a>
+    <button class="btn-back inter-header-back" id="interblock-back-btn" onclick="" style="display:none;">Voltar</button>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<div class="quiz-wrap">
+
+  <!-- 0: INTRO -->
+  <div class="screen active" id="screen-0" data-screen="0">
+    <p class="screen-eyebrow">Inteligência artificial para sua pele</p>
+    <h1 class="screen-h1" id="intro-title" style="position:relative;">
+      <span id="intro-placeholder" style="visibility:visible; display:block;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
+      <span id="intro-typed" style="position:absolute; top:0; left:0; width:100%; visibility:hidden;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
+    </h1>
+    <p class="screen-sub intro-sub-2" style="margin-bottom: 25px;">Conte com a tecnologia para avaliar sua pele com <strong>+95% de precisão</strong> sem sair de casa.</p>
+    <div class="intro-steps" style="margin-bottom: 32px;">
+      <div class="intro-step-row centered">
+        <div class="interblock-dot-wrap">
+          <div class="interblock-dot intro-dot" id="intro-dot-1">1</div>
+        </div>
+        <div class="option float-box" id="intro-box-1" style="cursor:default; pointer-events:none; flex:1; margin-right:10px;">
+          <div class="opt-icon">📝</div>
+          <div class="opt-text"><span class="opt-desc" style="margin-top:0; margin-bottom:2px;">Preencha o</span><span class="opt-label">Prontuário de fenótipo da pele</span></div>
+        </div>
+      </div>
+      <div class="intro-step-row centered">
+        <div class="interblock-dot-wrap">
+          <div class="interblock-dot intro-dot" id="intro-dot-2">2</div>
+        </div>
+        <div class="option float-box" id="intro-box-2" style="cursor:default; pointer-events:none; flex:1; margin-right:64px;">
+          <div class="opt-icon">🤳</div>
+          <div class="opt-text"><span class="opt-desc" style="margin-top:0; margin-bottom:2px;">Passe pelo</span><span class="opt-label">Scanner facial inteligente</span></div>
+        </div>
+      </div>
+      <div class="intro-step-row centered">
+        <div class="interblock-dot-wrap">
+          <div class="interblock-dot intro-dot" id="intro-dot-3">3</div>
+        </div>
+        <div class="option float-box" id="intro-box-3" style="cursor:default; pointer-events:none; flex:1; margin-right:10px;">
+          <div class="opt-icon">🧖‍♀️</div>
+          <div class="opt-text"><span class="opt-desc" style="margin-top:0; margin-bottom:2px;">Receba sua</span><span class="opt-label">Rotina de skincare personalizada</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-primary-full wide intro-btn" id="intro-btn" onclick="goTo(1)">Começar minha avaliação →</button>
+  </div>
+
+  <!-- 1: TIPO DE PELE -->
+  <div class="screen" id="screen-1" data-screen="1">
+    <p class="screen-eyebrow">Passo 1</p>
+    <h2 class="screen-q" data-tw-html="Como sua pele costuma ser <em>naturalmente</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Como sua pele costuma ser <em>naturalmente</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Como você a descreveria quando acorda ou não aplicou nenhum produto?</p>
+    <div class="options" id="q1">
+      <div class="option" onclick="selectOption(this,'q1','oleosa')">
+        <div class="opt-icon">💦</div>
+        <div class="opt-text"><span class="opt-label">Oleosa em todo o rosto</span><span class="opt-desc">Brilhante, pegajosa e com poros entupidos</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q1','seca')">
+        <div class="opt-icon">🌵</div>
+        <div class="opt-text"><span class="opt-label">Seca ou muito seca</span><span class="opt-desc">Sem brilho, áspera e descamando</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q1','mista')">
+        <div class="opt-icon">🌗</div>
+        <div class="opt-text"><span class="opt-label">Mista - depende da área</span><span class="opt-desc">Testa e nariz oleosos, mas bochechas secas</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q1','normal')">
+        <div class="opt-icon">🌸</div>
+        <div class="opt-text"><span class="opt-label">Normal</span><span class="opt-desc">Naturalmente hidratada, macia e elástica</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(0)">Voltar</button>
+      <button class="btn-next" id="next-1" disabled onclick="goTo(2)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 2: QUEIXAS -->
+  <div class="screen" id="screen-2" data-screen="2">
+    <p class="screen-eyebrow">Passo 2</p>
+    <h2 class="screen-q" data-tw-html="O que mais te <em>incomoda</em> na sua pele?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">O que mais te <em>incomoda</em> na sua pele?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Cada tipo de pele tem necessidades e preocupações únicas. Quais as suas?</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q2">
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🐡</div><div class="opt-text"><span class="opt-label">Acne ou oleosidade</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🧽</div><div class="opt-text"><span class="opt-label">Poros dilatados</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🧶</div><div class="opt-text"><span class="opt-label">Rugas e linhas finas</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🫠</div><div class="opt-text"><span class="opt-label">Flacidez</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">⛅️</div><div class="opt-text"><span class="opt-label">Falta de brilho</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🏜️</div><div class="opt-text"><span class="opt-label">Ressecamento</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🌶️</div><div class="opt-text"><span class="opt-label">Vermelhidão</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🍍</div><div class="opt-text"><span class="opt-label">Textura áspera</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">🐯</div><div class="opt-text"><span class="opt-label">Manchas escuras</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q2')"><div class="opt-icon">👁️</div><div class="opt-text"><span class="opt-label">Olheiras</span></div></div>
+    </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu problema? Digite aqui" style="padding:15px 20px;">
+      </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(1)">Voltar</button>
+      <button class="btn-next" id="next-2" disabled onclick="goTo(3)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 3: ÁREA DO ROSTO -->
+  <div class="screen" id="screen-3" data-screen="3">
+    <p class="screen-eyebrow">Passo 3</p>
+    <h2 class="screen-q" data-tw-html="Qual <em>área</em> você mais quer melhorar?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Qual <em>área</em> você mais quer melhorar?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Isso nos ajuda a direcionar o protocolo para onde realmente importa.</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q_area">
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">🤦‍♀️</div><div class="opt-text"><span class="opt-label">Testa</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">👀</div><div class="opt-text"><span class="opt-label">Região dos olhos</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">😳</div><div class="opt-text"><span class="opt-label">Bochechas</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">👃</div><div class="opt-text"><span class="opt-label">Nariz</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">👄</div><div class="opt-text"><span class="opt-label">Boca e lábios</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_area')"><div class="opt-icon">🦒</div><div class="opt-text"><span class="opt-label">Pescoço</span></div></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(2)">Voltar</button>
+      <button class="btn-next" id="next-3" disabled onclick="goTo(4)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 4: NOME E IDADE -->
+  <div class="screen" id="screen-4" data-screen="4">
+    <p class="screen-eyebrow">Passo 4</p>
+    <h2 class="screen-q" data-tw-html="Conta para a gente um pouco <em>sobre você</em>." style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Conta para a gente um pouco <em>sobre você</em>.</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Essas informações nos ajudam a criar um protocolo 100% personalizado.</p>
+    <div style="max-width: 400px; margin-inline: auto;">
+      <div class="input-wrap"><input type="text" id="inputNomeNew" class="input-field" placeholder="Qual o seu nome?" oninput="this.value=this.value.replace(/[0-9]/g,''); checkFormNew()"></div>
+      <div class="input-wrap"><input type="number" id="inputIdadeNew" class="input-field" placeholder="Qual a sua idade?" min="11" max="99" onkeydown="if(['e','E','+','-','.'].includes(event.key)) event.preventDefault();" oninput="checkFormNew()"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(3)">Voltar</button>
+      <button class="btn-next" id="next-4-new" disabled onclick="goTo(5)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 5: HIDRATAÇÃO -->
+  <div class="screen" id="screen-5" data-screen="5">
+    <p class="screen-eyebrow">Passo 5</p>
+    <h2 class="screen-q" data-tw-html="Considera sua pele bem <em>hidratada</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Considera sua pele bem <em>hidratada</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Como ela é após ser lavada e não usar nenhum produto?</p>
+    <div class="options" id="q_hidrat">
+      <div class="option" onclick="selectOption(this,'q_hidrat','sim')">
+        <div class="opt-icon">💧</div>
+        <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Costuma ser hidratada até sem hidratante</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_hidrat','nao')">
+        <div class="opt-icon">🧴</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não vivo sem passar hidratante</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_hidrat','nao_sei')">
+        <div class="opt-icon">🤷‍♀️</div>
+        <div class="opt-text"><span class="opt-label">Não sei</span><span class="opt-desc">Nunca prestei atenção nisso</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(4)">Voltar</button>
+      <button class="btn-next" id="next-5" disabled onclick="goTo(6)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 6: SENSIBILIDADE -->
+  <div class="screen" id="screen-6" data-screen="6">
+    <p class="screen-eyebrow">Passo 6</p>
+    <h2 class="screen-q" data-tw-html="Você sente que sua pele é <em>sensível</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Você sente que sua pele é <em>sensível</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Peles assim apresentam reações como vermelhidão, ardência ou coceira. </p>
+    <div class="options" id="q_sensivel">
+      <div class="option" onclick="selectOption(this,'q_sensivel','sim')">
+        <div class="opt-icon">⚠️</div>
+        <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Reage facilmente a novos produtos</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_sensivel','nao')">
+        <div class="opt-icon">🗿</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Tolera bem a maioria dos produtos</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_sensivel','nao_sei')">
+        <div class="opt-icon">🤷‍♀️</div>
+        <div class="opt-text"><span class="opt-label">Não sei</span><span class="opt-desc">Nunca prestei atenção nisso</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(5)">Voltar</button>
+      <button class="btn-next" id="next-6" disabled onclick="goTo(7)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 7: CIDADE -->
+  <div class="screen" id="screen-7" data-screen="7">
+    <p class="screen-eyebrow">Passo 7</p>
+    <h2 class="screen-q" data-tw-html="Em qual <em>cidade</em> você mora?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Em qual <em>cidade</em> você mora?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint"> Avaliamos o clima da sua região para entender como ele afeta sua pele. </p>
+
+    <div style="max-width: 440px; margin-inline: auto;">
+      <!-- Campo manual de cidade (visível só quando permissão negada) -->
+      <div class="city-search-wrap" id="city-search-wrap" style="display:none;">
+        <div class="input-wrap">
+          <input type="text" id="citySearchInput" class="input-field"
+            placeholder="Qual a sua cidade?"
+            autocomplete="off"
+            oninput="onCityInput(this.value); if(this.value.trim().length>2) enableNext7(); else document.getElementById('next-7').disabled=true; document.getElementById('city-box').classList.remove('selected');"
+            onkeydown="onCityKey(event)">
+        </div>
+        <div class="city-dropdown" id="cityDropdown"></div>
+      </div>
+
+      <div class="option" style="margin-bottom: 14px; cursor: default; pointer-events: none;" id="city-box">
+        <div class="opt-icon">📍</div>
+        <div class="opt-text">
+          <span class="opt-label" id="city-label">Detectando localização...</span>
+          <span class="opt-desc" id="city-desc">Aguarde um momento</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin-bottom: 28px;">
+        <div class="option" style="flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18px 10px; cursor: default; pointer-events: none; height: 105px; gap: 0;">
+          <div style="font-size: 22px; line-height: 1; margin-bottom: 10px;">☀️</div>
+          <span class="opt-desc" style="line-height: 1.2; margin: 0 0 5px 0;">Índice UV</span>
+          <span class="opt-label" id="uv-val"><span class="loading-dots"></span></span>
+        </div>
+        <div class="option" style="flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18px 10px; cursor: default; pointer-events: none; height: 105px; gap: 0;">
+          <div style="font-size: 22px; line-height: 1; margin-bottom: 10px;">💧</div>
+          <span class="opt-desc" style="line-height: 1.2; margin: 0 0 5px 0;">Umidade</span>
+          <span class="opt-label" id="hum-val"><span class="loading-dots"></span></span>
+        </div>
+        <div class="option" style="flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18px 10px; cursor: default; pointer-events: none; height: 105px; gap: 0;">
+          <div style="font-size: 22px; line-height: 1; margin-bottom: 10px;">💨</div>
+          <span class="opt-desc" style="line-height: 1.2; margin: 0 0 5px 0;">Poluição</span>
+          <span class="opt-label" id="pol-val"><span class="loading-dots"></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(6)">Voltar</button>
+      <button class="btn-next" id="next-7" disabled onclick="goTo('inter1')">Continuar</button>
+    </div>
+  </div>
+
+  <!-- INTERBLOCOS 1: Primeiros Passos → Sua Rotina -->
+  <div class="screen interblock" id="screen-inter1" data-screen="inter1">
+  </div>
+    <!-- 8: ROTINA -->
+  <div class="screen" id="screen-8" data-screen="8">
+    <p class="screen-eyebrow">Passo 8</p>
+    <h2 class="screen-q" data-tw-html="Você tem uma <em>rotina</em> de skincare?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Você tem uma <em>rotina</em> de skincare?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Atualmente você segue algum hábito diário de cuidado com a pele?</p>
+    <div class="options" id="q_rotina">
+      <div class="option" onclick="selectRotinaOption(this,'matinal_noturna')">
+        <div class="opt-icon">👍</div>
+        <div class="opt-text"><span class="opt-label">Sim, uma rotina matinal e noturna</span><span class="opt-desc">Cuido da pele de manhã e à noite</span></div>
+      </div>
+      <div class="option" onclick="selectRotinaOption(this,'matinal')">
+        <div class="opt-icon">🌞</div>
+        <div class="opt-text"><span class="opt-label">Apenas matinal</span><span class="opt-desc">Tenho uma rotina só de manhã</span></div>
+      </div>
+      <div class="option" onclick="selectRotinaOption(this,'noturna')">
+        <div class="opt-icon">🌚</div>
+        <div class="opt-text"><span class="opt-label">Apenas noturna</span><span class="opt-desc">Tenho uma rotina só à noite</span></div>
+      </div>
+      <div class="option" onclick="selectRotinaOption(this,'nenhuma')">
+        <div class="opt-icon">👎</div>
+        <div class="opt-text"><span class="opt-label">Não tenho uma rotina</span><span class="opt-desc">Ainda não tenho nenhum hábito regular</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo('inter1')">Voltar</button>
+      <button class="btn-next" id="next-8" disabled onclick="goTo(window._rotinaNext||9)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 9: ROTINA MATINAL -->
+  <div class="screen" id="screen-9" data-screen="9">
+    <p class="screen-eyebrow">Passo 8.1</p>
+    <h2 class="screen-q" data-tw-html="Como é sua rotina de skincare <em>matinal</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Como é sua rotina de skincare <em>matinal</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Quais produtos já fazem parte das suas manhãs regularmente?</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q4">
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🧴</div><div class="opt-text"><span class="opt-label">Hidratante</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">☀️</div><div class="opt-text"><span class="opt-label">Protetor solar</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🍊</div><div class="opt-text"><span class="opt-label">Vitamina C</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4')"><div class="opt-icon">🥛</div><div class="opt-text"><span class="opt-label">Niacinamida</span></div></div>
+    </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
+      </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(8)">Voltar</button>
+      <button class="btn-next" id="next-9" disabled onclick="goTo(window._rotina9Next||10)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 10: ROTINA NOTURNA -->
+  <div class="screen" id="screen-10" data-screen="10">
+    <p class="screen-eyebrow">Passo 8.2</p>
+    <h2 class="screen-q" data-tw-html="Como é sua rotina de skincare <em>noturna</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Como é sua rotina de skincare <em>noturna</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Quais produtos já fazem parte das suas noites regularmente?</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q4b">
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧴</div><div class="opt-text"><span class="opt-label">Hidratante</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">👀</div><div class="opt-text"><span class="opt-label">Creme para olhos</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧬</div><div class="opt-text"><span class="opt-label">Retinol</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🥛</div><div class="opt-text"><span class="opt-label">Niacinamida</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">💉</div><div class="opt-text"><span class="opt-label">Ácido hialurônico</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧪</div><div class="opt-text"><span class="opt-label">Ácido glicólico</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🧊</div><div class="opt-text"><span class="opt-label">Ácido salicílico</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q4b')"><div class="opt-icon">🫟</div><div class="opt-text"><span class="opt-label">Ácido lático</span></div></div>
+    </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
+      </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(window._rotina10Back||9)">Voltar</button>
+      <button class="btn-next" id="next-10" disabled onclick="goTo(11)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 11: MAQUIAGEM -->
+  <div class="screen" id="screen-11" data-screen="11">
+    <p class="screen-eyebrow">Passo 9</p>
+    <h2 class="screen-q" data-tw-html="Com qual frequência você usa <em>maquiagem</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Com qual frequência você usa <em>maquiagem</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Queremos entender o quanto ela pode influenciar no estado da sua pele.</p>
+    <div class="options" id="q_maquiagem">
+      <div class="option" onclick="selectMaquiagemOption(this,'sempre')">
+        <div class="opt-icon">🩷</div>
+        <div class="opt-text"><span class="opt-label">Sempre</span><span class="opt-desc">Pelo menos 4 vezes na semana</span></div>
+      </div>
+      <div class="option" onclick="selectMaquiagemOption(this,'as_vezes')">
+        <div class="opt-icon">💛</div>
+        <div class="opt-text"><span class="opt-label">Às vezes</span><span class="opt-desc">De 2 a 3 vezes na semana</span></div>
+      </div>
+      <div class="option" onclick="selectMaquiagemOption(this,'raramente')">
+        <div class="opt-icon">🧡</div>
+        <div class="opt-text"><span class="opt-label">Raramente</span><span class="opt-desc">No máximo 1 vez na semana</span></div>
+      </div>
+      <div class="option" onclick="selectMaquiagemOption(this,'nunca')">
+        <div class="opt-icon">❤️</div>
+        <div class="opt-text"><span class="opt-label">Nunca</span><span class="opt-desc">Não uso maquiagem</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(window._rotina11Back||10)">Voltar</button>
+      <button class="btn-next" id="next-11" disabled onclick="goTo(window._maquiagemNext||12)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 12: PREPARAÇÃO DA PELE -->
+  <div class="screen" id="screen-12" data-screen="12">
+    <p class="screen-eyebrow">Passo 9.1</p>
+    <h2 class="screen-q" data-tw-html="Você <em>prepara</em> a pele antes de se maquiar?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Você <em>prepara</em> a pele antes de se maquiar?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Quando vai usar maquiagem, costuma usar hidratante, protetor solar ou primer?</p>
+    <div class="options" id="q_preparo_pele">
+      <div class="option" onclick="selectOption(this,'q_preparo_pele','sim')">
+        <div class="opt-icon">👍</div>
+        <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Passo hidratante, protetor ou primer</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_preparo_pele','sabonete')">
+        <div class="opt-icon">🧼</div>
+        <div class="opt-text"><span class="opt-label">Limpo, mas não preparo</span><span class="opt-desc">Uso apenas sabonete ou gel</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_preparo_pele','nao')">
+        <div class="opt-icon">👎</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Geralmente não faço nenhum preparo</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(11)">Voltar</button>
+      <button class="btn-next" id="next-12" disabled onclick="goTo(13)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 13: PÓS-MAQUIAGEM -->
+  <div class="screen" id="screen-13" data-screen="13">
+    <p class="screen-eyebrow">Passo 9.2</p>
+    <h2 class="screen-q" data-tw-html="Como você <em>remove</em> a maquiagem?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Como você <em>remove</em> a maquiagem?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Quais produtos estão no método que usa para desmaquilar?</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q_demaquila">
+      <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧪</div><div class="opt-text"><span class="opt-label">Demaquilante</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🍯</div><div class="opt-text"><span class="opt-label">Óleo de limpeza</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧻</div><div class="opt-text"><span class="opt-label">Lenço</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">💦</div><div class="opt-text"><span class="opt-label">Água micelar</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila')"><div class="opt-icon">🧼</div><div class="opt-text"><span class="opt-label">Sabonete ou gel</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_demaquila','none'); goTo(14);"><div class="opt-icon">🤦‍♀️</div><div class="opt-text"><span class="opt-label">Não removo</span></div></div>
+    </div>
+      <div class="input-wrap extra-option-wrap" style="margin-top:12px; margin-bottom:0;">
+        <input type="text" class="input-field extra-option-input" placeholder="Não achou seu produto? Digite aqui" style="padding:15px 20px;">
+      </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(12)">Voltar</button>
+      <button class="btn-next" id="next-13" disabled onclick="goTo(14)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 14: EXPOSIÇÃO AO SOL -->
+  <div class="screen" id="screen-14" data-screen="14">
+    <p class="screen-eyebrow">Passo 10</p>
+    <h2 class="screen-q" data-tw-html="Quanto tempo por dia você se <em>expõe ao sol</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Quanto tempo por dia você se <em>expõe ao sol</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Assim é possível avaliar o quanto sua pele pode ser afetada pelo fotoenvelhecimento precoce.</p>
+    <div class="options" id="q_sol">
+      <div class="option" onclick="selectOption(this,'q_sol','bastante')">
+        <div class="opt-icon">☀️</div>
+        <div class="opt-text"><span class="opt-label">Mais de 4 horas</span><span class="opt-desc">Passo muito tempo ao ar livre</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_sol','um_pouco')">
+        <div class="opt-icon">🌤️</div>
+        <div class="opt-text"><span class="opt-label">Entre 1 e 4 horas</span><span class="opt-desc">Me exponho apenas em poucos momentos</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_sol','quase_nada')">
+        <div class="opt-icon">⛅️</div>
+        <div class="opt-text"><span class="opt-label">Menos de 1 hora</span><span class="opt-desc">Fico o dia todo em ambientes fechados</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(window._maquiagemNext===14?11:13)">Voltar</button>
+      <button class="btn-next" id="next-14" disabled onclick="goTo(15)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 15: PROTETOR SOLAR -->
+  <div class="screen" id="screen-15" data-screen="15">
+    <p class="screen-eyebrow">Passo 11</p>
+    <h2 class="screen-q" data-tw-html="Você usa <em>protetor solar</em> facial?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Você usa <em>protetor solar</em> facial?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Costuma aplicar protetor solar no rosto com qual frequência?</p>
+    <div class="options" id="q_fps">
+      <div class="option" onclick="selectOption(this,'q_fps','sempre')">
+        <div class="opt-icon">☀️</div>
+        <div class="opt-text"><span class="opt-label">Sim, sempre</span><span class="opt-desc">Uso todos os dias, independente do tempo</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_fps','as_vezes')">
+        <div class="opt-icon">🌤️</div>
+        <div class="opt-text"><span class="opt-label">Às vezes</span><span class="opt-desc">Apenas quando estou ao ar livre</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_fps','raramente')">
+        <div class="opt-icon">⛅️</div>
+        <div class="opt-text"><span class="opt-label">Raramente</span><span class="opt-desc">Somente quando vou à praia ou à piscina</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_fps','nunca')">
+        <div class="opt-icon">☁️</div>
+        <div class="opt-text"><span class="opt-label">Nunca</span><span class="opt-desc">Quando uso, é no corpo, ou nem isso</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(14)">Voltar</button>
+      <button class="btn-next" id="next-15" disabled onclick="goTo(16)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 16: TEMPO DE TELA -->
+  <div class="screen" id="screen-16" data-screen="16">
+    <p class="screen-eyebrow">Passo 12</p>
+    <h2 class="screen-q" data-tw-html="Quanto tempo fica em <em>frente a telas</em> no dia?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Quanto tempo fica em <em>frente a telas</em> no dia?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Diariamente, quantas horas você passa na frente de celulares, computadores ou TVs?</p>
+    <div class="options" id="q_tela">
+      <div class="option" onclick="selectOption(this,'q_tela','menos2')">
+        <div class="opt-icon">📵</div>
+        <div class="opt-text"><span class="opt-label">Menos de 2 horas</span><span class="opt-desc">Meu uso de telas é bem limitado</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_tela','2a4')">
+        <div class="opt-icon">📱</div>
+        <div class="opt-text"><span class="opt-label">De 2 a 4 horas</span><span class="opt-desc">Divido meu tempo no dia com controle</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_tela','4a8')">
+        <div class="opt-icon">💻</div>
+        <div class="opt-text"><span class="opt-label">Entre 4 e 8 horas</span><span class="opt-desc">Passo boa parte do dia em frente a telas</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_tela','mais8')">
+        <div class="opt-icon">🖥️</div>
+        <div class="opt-text"><span class="opt-label">Mais de 8 horas</span><span class="opt-desc">Uso intenso ao longo do dia inteiro</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(15)">Voltar</button>
+      <button class="btn-next" id="next-16" disabled onclick="goTo('inter2')" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- INTERBLOCOS 2: Sua Rotina → Seu Histórico -->
+  <div class="screen" id="screen-17" data-screen="17">
+    <p class="screen-eyebrow">Passo 13</p>
+    <h2 class="screen-q" data-tw-html="Tem <em>alergia</em> a alguma substância?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Tem <em>alergia</em> a alguma substância?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Alguma vez algum produto te causou alguma reação indesejada?</p>
+    <div class="options" id="q_alergia">
+      <div class="option" onclick="selectAlergiaOption(this,'sim')">
+        <div class="opt-icon">👍</div>
+        <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Já reagi a algum produto ou ingrediente</span></div>
+      </div>
+      <div class="option" onclick="selectAlergiaOption(this,'nao')">
+        <div class="opt-icon">👎</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Nunca tive reação alérgica a cosméticos</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo('inter2')">Voltar</button>
+      <button class="btn-next" id="next-17" disabled onclick="goTo(window._alergiaNext||18)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 18: LISTA ALERGIA -->
+  <div class="screen" id="screen-18" data-screen="18">
+    <p class="screen-eyebrow">Passo 13.1</p>
+    <h2 class="screen-q" data-tw-html="Qual <em>produto</em> ou <em>ingrediente</em> causou isso?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Qual <em>produto</em> ou <em>ingrediente</em> causou isso?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Descreva o que sabe para evitarmos ativos que não combinem com sua pele.</p>
+    <div style="max-width: 400px; margin-inline: auto;">
+      <div class="input-wrap"><input type="text" id="inputAlergia" class="input-field" placeholder="Por exemplo: retinol, ácido…" oninput="checkAlergiaForm()"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(17)">Voltar</button>
+      <button class="btn-next" id="next-18" disabled onclick="goTo(19)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 19: RECEITA -->
+  <div class="screen interblock" id="screen-inter2" data-screen="inter2">
+  </div>
+
+  <!-- AGUARDANDO -->
+
+  <div class="screen" id="screen-19" data-screen="19">
+    <p class="screen-eyebrow">Passo 14</p>
+    <h2 class="screen-q" data-tw-html="Usa algum produto <em>com receita</em> no rosto?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Usa algum produto <em>com receita</em> no rosto?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Produtos como tretinoína, ácido azelaico ou antibióticos tópicos prescritos por dermatologista.</p>
+    <div class="options" id="q_receita">
+      <div class="option" onclick="selectReceitaOption(this,'sim')">
+        <div class="opt-icon">👍</div>
+        <div class="opt-text"><span class="opt-label">Sim</span><span class="opt-desc">Uso medicamento tópico com prescrição</span></div>
+      </div>
+      <div class="option" onclick="selectReceitaOption(this,'nao')">
+        <div class="opt-icon">👎</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não uso nenhum produto com receita</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(window._alergiaNext===19?17:18)">Voltar</button>
+      <button class="btn-next" id="next-19" disabled onclick="goTo(window._receitaNext||20)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 20: LISTA RECEITA -->
+  <div class="screen" id="screen-20" data-screen="20">
+    <p class="screen-eyebrow">Passo 14.1</p>
+    <h2 class="screen-q" data-tw-html="Qual <em>produto</em> ou <em>substância</em> com receita?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Qual <em>produto</em> ou <em>substância</em> com receita?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Sabendo o princípio ativo, podemos ajustar sua rotina indicada.</p>
+    <div style="max-width: 400px; margin-inline: auto;">
+      <div class="input-wrap"><input type="text" id="inputReceita" class="input-field" placeholder="Por exemplo: tretinoína, doxiciclina…" oninput="checkReceitaForm()"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(19)">Voltar</button>
+      <button class="btn-next" id="next-20" disabled onclick="goTo(21)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 21: ÁGUA -->
+  <div class="screen" id="screen-21" data-screen="21">
+    <p class="screen-eyebrow">Passo 15</p>
+    <h2 class="screen-q" data-tw-html="Quantos litros de <em>água</em> você bebe por dia?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Quantos litros de <em>água</em> você bebe por dia?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Qual a sua ingestão diária de água em um dia comum na rotina?</p>
+    <div class="options" id="q_agua">
+      <div class="option" onclick="selectOption(this,'q_agua','menos1')">
+        <div class="opt-icon">🌵</div>
+        <div class="opt-text"><span class="opt-label">Menos de 1 litro</span><span class="opt-desc">Só bebo água quando sinto sede</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_agua','aprox1')">
+        <div class="opt-icon">💧</div>
+        <div class="opt-text"><span class="opt-label">Aproximadamente 1 litro</span><span class="opt-desc">Tomo pouca água ao longo do dia</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_agua','1a2')">
+        <div class="opt-icon">💦</div>
+        <div class="opt-text"><span class="opt-label">Entre 1 e 2 litros</span><span class="opt-desc">Bebo entre 5 e 10 copos por dia</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_agua','mais2')">
+        <div class="opt-icon">🐪</div>
+        <div class="opt-text"><span class="opt-label">Mais de 2 litros</span><span class="opt-desc">Me preocupo com minha hidratação</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(window._receitaNext===21?19:20)">Voltar</button>
+      <button class="btn-next" id="next-21" disabled onclick="goTo(22)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 22: ALIMENTAÇÃO -->
+  <div class="screen" id="screen-22" data-screen="22">
+    <p class="screen-eyebrow">Passo 16</p>
+    <h2 class="screen-q" data-tw-html="Quais desses você <em>consome</em> sempre?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Quais desses você <em>consome</em> sempre?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Hábitos alimentares são fatores determinantes para o estado da pele. Como são os seus?</p>
+    <p class="multi-hint">Selecione quantas opções quiser</p>
+    <div class="options grid-2" id="q_alimentacao">
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🍎</div><div class="opt-text"><span class="opt-label">Frutas e verduras</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🧀</div><div class="opt-text"><span class="opt-label">Laticínios</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🍫</div><div class="opt-text"><span class="opt-label">Açúcar refinado</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🍕</div><div class="opt-text"><span class="opt-label">Ultraprocessados</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🌭</div><div class="opt-text"><span class="opt-label">Embutidos</span></div></div>
+      <div class="option" onclick="toggleMulti(this,'q_alimentacao')"><div class="opt-icon">🍷</div><div class="opt-text"><span class="opt-label">Álcool</span></div></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(21)">Voltar</button>
+      <button class="btn-next" id="next-22" disabled onclick="goTo(23)">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 23: GRAVIDEZ -->
+  <div class="screen" id="screen-23" data-screen="23">
+    <p class="screen-eyebrow">Passo 17</p>
+    <h2 class="screen-q" data-tw-html="Você está <em>grávida</em> ou <em>amamentando</em>?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Você está <em>grávida</em> ou <em>amamentando</em>?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Alguns ativos são contraindicados nessa fase, por esse motivo perguntamos.</p>
+    <div class="options" id="q_grav">
+      <div class="option" onclick="selectOption(this,'q_grav','nao')">
+        <div class="opt-icon">👎</div>
+        <div class="opt-text"><span class="opt-label">Não</span><span class="opt-desc">Não estou grávida nem amamentando</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_grav','gravida')">
+        <div class="opt-icon">🤰</div>
+        <div class="opt-text"><span class="opt-label">Sou gestante</span><span class="opt-desc">Preciso de indicações especiais</span></div>
+      </div>
+      <div class="option" onclick="selectOption(this,'q_grav','amamentando')">
+        <div class="opt-icon">🍼</div>
+        <div class="opt-text"><span class="opt-label">Estou amamentando</span><span class="opt-desc">Preciso de indicações especiais</span></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(22)">Voltar</button>
+      <button class="btn-next" id="next-23" disabled onclick="goTo('inter3')" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- INTERBLOCOS 3: Seu Histórico → Scanner Facial -->
+  <div class="screen interblock" id="screen-inter3" data-screen="inter3">
+  </div>
+
+  <!-- 24: SCANNER (intro + gatilho) -->
+  <div class="screen" id="screen-24" data-screen="24">
+    <p class="screen-eyebrow">Scanner facial inteligente</p>
+    <h2 class="screen-q" data-tw-html="Acesse a <em>câmera</em> para usar o scanner." style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Acesse a <em>câmera</em> para usar o scanner.</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">A IA é capaz de uma análise visual muito mais precisa sobre suas necessidades.</p>
+    <div class="photo-grid" style="grid-template-columns: 1fr; width: 440px; max-width: 100%; margin-inline: auto;">
+      <div class="photo-slot" id="slot-scanner" onclick="goTo('scanner')" style="cursor:pointer; aspect-ratio: unset; height: 200px; flex-direction: column; gap: 10px; padding: 0 20px; justify-content: center; align-items: center;">
+        <div class="slot-icon" id="slot-scanner-icon" style="width:42px;height:42px;border-radius:12px;background:var(--ivory-dark);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">📸</div>
+        <div class="slot-label" id="slot-scanner-label" style="font-size: 15px; font-weight: 500; color: var(--ink); text-align: center; line-height: 1.5; position: relative; z-index: 3;">Clique aqui<br>para usar o scanner</div>
+      </div>
+    </div>
+    <div class="photo-tip-genius-wrap" id="scanner-tip-wrap">
+      <div class="photo-tip">
+        Escolha um lugar com boa iluminação natural e esteja com o rosto limpo: sem maquiagem, sem óculos e de cabelo preso.
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo('inter3')">Voltar</button>
+      <button class="btn-next" id="next-24" onclick="goTo(25)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 25: ORÇAMENTO -->
+  <div class="screen" id="screen-scanner" data-screen="scanner">
+  </div>
+
+  <div class="screen" id="screen-25" data-screen="25">
+    <p class="screen-eyebrow">Penúltimo passo</p>
+    <h2 class="screen-q" data-tw-html="Quanto você <em>investe</em> em skincare por mês?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Quanto você <em>investe</em> em skincare por mês?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Qual o valor máximo disponível no seu orçamento mensal para produtos para a pele?</p>
+    <div class="options" id="q6">
+      <div class="option" onclick="selectOption(this,'q6','basico')"><div class="opt-icon">❤️</div><div class="opt-text"><span class="opt-label">Menos de R$100</span><span class="opt-desc">Priorizo cosméticos mais acessíveis</span></div></div>
+      <div class="option" onclick="selectOption(this,'q6','medio')"><div class="opt-icon">💛</div><div class="opt-text"><span class="opt-label">Entre R$100 e R$300</span><span class="opt-desc">Consigo usar produtos de valor intermediário</span></div></div>
+      <div class="option" onclick="selectOption(this,'q6','premium')"><div class="opt-icon">💚</div><div class="opt-text"><span class="opt-label">Mais de R$300</span><span class="opt-desc">Me indique o melhor, independente do preço</span></div></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(24)">Voltar</button>
+      <button class="btn-next" id="next-25" disabled onclick="goTo(26)" style="display:none;">Continuar</button>
+    </div>
+  </div>
+
+  <!-- 26: CONTATO -->
+  <div class="screen" id="screen-26" data-screen="26">
+    <p class="screen-eyebrow">Último passo</p>
+    <h2 class="screen-q" data-tw-html="Para onde devemos <em>enviar</em> seu protocolo?" style="position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Para onde devemos <em>enviar</em> seu protocolo?</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;"></span></h2>
+    <p class="screen-hint">Receba sua rotina 100% personalizada no WhatsApp ou no email para consultar quando quiser.</p>
+    <div style="max-width: 440px; margin-inline: auto;">
+      <div class="input-wrap"><input type="tel" id="inputTelefone" class="input-field" placeholder="Qual o seu número de celular?" maxlength="15" oninput="formatPhone(this); checkForm()"></div>
+      <div class="input-wrap"><input type="email" id="inputEmail" class="input-field" placeholder="Qual o seu email?" oninput="checkForm()"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-back" onclick="goTo(25)">Voltar</button>
+      <button class="btn-next" id="next-26" disabled onclick="startAguardando()">Ver meu protocolo</button>
+    </div>
+  </div>
+
+  <!-- SCANNER FACIAL -->
+
+  <!-- AGUARDANDO -->
+
+  <!-- RESULTADO -->
+
+  <!-- 17: ALERGIA -->
+
+</div>
+
+<!-- SCANNER OVERLAY — fora do quiz-wrap, cobre tela inteira -->
+<div id="scanner-overlay" style="display:none;">
+  <video id="scanner-video" autoplay playsinline muted></video>
+  <canvas id="scanner-canvas" style="display:none;"></canvas>
+
+  <!-- Canvas para efeitos de mesh/scan -->
+  <canvas id="scanner-fx-canvas"></canvas>
+
+  <svg id="scanner-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <defs>
+      <mask id="face-mask">
+        <rect width="100" height="100" fill="white"/>
+        <ellipse id="mask-ellipse" cx="50" cy="50" rx="22" ry="30" fill="black"/>
+      </mask>
+      <!-- Gradiente radial para o efeito de vinheta suave (sem borda dura) -->
+      <radialGradient id="vignetteGrad" cx="50%" cy="50%" r="55%" fx="50%" fy="50%">
+        <stop offset="0%"   stop-color="rgba(5,12,10,0)"    />
+        <stop offset="52%"  stop-color="rgba(5,12,10,0)"    />
+        <stop offset="72%"  stop-color="rgba(5,12,10,0.35)" />
+        <stop offset="86%"  stop-color="rgba(5,12,10,0.58)" />
+        <stop offset="100%" stop-color="rgba(5,12,10,0.75)" />
+      </radialGradient>
+      <!-- Gradiente para scan line no SVG -->
+      <linearGradient id="scanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="rgba(46,169,214,0)" />
+        <stop offset="35%"  stop-color="rgba(46,169,214,0.5)" />
+        <stop offset="50%"  stop-color="rgba(120,210,240,0.9)" />
+        <stop offset="65%"  stop-color="rgba(46,169,214,0.5)" />
+        <stop offset="100%" stop-color="rgba(46,169,214,0)" />
+      </linearGradient>
+    </defs>
+    <!-- Overlay com vinheta gradiente suave — sem borda dura -->
+    <rect width="100" height="100" fill="url(#vignetteGrad)"/>
+    <!-- Oval guia — sem borda (invisível, apenas para referência de arco de progresso) -->
+    <ellipse id="guide-ellipse" cx="50" cy="50" rx="22" ry="30"
+      fill="none" stroke="rgba(168,85,104,0)" stroke-width="0"/>
+    <!-- Arco de progresso -->
+    <ellipse id="arc-ellipse" cx="50" cy="50" rx="22" ry="30"
+      fill="none" stroke="rgba(46,169,214,1)" stroke-width="0.8"
+      stroke-dasharray="0 1000" stroke-linecap="round"
+      style="transition: stroke-dasharray 0.12s linear, stroke 0.3s ease;
+             filter: drop-shadow(0 0 1px rgba(46,169,214,0.8));"/>
+    <!-- Linha de scan SVG -->
+    <line id="svg-scan-line" x1="0" y1="50" x2="100" y2="50"
+      stroke="url(#scanGrad)" stroke-width="0.25" opacity="0"
+      style="transition: opacity 0.3s;"/>
+  </svg>
+
+  <!-- Linha de scan horizontal DOM -->
+  <div id="scan-line"></div>
+
+  <!-- HUD textos técnicos -->
+  <div class="scan-hud" id="hud-tl">
+    DERMIND SCANNER v2.4<br>
+    3D SMART FACIAL<br>
+    <span id="hud-depth">PROF: —</span>
+  </div>
+  <div class="scan-hud" id="hud-tr">
+    IA SCANNER ATIVA<br>
+    <span id="hud-res">RES: —</span><br>
+    <span id="hud-conf">CONF: —%</span>
+  </div>
+  <div class="scan-hud" id="hud-bl">
+    <span id="hud-pores">POROS: —</span><br>
+    <span id="hud-hydra">HIDRATAÇÃO: —</span><br>
+    <span id="hud-oily">OLEOSIDADE: —</span>
+  </div>
+  <div class="scan-hud" id="hud-br">
+    <span id="hud-zones">ZONAS: 0/7</span><br>
+    <span id="hud-pts">PONTOS: 0</span><br>
+    <span id="hud-acc">PRECISÃO: —</span>
+  </div>
+
+  <!-- Topo: status badge + step dots -->
+  <div id="scanner-top">
+    <div id="scanner-status-badge">
+      <div id="scanner-status-dot"></div>
+      <span id="scanner-step-label">Scanner facial</span>
+    </div>
+    <div id="scanner-step-dots">
+      <span class="sdot" id="sdot-0"></span>
+      <span class="sdot" id="sdot-1"></span>
+      <span class="sdot" id="sdot-2"></span>
+      <span class="sdot" id="sdot-3"></span>
+    </div>
+  </div>
+
+  <!-- Instrução -->
+  <div id="scanner-instruction">
+    <div id="scanner-inst-icon">🙆‍♀️</div>
+    <div id="scanner-inst-box">
+      <div id="scanner-inst-text">Posicione seu rosto no centro</div>
+    </div>
+
+  </div>
+
+  <div id="scanner-progress-wrap">
+    <div id="scanner-progress-bar"></div>
+  </div>
+
+  <div id="scanner-flash"></div>
+
+  <button id="scanner-back-btn" onclick="goTo(24)">Voltar</button>
+
+  <div id="scanner-blocked">
+    <div id="scanner-blocked-icon">📵</div>
+    <div id="scanner-blocked-title">Câmera bloqueada</div>
+    <div id="scanner-blocked-sub">Para continuar, permita o acesso à câmera nas configurações do seu navegador e recarregue a página.</div>
+  </div>
+</div>
+
+<!-- AGUARDANDO OVERLAY — fora do quiz-wrap, posição fixa, independente de scroll -->
+<div id="aguardando-overlay" style="display:none; position:fixed; inset:0; z-index:50; align-items:center; justify-content:center; background:transparent; overflow:hidden; touch-action:none;">
+  <canvas id="aguardando-particles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div class="screen" id="screen-aguardando" data-screen="aguardando" style="display:block; width:100%; max-width:620px; padding:0 24px; position:relative; z-index:1;">
+    <div class="aguardando-screen">
+      <!-- ponto de atração das partículas — posicionado onde estava o orb -->
+      <div id="particle-attractor" style="width:88px;height:88px;margin:30px auto 28px;position:relative;"></div>
+      <h2 class="screen-h1 aguardando-title" data-tw-html="Avaliando sua pele..." style="font-size:clamp(32px,5vw,50px);text-align:center;position:relative;"><span aria-hidden="true" style="display:block;visibility:hidden;">Avaliando sua pele...</span><span class="screen-q-typed" style="position:absolute;top:0;left:0;width:100%;text-align:center;"></span></h2>
+      <div class="loading-steps" id="aguardandoSteps">
+        <div class="pill-float-wrap" id="pfw1"><div class="loading-step loading-pill" id="ls1"><span class="pill-icon" id="pi1"></span><span data-text="Analisando tipo de pele e condições">Analisando tipo de pele e condições</span></div></div>
+        <div class="pill-float-wrap" id="pfw2"><div class="loading-step loading-pill" id="ls2"><span class="pill-icon" id="pi2"></span><span data-text="Identificando necessidades específicas">Identificando necessidades específicas</span></div></div>
+        <div class="pill-float-wrap" id="pfw3"><div class="loading-step loading-pill" id="ls3"><span class="pill-icon" id="pi3"></span><span data-text="Selecionando ingredientes ideais">Selecionando ingredientes ideais</span></div></div>
+        <div class="pill-float-wrap" id="pfw4"><div class="loading-step loading-pill" id="ls4"><span class="pill-icon" id="pi4"></span><span data-text="Montando sua rotina personalizada">Montando sua rotina personalizada</span></div></div>
+        <div class="pill-float-wrap" id="pfw5"><div class="loading-step loading-pill" id="ls5"><span class="pill-icon" id="pi5"></span><span data-text="Escolhendo os produtos adequados">Escolhendo os produtos adequados</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTADO OVERLAY — fora do quiz-wrap, posição fixa, independente de scroll -->
+<div id="result-overlay" style="display:none; position:fixed; inset:0; z-index:50; flex-direction:column; align-items:center; justify-content:flex-start; background:transparent; overflow-y:auto;">
+  <div class="screen result-screen" id="screen-result" data-screen="result" style="display:block; width:100%; padding:96px 24px 120px;">
+
+    <!-- ── DESKTOP: 2-column layout wrapper ── -->
+    <div class="result-two-col-wrap">
+
+      <!-- ── COLUNA ESQUERDA ── -->
+      <div class="result-col-left">
+
+        <!-- Crachá — desktop: visível na col-left; mobile: col-left fica visível apenas para este elemento -->
+        <div class="result-photo-front-only" id="result-photo-front-only-wrap">
+          <div id="result-cracha">
+            <div class="cracha-top">
+              <div class="cracha-hole-wrap">
+                <div class="cracha-hole"></div>
+              </div>
+              <div class="result-badge badge-visible" style="margin-bottom:0; opacity:1; transform:none; transition:none;">✦ PACIENTE</div>
+            </div>
+            <div class="cracha-photo-wrap">
+              <div class="result-photo-box" id="result-photo-front-desktop">
+                <div class="photo-placeholder">📸</div>
+              </div>
+            </div>
+            <div class="cracha-info">
+              <div class="cracha-name" id="crachaName">—</div>
+              <div class="cracha-divider"></div>
+              <div class="cracha-fields">
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Idade</span>
+                  <span class="cracha-field-val" id="crachaIdade">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Cidade</span>
+                  <span class="cracha-field-val" id="craCidade">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Tipo de pele</span>
+                  <span class="cracha-field-val" id="craTipo">—</span>
+                </div>
+                <div class="cracha-field" id="cracha-alergia-row">
+                  <span class="cracha-field-label">Alergias</span>
+                  <span class="cracha-field-val" id="craAlergia">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RADAR CHART -->
+        <div id="radar-chart-wrap" style="display:flex; flex-direction:column; align-items:center;">
+          <div id="radar-pill-container" style="position:relative; width:100%; max-width:400px;">
+            <svg id="skin-radar" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
+            <div id="radar-pills-overlay" style="position:absolute; inset:0; pointer-events:none;"></div>
+            <canvas id="radar-connector-canvas" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
+          </div>
+        </div>
+
+        <div class="score-row" id="score-row-1">
+          <div class="score-pill"><div class="score-val">48%</div><div class="score-lbl">Hidratação</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="48%"></div></div></div>
+          <div class="score-pill"><div class="score-val">57%</div><div class="score-lbl">Brilho</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="57%"></div></div></div>
+          <div class="score-pill"><div class="score-val">63%</div><div class="score-lbl">Firmeza</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="63%"></div></div></div>
+          <div class="score-pill"><div class="score-val">72%</div><div class="score-lbl">Textura</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="72%"></div></div></div>
+        </div>
+        <div class="score-row" style="margin-top:8px;">
+          <div class="score-pill"><div class="score-val">44%</div><div class="score-lbl">Oleosidade</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="44%"></div></div></div>
+          <div class="score-pill"><div class="score-val">81%</div><div class="score-lbl">Sensibilidade</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="81%"></div></div></div>
+          <div class="score-pill"><div class="score-val">31%</div><div class="score-lbl">Rugas</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="31%"></div></div></div>
+          <div class="score-pill"><div class="score-val">38%</div><div class="score-lbl">Manchas</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="38%"></div></div></div>
+        </div>
+
+        <div class="result-section" id="box-dicas-inteligentes" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; margin-top: 6px; box-shadow:0 8px 32px rgba(74,127,165,0.22), inset 0 1px 0 rgba(255,255,255,0.07);">
+          <!-- glow wine topo -->
+          <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <!-- glow steel canto -->
+          <div style="position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--steel) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <div class="rs-title" style="color:var(--ivory);">Dicas inteligentes</div>
+          <div id="dicas-lista" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
+        </div>
+
+        <!-- BOX: Produto Essencial — desktop only (em mobile aparece via #box-produto-essencial-mobile na col-right) -->
+        <div class="result-section" id="box-produto-essencial">
+          <div class="rs-title">Seu produto essencial</div>
+          <p class="diagnosis-text" style="margin-bottom:15px;">Baseado na avaliação, a IA identificou o <strong>maior ponto fraco</strong> da sua pele - e esse produto age diretamente na raiz do problema.</p>
+          <div class="essential-product-wrap">
+            <div class="essential-product-card">
+              <div class="essential-emoji-wrap" id="essentialEmoji">💧</div>
+              <div class="essential-prod-info">
+                <div class="essential-prod-name" id="essentialName">Hydra Boost Oil-Free</div>
+                <div class="essential-prod-brand" id="essentialBrand">Neutrogena</div>
+                <div class="essential-prod-brand" id="essentialPrice">~R$ 72</div>
+              </div>
+              <span class="essential-badge" id="essentialBadge">⭑ Prioridade</span>
+              <div class="essential-prod-reason" id="essentialReason">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOX: Combinam com você — col-left, abaixo do produto essencial -->
+        <div class="result-section" id="box-combinam">
+          <div class="rs-title">Combinam com você</div>
+          <div class="product-recs" id="indicados-para-voce">
+            <div class="prod-rec"><div class="prod-emoji">🧴</div><div><div class="prod-name">Effaclar Gel Espumante</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 68</div></div><span class="prod-fit">❤︎ 97%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">✨</div><div><div class="prod-name">Vitamina C 10% Sérum</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 89</div></div><span class="prod-fit">❤︎ 94%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">💧</div><div><div class="prod-name">Hydra Boost Oil-Free</div><div class="prod-brand">Neutrogena</div><div class="prod-price">~R$ 72</div></div><span class="prod-fit">❤︎ 91%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">☀️</div><div><div class="prod-name">Anthelios XL FPS 50+</div><div class="prod-brand">La Roche-Posay</div><div class="prod-price">~R$ 115</div></div><span class="prod-fit">❤︎ 96%</span></div>
+            <div class="prod-rec"><div class="prod-emoji">🌙</div><div><div class="prod-name">BHA 2% Salicylic Solution</div><div class="prod-brand">The Ordinary</div><div class="prod-price">~R$ 45</div></div><span class="prod-fit">❤︎ 93%</span></div>
+          </div>
+        </div>
+
+      </div><!-- /result-col-left -->
+
+      <!-- ── COLUNA DIREITA ── -->
+      <div class="result-col-right">
+
+        <div class="result-badge" id="result-protocolo-badge">⛶ Protocolo</div>
+        <h2 class="result-name" id="resultTitle" style="position:relative;">
+          <span id="result-title-placeholder" style="display:block; visibility:hidden; pointer-events:none;" aria-hidden="true">Seu perfil de pele é <em>mista com tendência oleosa</em>.</span>
+          <span id="result-title-typed" style="display:none; position:absolute; top:0; left:0; width:100%;"></span>
+        </h2>
+
+
+
+        <p class="result-sub" id="resultSubtitle" style="visibility:hidden;">Oi, <span id="resultNome">você</span>! Agora que passou por todas as etapas, aqui está a <strong>rotina personalizada</strong> que montamos para os seus próximos 15 dias.</p>
+
+        <!-- CRACHÁ — mobile only (original na col-left, este é o clone para mobile) -->
+        <div class="result-section-mobile-only" id="cracha-mobile-wrap" style="display:none;">
+          <div id="result-cracha-mobile">
+            <div class="cracha-top">
+              <div class="cracha-hole-wrap"><div class="cracha-hole"></div></div>
+              <div class="result-badge badge-visible" style="margin-bottom:0; opacity:1; transform:none; transition:none;">✦ PACIENTE</div>
+            </div>
+            <div class="cracha-photo-wrap">
+              <div class="result-photo-box" id="result-photo-front-mobile">
+                <div class="photo-placeholder">📸</div>
+              </div>
+            </div>
+            <div class="cracha-info">
+              <div class="cracha-name" id="crachaName-mobile">—</div>
+              <div class="cracha-divider"></div>
+              <div class="cracha-fields">
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Idade</span>
+                  <span class="cracha-field-val" id="crachaIdade-mobile">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Cidade</span>
+                  <span class="cracha-field-val" id="craCidade-mobile">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Tipo de pele</span>
+                  <span class="cracha-field-val" id="craTipo-mobile">—</span>
+                </div>
+                <div class="cracha-field">
+                  <span class="cracha-field-label">Alergias</span>
+                  <span class="cracha-field-val" id="craAlergia-mobile">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RADAR CHART — mobile only (em desktop fica na col-right dentro de box) -->
+        <div id="radar-chart-wrap-mobile" class="result-section result-section-mobile-only" style="display:flex; flex-direction:column; align-items:stretch; padding:24px 26px;">
+          <div class="rs-title">Radar da pele</div>
+          <div id="radar-pill-container-mobile" style="position:relative; width:100%; max-width:400px; margin:0 auto;">
+            <svg id="skin-radar-mobile" viewBox="0 0 420 420" width="100%" style="display:block;"></svg>
+            <div id="radar-pills-overlay-mobile" style="position:absolute; inset:0; pointer-events:none;"></div>
+            <canvas id="radar-connector-canvas-mobile" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;"></canvas>
+          </div>
+        </div>
+
+        <!-- SCORE PILLS — mobile only (em desktop ficam na col-left) -->
+        <div class="score-row result-section-mobile-only" id="score-row-1-mobile" style="margin-top:0px;">
+          <div class="score-pill"><div class="score-val">48%</div><div class="score-lbl">Hidratação</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="48%"></div></div></div>
+          <div class="score-pill"><div class="score-val">57%</div><div class="score-lbl">Brilho</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="57%"></div></div></div>
+          <div class="score-pill"><div class="score-val">63%</div><div class="score-lbl">Firmeza</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="63%"></div></div></div>
+          <div class="score-pill"><div class="score-val">72%</div><div class="score-lbl">Textura</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="72%"></div></div></div>
+        </div>
+        <div class="score-row result-section-mobile-only" id="score-row-2-mobile" style="margin-top:8px;">
+          <div class="score-pill"><div class="score-val">44%</div><div class="score-lbl">Oleosidade</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="44%"></div></div></div>
+          <div class="score-pill"><div class="score-val">81%</div><div class="score-lbl">Sensibilidade</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="81%"></div></div></div>
+          <div class="score-pill"><div class="score-val">31%</div><div class="score-lbl">Rugas</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="31%"></div></div></div>
+          <div class="score-pill"><div class="score-val">38%</div><div class="score-lbl">Manchas</div><div class="score-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="score-bar-bg"><div class="score-bar-fill" style="width:0%" data-width="38%"></div></div></div>
+        </div>
+
+        <!-- Avaliação da IA — logo acima do box Idade da Pele -->
+        <div class="result-section" id="box-avaliacao-ia">
+          <div class="rs-title">Avaliação da IA</div>
+          <p class="diagnosis-text"><span style="color:var(--wine);margin-right:6px;">✦</span>Sua pele apresenta <strong>oleosidade moderada a alta</strong> na zona T com sensação de ressecamento nas bochechas - padrão clássico de pele mista. A análise das fotos indica <strong>poros dilatados</strong> nas laterais do nariz e leve <strong>desuniformidade de textura</strong>. Não identificamos inflamação ativa, mas há predisposição à acne quando a barreira protetora está comprometida. Esse perfil responde muito bem a uma rotina simples e consistente com os ativos certos.</p>
+        </div>
+
+        <!-- BOX: Idade da Pele -->
+        <div id="box-idade-pele" class="result-section" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; box-shadow:0 8px 32px rgba(74,127,165,0.22), inset 0 1px 0 rgba(255,255,255,0.07);">
+          <!-- glow wine topo -->
+          <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <!-- glow steel canto -->
+          <div style="position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--steel) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--ivory);margin-bottom:18px;position:relative;filter:drop-shadow(0 2px 8px rgba(168,85,104,0.08));">Idade da pele com <em style="color:var(--blush);">envelhecimento precoce</em></div>
+          <div class="age-compare-box" style="position:relative;">
+            <div class="age-col" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.10);">
+              <div class="age-col-value" id="ageReal" style="color:var(--ivory);">—</div>
+              <span class="age-col-sublabel" style="color:var(--ivory);">Sua idade em anos cronológicos</span>
+            </div>
+            <div class="age-divider">
+              <div class="age-divider-line" style="background:rgba(255,255,255,0.15);"></div>
+              <span class="age-divider-icon" style="color:rgba(247,242,234,0.30);">≈</span>
+              <div class="age-divider-line" style="background:rgba(255,255,255,0.15);"></div>
+            </div>
+            <div class="age-col" style="background:rgba(247,242,234,0.10);border-color:rgba(255,255,255,0.18);">
+              <div class="age-col-value" id="ageSkin" style="color:var(--blush);"><em style="color:var(--blush);">—</em></div>
+              <span class="age-col-sublabel" style="color:var(--ivory);">Idade da sua pele estimada pela IA</span>
+            </div>
+          </div>
+          <p id="ageDelta" style="display:none;font-size:14px;color:rgba(247,242,234,0.55);line-height:1.7;margin-top:18px;position:relative;"></p>
+        </div>
+
+        <!-- BOX: Produto Essencial -->
+        <div class="result-section" id="box-protocolo-completo">
+          <div class="rs-title">Protocolo completo</div>
+          <div class="routine-steps">
+            <div class="routine-group">
+              <span class="rs-period">☀︎ Matinal</span>
+              <div class="routine-group-cards" id="rotina-matinal-cards">
+                <div class="routine-step"><div class="rs-emoji">🧼</div><div><div class="rs-step-name">Limpeza suave</div><div class="rs-step-desc">Remove impurezas e excesso de oleosidade sem comprometer a barreira da pele.</div></div></div>
+                <div class="routine-step"><div class="rs-emoji">✨</div><div><div class="rs-step-name">Sérum vitamina C</div><div class="rs-step-desc">Clareia manchas, uniformiza o tom e protege contra radicais livres ao longo do dia.</div></div></div>
+                <div class="routine-step"><div class="rs-emoji">💧</div><div><div class="rs-step-name">Hidratante oil-free</div><div class="rs-step-desc">Hidrata sem obstruir os poros, deixando a pele macia e com acabamento seco.</div></div></div>
+                <div class="routine-step"><div class="rs-emoji">☀️</div><div><div class="rs-step-name">FPS 50</div><div class="rs-step-desc">Proteção solar é obrigatória — sem ela, a rotina perde 60% da eficácia.</div></div></div>
+              </div>
+            </div>
+            <div class="routine-group">
+              <span class="rs-period">⏾ Noturno</span>
+              <div class="routine-group-cards" id="rotina-noturna-cards">
+                <div class="routine-step"><div class="rs-emoji">🫧</div><div><div class="rs-step-name">Limpeza dupla</div><div class="rs-step-desc">Remove maquiagem, protetor e impurezas acumuladas ao longo do dia.</div></div></div>
+                <div class="routine-step"><div class="rs-emoji">🧪</div><div><div class="rs-step-name">Ácido salicílico (2×/sem)</div><div class="rs-step-desc">Desobstrui os poros. Use apenas 2 vezes por semana nos primeiros 30 dias para a pele se adaptar.</div></div></div>
+                <div class="routine-step"><div class="rs-emoji">🌙</div><div><div class="rs-step-name">Hidratante noturno</div><div class="rs-step-desc">Repõe a hidratação e apoia a regeneração da pele enquanto você dorme.</div></div></div>
+              </div>
+            </div>
+            <div class="routine-group" id="rotina-semanal-group">
+              <span class="rs-period">➤ Semanal</span>
+              <div class="routine-group-cards" id="rotina-semanal-cards">
+                <div class="routine-step"><div class="rs-emoji">🌿</div><div><div class="rs-step-name">Máscara de argila na zona T (1×/sem)</div><div class="rs-step-desc">Purifica e minimiza os poros sem ressecar as bochechas. Aplique só na zona T.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA — col-right, abaixo do protocolo completo -->
+        <div class="result-cta" id="result-cta-box">
+          <h3>Assine e veja sua pele <em>evoluir<span style="color:var(--ivory);"></span></em> a cada dia.</h3>
+          <p style="max-width:450px;margin-left:auto;margin-right:auto;">Receba os cuidados de uma assistente virtual capaz de ajustar seu protocolo de acordo com suas necessidades.</p>
+          <a href="#" class="btn-primary-full">Assinar agora</a>
+          <p class="cta-note">🔓 7 dias grátis · Cancele quando quiser</p>
+        </div>
+
+        <!-- BOX: Produto Essencial — mobile only (original na col-left) -->
+        <div class="result-section result-section-mobile-only" id="box-produto-essencial-mobile">
+          <div class="rs-title">Seu produto essencial</div>
+          <p class="diagnosis-text" style="margin-bottom:15px;">Baseado na avaliação, a IA identificou o <strong>maior ponto fraco</strong> da sua pele - e esse produto age diretamente na raiz do problema.</p>
+          <div class="essential-product-wrap">
+            <div class="essential-product-card">
+              <div class="essential-emoji-wrap" id="essentialEmoji-mobile">💧</div>
+              <div class="essential-prod-info">
+                <div class="essential-prod-name" id="essentialName-mobile">Hydra Boost Oil-Free</div>
+                <div class="essential-prod-brand" id="essentialBrand-mobile">Neutrogena</div>
+                <div class="essential-prod-brand" id="essentialPrice-mobile">~R$ 72</div>
+              </div>
+              <span class="essential-badge" id="essentialBadge-mobile">⭑ Prioridade</span>
+              <div class="essential-prod-reason" id="essentialReason-mobile">Sua pele está pedindo por <strong>mais hidratação</strong> — o parâmetro mais baixo do seu diagnóstico. Esse produto resolve o desequilíbrio que está na raiz da maioria dos outros sintomas.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dicas inteligentes — mobile only (na col-left em desktop) -->
+        <div class="result-section result-section-mobile-only" id="box-dicas-inteligentes-mobile" style="background:var(--ink); border-radius:22px; padding:28px 26px; position:relative; overflow:hidden; margin-top: 6px; box-shadow:0 8px 32px rgba(74,127,165,0.22), inset 0 1px 0 rgba(255,255,255,0.07);">
+          <!-- glow wine topo -->
+          <div style="position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,var(--wine) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <!-- glow steel canto -->
+          <div style="position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--steel) 0%,transparent 70%);opacity:0.1;border-radius:50%;pointer-events:none;"></div>
+          <div class="rs-title" style="color:var(--ivory);">Dicas inteligentes</div>
+          <div id="dicas-lista-mobile" style="display:flex; flex-direction:column; gap:6px; margin-top:4px;"></div>
+        </div>
+
+        <!-- BOX: Combinam com você — mobile only (original na col-left) -->
+        <div class="result-section result-section-mobile-only" id="box-combinam-mobile">
+          <div class="rs-title">Combinam com você</div>
+          <div class="product-recs" id="indicados-para-voce-mobile"></div>
+        </div>
+
+      </div><!-- /result-col-right -->
+
+    </div><!-- /result-two-col-wrap -->
+
+    <!-- ── ABAIXO DAS COLUNAS: 1 coluna full-width ── -->
+
+    <!-- BOX: Combinam com você — movido para col-left -->
+  </div>
+</div>
+
+<footer id="site-footer">
+  <style>
+    #site-footer {
+      width: 100%;
+      font-family: var(--sans);
+      position: relative;
+      margin-top: auto;
+      padding-top: 35px;
+      height: 150px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      z-index: 2;
+      transition: none;
+    }
+    #site-footer.footer-ready {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    }
+    #site-footer.footer-hiding {
+      transform: translateY(60px);
+      opacity: 0;
+    }
+    #site-footer.footer-entering {
+      animation: footerEnter 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes footerEnter {
+      from { transform: translateY(60px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* Cobre o canvas fixo além do footer */
+    #footer-canvas-cover {
+      display: none;
+    }
+
+    /* SVG de fundo: forma única footer + orelha */
+    #footer-shape {
+      position: absolute;
+      top: -32px;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    /* Blur layer com máscara na forma do footer+orelha */
+    #footer-blur-layer {
+      position: absolute;
+      top: -32px;
+      left: 0; right: 0;
+      bottom: 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Conteúdo acima do SVG */
+    #site-footer > *:not(#footer-blur-layer):not(#footer-shape):not(#footer-canvas-cover) {
+      position: relative;
+      z-index: 2;
+    }
+
+    body { padding-bottom: 0; }
+
+    /* ── Barra inferior ── */
+    .footer-bar {
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 32px;
+      border-top: 1px solid rgba(247,242,234,0.55);
+    }
+    .footer-copy {
+      font-family: var(--sans); font-size: 12px; font-weight: 300;
+      letter-spacing: 0.05em; color: var(--ivory); white-space: nowrap;
+    }
+    .footer-copy strong { color: var(--ivory); font-weight: 500; }
+    .footer-copy-highlight {
+      font-weight: 500;
+      color: var(--ivory); letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 580px) {
+      .footer-bar { padding: 0 16px; }
+      .footer-copy { font-size: 12px; position: relative; top: -1px; }
+    }
+
+    /* ── Área acima da linha: segura o botão pílula ── */
+    .footer-wa-wrap {
+      position: relative; z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      margin-bottom: 15px;
+    }
+
+    /* ── Botão pílula WhatsApp ── */
+    .footer-wa-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft, #5c4a3a);
+      background: rgba(253,250,247,0.70);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.60);
+      padding: 6px 14px;
+      border-radius: 100px;
+      box-shadow: 0 2px 8px rgba(24,16,14,0.07), inset 0 1px 0 rgba(255,255,255,0.8);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+    }
+    .footer-wa-pill:hover {
+      transform: scale(1.06);
+    }
+    .footer-wa-pill svg { flex-shrink: 0; }
+
+    /* footer-bar: apenas copyright, altura fixa restaurada */
+    .footer-bar {
+      flex-direction: row;
+      gap: 0;
+      height: 44px;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  </style>
+
+  <!-- Cobertura do canvas além do footer -->
+  <div id="footer-canvas-cover"></div>
+
+  <!-- SVG: forma única (footer + orelha trapezoidal) -->
+  <svg id="footer-shape" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="footer-shadow" x="-5%" y="-40%" width="110%" height="160%">
+        <feDropShadow dx="0" dy="-6" stdDeviation="12" flood-color="rgba(24,16,14,0.10)"/>
+      </filter>
+    </defs>
+    <path id="footer-path-fill"
+      fill="rgba(247,242,234,0.30)"
+      stroke="rgba(255,255,255,0.55)"
+      stroke-width="1.5"
+      filter="url(#footer-shadow)"
+    />
+    <path id="footer-path-gloss" fill="rgba(255,255,255,0.13)" stroke="none"/>
+  </svg>
+
+  <!-- Pílula WhatsApp — acima da linha marfim -->
+  <div class="footer-wa-wrap">
+    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer" class="footer-wa-pill">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 175.216 175.552" width="25" height="25"><defs><linearGradient id="wa-b" x1="85.915" x2="86.535" y1="32.567" y2="137.092" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#57d163"/><stop offset="1" stop-color="#23b33a"/></linearGradient><filter id="wa-a" width="1.115" height="1.114" x="-.057" y="-.057" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="3.531"/></filter></defs><path fill="#b3b3b3" d="m54.532 138.45 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.523h.023c33.707 0 61.139-27.426 61.153-61.135.006-16.335-6.349-31.696-17.895-43.251A60.75 60.75 0 0 0 87.94 25.983c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.558zm-40.811 23.544L24.16 123.88c-6.438-11.154-9.825-23.808-9.821-36.772.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954zm0 0" filter="url(#wa-a)"/><path fill="#fff" d="m12.966 161.238 10.439-38.114a73.42 73.42 0 0 1-9.821-36.772c.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954z"/><path fill="url(#wa-b)" d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.313-6.179 22.558 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.517 31.126 8.523h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.928z"/><path fill="#fff" fill-rule="evenodd" d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647"/></svg>
+      Ficou com dúvida? Fala com a gente
+    </a>
+  </div>
+
+  <!-- Barra inferior (linha marfim + copyright) -->
+  <div class="footer-bar">
+    <span class="footer-copy"><strong class="footer-copy-highlight">© 2026 Dermind.</strong> Todos os direitos reservados.</span>
+  </div>
+
+</footer>
+  
+<!-- ═══ OTIMIZAÇÃO 3 — Quebrar tarefas longas da thread principal ═══
+  quiz.js foi dividido em dois arquivos:
+
+  quiz-critical.js (~113 KB, defer):
+    Contém todas as funções de navegação (goTo, selectOption, updateProgress),
+    as IIFEs pequenas de inicialização, e a IIFE de typewriter + intro-boxes.
+    Carregado com defer — roda após o parse do HTML, sem bloquear renderização.
+
+  quiz-deferred.js (~28 KB, requestIdleCallback):
+    Contém os sub-sistemas NÃO urgentes para a tela 0:
+    - Float animations (bolinhas flutuantes das opções)
+    - Dot animations (animação dos bullets do intro)
+    - Mousetrail (efeito de brilho no cursor)
+    - Scanner IIFE (face-api, câmera, detecção facial)
+    Carregado apenas quando o browser estiver ocioso (idle),
+    com timeout de 3s como garantia mínima.
+-->
+<script src="quiz-critical.js" defer></script>
+<script>
+/* Patch LCP: aguarda o primeiro paint antes de iniciar o typewriter do intro,
+   garantindo que o browser registre o texto estático como LCP */
+(function() {
+  var _orig;
+  function patchIntroTypewriter() {
+    var typed = document.getElementById('intro-typed');
+    var placeholder = document.getElementById('intro-placeholder');
+    if (!typed || !placeholder) return;
+    // Só inicia a animação após o primeiro frame pintado
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        placeholder.style.visibility = 'hidden';
+        typed.style.visibility = 'visible';
+      });
+    });
+  }
+  window.addEventListener('DOMContentLoaded', function() {
+    requestAnimationFrame(function() {
+      requestAnimationFrame(patchIntroTypewriter);
+    });
+  });
+})();
+</script>
+<script>
+  /* ═══ OTIMIZAÇÃO 2 — Correção de reflow forçado ═══
+   * O _headerCollapse() original fazia:
+   *   1. Escrita: o.style.* (vários)
+   *   2. Leitura: e.getBoundingClientRect().height  ← REFLOW FORÇADO
+   *   3. Escrita: o.style.height = ...
+   *
+   * A correção: patch aplicado via monkeypatch antes de quiz.js usar a função.
+   * Interceptamos depois que quiz-critical.js carrega (DOMContentLoaded do defer) e
+   * substituímos _headerCollapse por uma versão que lê o height ANTES de
+   * iniciar qualquer escrita de estilo, eliminando o reflow intermediário.
+   *
+   * Nota: os usos de el.offsetHeight no quiz.js são INTENCIONAIS (flush CSS
+   * para re-trigger de transitions: remove classe → flush → adiciona classe).
+   * Esses NÃO são reflows problemáticos — são o padrão correto para animações.
+   * O único reflow não intencional era o getBoundingClientRect no meio das
+   * escritas do _headerCollapse.
+   */
+  document.addEventListener('DOMContentLoaded', function patchHeaderCollapse() {
+    // Aguarda o quiz.js (defer) terminar de definir as funções
+    // O defer garante que ele roda antes deste handler em DOMContentLoaded,
+    // mas usamos requestAnimationFrame para garantir que o parser finalizou.
+    requestAnimationFrame(function() {
+      // Guarda referência original caso quiz-critical.js já a tenha sobrescrito
+      var _orig = window._headerCollapse;
+      if (typeof _orig !== 'function') return; // quiz-critical.js ainda não carregou
+
+      window._headerCollapse = function _headerCollapsePatch() {
+        var header  = document.querySelector('header');
+        var counter = document.getElementById('stepCounter');
+        var overlay = document.getElementById('cc-overlay');
+        var isMobile = window.innerWidth <= 580;
+        var margin   = isMobile ? 1 : 12;
+
+        // ── BLOCO DE LEITURA (antes de qualquer escrita) ──────────────────
+        // Lemos o height do header AGORA, enquanto o layout está limpo.
+        // Isso evita que o browser precise fazer um reflow no meio da sequência.
+        var headerHeight = header ? header.getBoundingClientRect().height : 56;
+        // ─────────────────────────────────────────────────────────────────
+
+        // ── BLOCO DE ESCRITAS ─────────────────────────────────────────────
+        overlay.classList.remove('cc-fullscreen');
+        overlay.offsetHeight; // flush intencional para re-trigger de transition
+        overlay.style.transition =
+          'top 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'left 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'width 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'height 500ms cubic-bezier(0.4,0,0.2,1), ' +
+          'border-radius 500ms cubic-bezier(0.4,0,0.2,1)';
+        overlay.style.opacity      = '1';
+        overlay.style.top          = margin + 'px';
+        overlay.style.left         = margin + 'px';
+        overlay.style.width        = (window.innerWidth - 2 * margin) + 'px';
+        overlay.style.height       = headerHeight + 'px'; // usa valor já lido
+        overlay.style.borderRadius = isMobile ? '17px' : '20px';
+        if (header) header.classList.remove('cc-open');
+        // ─────────────────────────────────────────────────────────────────
+
+        setTimeout(function() {
+          overlay.style.transition = 'opacity 180ms ease';
+          overlay.style.opacity    = '0';
+          setTimeout(function() {
+            overlay.style.transition = 'none';
+            overlay.classList.remove('cc-fullscreen');
+            if (counter) {
+              counter.style.transition = 'opacity 0.25s';
+              counter.style.opacity    = '1';
+              setTimeout(function() { counter.style.transition = ''; }, 280);
+            }
+            var backBtn = document.getElementById('interblock-back-btn');
+            if (backBtn) backBtn.style.display = 'none';
+          }, 200);
+        }, 500);
+
+        // Retorna a mesma Promise que o original (_wait(680))
+        return new Promise(function(resolve) { setTimeout(resolve, 680); });
+      };
+    });
+  }, { once: true });
+
+  /* ═══ OTIMIZAÇÃO 3 — Quebrar tarefas longas da thread principal ═══
+   * O quiz.js roda IIFEs pesadas no load:
+   *   - Mist canvas (partículas de fundo)      → NÃO urgente na tela 0
+   *   - Float animations (bolinhas flutuantes)  → NÃO urgente na tela 0
+   *   - Particle/mousetrail effects             → NÃO urgente na tela 0
+   *   - Scanner (face-api, câmera)              → Definitivamente não urgente
+   *
+   * Como quiz.js está minificado, não podemos editar diretamente.
+   * A abordagem segura: carregar quiz.js normalmente (já tem defer),
+   * mas postergar extras.js com requestIdleCallback. Além disso,
+   * adicionamos uma pequena pausa estrutural via scheduler para dar
+   * ao browser janelas de resposta entre as IIFEs do quiz.js.
+   *
+   * requestIdleCallback garante que o código só roda quando o browser
+   * está ocioso (sem frames pendentes ou input), com timeout de 2s
+   * como fallback para browsers que não suportam rIC (Safari < 16).
+   */
+  window.addEventListener('load', function() {
+
+    // quiz-deferred.js: float animations, dot animations, mousetrail, scanner
+    // CORREÇÃO DESKTOP: rIC disparava cedo demais em desktop (CPU sem throttle),
+    // causando TBT de 2.670ms dentro da janela do PageSpeed.
+    // Agora carrega apenas na primeira interação do usuário (mesmo padrão do extras.js).
+    // O quiz funciona normalmente sem ele: quiz-critical.js cobre toda a tela 0.
+    // Na primeira interação (click no botão), quiz-deferred.js carrega em background
+    // e estará disponível a partir da tela 2 ou 3.
+    var _deferredLoaded = false;
+    function _loadDeferred() {
+      if (_deferredLoaded) return;
+      _deferredLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'quiz-deferred.js';
+      document.body.appendChild(s);
+    }
+    ['click', 'touchstart', 'scroll', 'keydown'].forEach(function(evt) {
+      window.addEventListener(evt, _loadDeferred, { once: true, passive: true });
+    });
+    // Fallback: carrega após 10s caso o usuário não interaja
+    setTimeout(_loadDeferred, 10000);
+
+    // extras.js: canvas do footer e animações secundárias
+    // Carregado apenas na primeira interação — não é necessário antes disso.
+    var _extrasLoaded = false;
+    function _loadExtras() {
+      if (_extrasLoaded) return;
+      _extrasLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'extras.js';
+      document.head.appendChild(s);
+    }
+    ['click', 'touchstart', 'scroll'].forEach(function(evt) {
+      window.addEventListener(evt, _loadExtras, { once: true, passive: true });
+    });
+  });
+
+  /* Ativação de vídeos por lazy-load (mantido do original) */
+  document.addEventListener('click', function ativarVideos() {
+    document.querySelectorAll('video[data-src]').forEach(function(v) {
+      v.src = v.getAttribute('data-src');
+    });
+    document.removeEventListener('click', ativarVideos);
+  }, { once: true });
+</script>
+<script>
+/* Footer init — inline para não gerar requisição extra nem atrasar LCP */
+!function(){function A(A){var e=A/2,t=e-100,a=e+100,i=e-70,g=e+70;return["M",18,30,"Q",0,30,0,48,"L",0,180,"L",A,180,"L",A,48,"Q",A,30,A-18,30,"L",a+18,30,"Q",a,30,a-18,12,"L",g+12,12,"Q",g,0,g-12,0,"L",i+12,0,"Q",i,0,i-12,12,"L",t+18,12,"Q",t,30,t-18,30,"Z"].join(" ")}function e(){var e,t,a,i,g,n,C=document.getElementById("site-footer"),s=document.getElementById("footer-shape"),o=C.offsetWidth;s.setAttribute("viewBox","0 0 "+o+" 180"),s.setAttribute("width",o),s.setAttribute("height",180),document.getElementById("footer-path-fill").setAttribute("d",A(o)),document.getElementById("footer-path-gloss").setAttribute("d",(a=(t=(e=o)/2)-100,i=t+100,g=t-70,["M",18,30,"Q",0,30,0,48,"L",0,98,"Q",.5*e,73,e,98,"L",e,48,"Q",e,30,e-18,30,"L",i+18,30,"Q",i,30,i-18,12,"L",(n=t+70)+12,12,"Q",n,0,n-12,0,"L",g+12,0,"Q",g,0,g-12,12,"L",a+18,12,"Q",a,30,a-18,30,"Z"].join(" ")));var r=document.getElementById("footer-blur-layer");if(r){var $='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="'+o+'" height="180"><path d="'+A(o)+'" fill="black"/></svg>')+'")';r.style.webkitMaskImage=$,r.style.maskImage=$,r.style.webkitMaskSize="100% 100%",r.style.maskSize="100% 100%"}}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e(),window.addEventListener("resize",e)}(),window.addEventListener("load",function(){var A=document.getElementById("site-footer");A&&A.classList.add("footer-ready")});
+</script>
+</html>
