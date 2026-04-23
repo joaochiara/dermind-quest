@@ -833,9 +833,9 @@
   }
 
   @media (max-width: 580px) {
-    #screen-0 .screen-h1 { font-size: 40px; max-width: 100%; margin-top: 5px; transform: translateY(-5px); }
-    #screen-0 .screen-h1 .intro-highlight { font-size: 40px; }
-    #screen-0 .screen-h1 .intro-finale { font-size: 40px; }
+    #screen-0 .screen-h1 { font-size: 32px; max-width: 100%; margin-top: 5px; transform: translateY(-5px); }
+    #screen-0 .screen-h1 .intro-highlight { font-size: 32px; }
+    #screen-0 .screen-h1 .intro-finale { font-size: 32px; }
     .sub1-desktop { display: none; }
     .sub1-mobile  { display: inline; }
   }
@@ -3198,6 +3198,11 @@
     #scanner-instruction { bottom: 15px; }
     #scanner-top { padding-top: 112px; }
     #scanner-progress-wrap { bottom: 32px; }
+  }
+
+  /* ── Oculta pílula WhatsApp na screen 0 ── */
+  body:has(#screen-0.active) .footer-wa-wrap {
+    display: none;
   }
 
   /* ── Pílula WhatsApp footer ── */
