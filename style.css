@@ -368,7 +368,7 @@
   .screen-q em { font-style: italic; color: var(--wine); }
 
   .screen-sub {
-    font-size: 14px; font-weight: 400; line-height: 1.7;
+    font-size: 16px; font-weight: 400; line-height: 1.7;
     color: var(--ink-soft); margin-bottom: 32px;
     filter: drop-shadow(0 2px 6px rgba(24,16,14,0.06));
   }
@@ -1534,7 +1534,7 @@
   .result-name em { color: var(--wine); font-style: italic; }
 
   .result-sub {
-    font-size: 14px; font-weight: 400; color: var(--ink-soft);
+    font-size: 16px; font-weight: 400; color: var(--ink-soft);
     line-height: 1.7; margin-bottom: 28px;
     filter: drop-shadow(0 2px 6px rgba(24,16,14,0.06));
   }
