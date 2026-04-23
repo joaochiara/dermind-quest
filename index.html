@@ -605,42 +605,38 @@ header.cc-open .inter-header-back {
   opacity: 1;
 }
 
-.br-mobile { display: none; }
-@media (max-width: 580px) {
-  .br-mobile { display: inline; }
-}
-
 @media (min-width: 581px) {
-  #screen-0 .screen-h1,
-  #screen-0 .intro-sub-1,
-  #screen-0 .screen-sub { max-width: 590px; margin-inline: auto; }
-  #screen-0 .screen-eyebrow { max-width: 590px; width: 100%; display: flex; margin-inline: auto; }
-  #screen-0 .intro-btn { max-width: 590px; width: 100%; display: block; margin-inline: auto; }
+  #screen-0 { max-width: 740px; }
   .sub1-desktop { display: inline; }
   .sub1-mobile  { display: none; }
 }
 
 @media (max-width: 580px) {
-  #screen-0 .screen-h1 { font-size: 32px; max-width: 100%; margin-top: 5px; transform: translateY(-5px); }
-  #screen-0 .screen-h1 .intro-highlight { font-size: 32px; }
+  #screen-0 .screen-h1 { font-size: 40px; max-width: 100%; margin-top: 5px; transform: translateY(-5px); }
+  #screen-0 .screen-h1 .intro-highlight { font-size: 40px; }
+  #screen-0 .screen-h1 .intro-finale { font-size: 40px; }
   .sub1-desktop { display: none; }
   .sub1-mobile  { display: inline; }
 }
 
 /* Subtitles: fade in */
-#screen-0 .intro-sub-1,
-#screen-0 .screen-sub {
+#screen-0 .intro-sub-1 {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+#screen-0 .intro-sub-2 {
   opacity: 0;
   transition: opacity 1.4s ease;
 }
 @media (max-width: 580px) {
-  #screen-0 .intro-sub-1 { padding-top: 10px !important; margin-bottom: 3px !important; transform: translateY(-15px) !important; }
-  #screen-0 .intro-steps  { margin-bottom: 27px !important; margin-top: 10px !important; }
+  #screen-0 .intro-sub-1 { padding-top: 10px !important; margin-bottom: 3px !important; transform: translateY(-5px); }
+  #screen-0 .intro-sub-2 { padding-top: 10px !important; margin-bottom: 20px !important; margin-top: -10px !important; transform: translateY(-5px); }
+  #screen-0 .intro-steps  { margin-bottom: 27px !important; }
 }
 
 #screen-0 .screen-eyebrow.sub-visible,
 #screen-0 .intro-sub-1.sub-visible,
-#screen-0 .screen-sub.sub-visible {
+#screen-0 .intro-sub-2.sub-visible {
   opacity: 1;
 }
 
@@ -770,18 +766,18 @@ header.cc-open .inter-header-back {
   #screen-0 #intro-box-3 {
     transform: scale(0.85);
     transform-origin: center center;
-    margin-top: 0px !important;
+    margin-top: -10px !important;
     margin-bottom: -10px !important;
   }
   /* Box 2 e 3: 5px para cima */
   #screen-0 #intro-box-2,
   #screen-0 #intro-box-3 {
-    margin-top: -5px !important;
+    margin-top: -15px !important;
   }
 
   /* Move botão para cima em mobile */
   #screen-0 #intro-btn {
-    transform: translateY(22px);
+    transform: translateY(2px);
   }
 }
 
@@ -858,9 +854,10 @@ header.cc-open .inter-header-back {
   <div class="screen active" id="screen-0" data-screen="0">
     <p class="screen-eyebrow">Inteligência artificial para sua pele</p>
     <h1 class="screen-h1" id="intro-title" style="position:relative;">
-      <span id="intro-placeholder" style="visibility:visible; display:block;">Você cuida da pele.<span class="br-mobile"><br></span> Mas será que usa<span class="br-mobile"><br></span> os <span class="intro-highlight"><em>produtos certos</em></span>?</span>
+      <span id="intro-placeholder" style="visibility:visible; display:block;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
+      <span id="intro-typed" style="position:absolute; top:0; left:0; width:100%; visibility:hidden;">Consulte nossa IA e descubra <span class="intro-highlight">qual o <em>protocolo ideal</em></span> <span class="intro-finale">para salvar sua pele.</span></span>
     </h1>
-    <p class="screen-sub intro-sub-1" style="margin-bottom: 25px;">Descubra em 6 minutos qual protocolo<span class="br-mobile"><br></span> realmente funciona para sua pele -<span class="br-mobile"><br></span><strong> com mais de 95% de precisão, sem<span class="br-mobile"><br></span> consulta, sem espera e sem achismos</strong>.</p>
+    <p class="screen-sub intro-sub-2" style="margin-bottom: 25px;">Conte com a tecnologia para avaliar sua pele com <strong>+95% de precisão</strong> sem sair de casa.</p>
     <div class="intro-steps" style="margin-bottom: 32px;">
       <div class="intro-step-row centered">
         <div class="interblock-dot-wrap">
