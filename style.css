@@ -3205,7 +3205,7 @@
     transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
   .footer-wa-pill:hover {
-    background: rgba(253,250,247,0.88) !important;
+    background: rgba(253,250,247,0.70) !important;
     box-shadow: 0 2px 8px rgba(24,16,14,0.07), inset 0 1px 0 rgba(255,255,255,0.8) !important;
     transform: scale(1.06) !important;
   }
