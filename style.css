@@ -828,11 +828,6 @@
 
   @media (min-width: 581px) {
     #screen-0 { max-width: 740px; }
-    #screen-0 .screen-h1,
-    #screen-0 .intro-sub-1,
-    #screen-0 .screen-sub { max-width: 730px; margin-inline: auto; }
-    #screen-0 .screen-eyebrow { max-width: 730px; width: 100%; display: flex; margin-inline: auto; }
-    #screen-0 .intro-btn { max-width: 730px; width: 100%; display: block; margin-inline: auto; }
     .sub1-desktop { display: inline; }
     .sub1-mobile  { display: none; }
   }
