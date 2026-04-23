@@ -169,6 +169,7 @@ html { scroll-behavior: smooth; }
     linear-gradient(rgba(247,242,234,1), rgba(247,242,234,1));
   background-attachment: scroll;
   pointer-events: none;
+  will-change: transform;
 }
 
 body {
@@ -667,12 +668,10 @@ header.cc-open .inter-header-back {
 /* Button: slide up from below + fade in */
 #screen-0 .intro-btn {
   opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.52s cubic-bezier(0.22,1,0.36,1), transform 0.52s cubic-bezier(0.22,1,0.36,1);
+  transition: opacity 0.52s cubic-bezier(0.22,1,0.36,1);
 }
 #screen-0 .intro-btn.btn-visible {
   opacity: 1;
-  transform: translateY(0);
 }
 #screen-0 .intro-btn.btn-ready {
   transition: background 0.22s, box-shadow 0.22s, transform 0.15s, opacity 0.22s;
