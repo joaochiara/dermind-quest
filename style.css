@@ -358,9 +358,11 @@
   .screen-h1 em { font-style: italic; color: var(--wine); }
 
   /* ── QUEBRAS DE LINHA CONDICIONAIS (tela 0) ── */
-  .br-mobile { display: none; } /* visível só no mobile */
+  .br-mobile  { display: none; }
+  .br-desktop { display: inline; }
   @media (max-width: 580px) {
-    .br-mobile { display: inline; }
+    .br-mobile  { display: inline; }
+    .br-desktop { display: none; }
   }
 
   .screen-q {
