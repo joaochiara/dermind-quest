@@ -793,19 +793,23 @@ header.cc-open .inter-header-back {
 
 </style>
 <script>
-/* Mostra o h1 da tela 0 só quando ambas as fontes DM Serif
-   (regular + itálico) estiverem carregadas simultaneamente. */
 (function() {
-  if (!document.fonts) {
-    document.getElementById('intro-title').style.visibility = '';
-    return;
+  function reveal() {
+    var el = document.getElementById('intro-title');
+    if (el) el.style.visibility = '';
   }
+  function whenReady(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
+    }
+  }
+  if (!document.fonts) { whenReady(reveal); return; }
   Promise.all([
     document.fonts.load('400 1em "DM Serif Text"'),
     document.fonts.load('italic 400 1em "DM Serif Text"')
-  ]).then(function() {
-    document.getElementById('intro-title').style.visibility = '';
-  });
+  ]).then(function() { whenReady(reveal); });
 })();
 </script>
 <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
