@@ -1176,6 +1176,12 @@
     /* Score rows na col-left: 2 colunas em vez de 4 */
     .result-col-left .score-row {
       grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    /* Anula o margin-top:8px inline da segunda row em desktop */
+    .result-col-left .score-row[style*="margin-top:8px"] {
+      margin-top: 0 !important;
     }
 
     /* Foto do scanner — visível em desktop */
@@ -1267,6 +1273,12 @@
     .score-row.result-section-mobile-only {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    /* Anula o margin-top:8px inline da row-2-mobile (espaço entre rows controlado pelo margin-bottom acima) */
+    #score-row-2-mobile {
+      margin-top: 0 !important;
     }
     /* Box dicas-inteligentes original (col-left) oculto — existe clone mobile-only na col-right */
     #box-dicas-inteligentes {
@@ -1282,7 +1294,7 @@
     .result-col-right #radar-chart-wrap-mobile        { order: 5; }
     /* Radar mobile: padding alinhado com os outros boxes e margin-top 20px */
     #radar-chart-wrap-mobile {
-      padding: 24px 10px 16px 26px !important;
+      padding: 24px 26px 16px 26px !important;
       margin-top: 20px !important;
     }
     #radar-pill-container-mobile {
